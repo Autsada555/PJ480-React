@@ -1,2 +1,2 @@
 # PJ480-React
-react-typescript-tailwind-shadcn
+vite+react-typescript-tailwind-shadcn
