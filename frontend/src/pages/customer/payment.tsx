@@ -203,9 +203,12 @@ export function Payment() {
               <Button className="bg-green-600">Confirm Transaction</Button>
             </div> */}
             <div className="left-[580px] top-[765px] absolute ">
-              <Button 
+              <Button
                 variant="outline"
-                className="bg-red-600 w-[160px] text-white">Cancel </Button>
+                className="bg-red-600 w-[160px] text-white"
+              >
+                Cancel{" "}
+              </Button>
             </div>
 
             <AlertDialog>
@@ -232,15 +235,27 @@ export function Payment() {
             </AlertDialog>
             <div>
               <div className="w-[250px] h-[250px] bg-slate-100 mt-[400px] ml-[1270px] rounded-3xl left-[800px]  border-double border-4 border-gray-300"></div>
-              <img src={Qrcode} alt="qrcode" className="w-[130px] h-[130px]  mt-[-230px] ml-[1330px]"/>
-              <div className="ml-[1190px] mt-[10px]">
-                  <label htmlFor="namebank" className="font-medium">ชื่อบัญชี : FoodforHealth</label>
+              <img
+                src={Qrcode}
+                alt="qrcode"
+                className="w-[130px] h-[130px]  mt-[-230px] ml-[1330px]"
+              />
+            </div>
+            <div>
+              <div className="ml-[1200px] mt-[10px]">
+                <label htmlFor="namebank" className="font-medium">
+                  ชื่อบัญชี : FoodforHealth
+                </label>
               </div>
-              <div>
-                  <label htmlFor="bank" className=" ml-[1190px] font-medium">ธนาคาร : ไทยพานิชย์ (SCB)</label>
+              <div className="ml-[1200px] mt-[5px]">
+                <label htmlFor="bank" className="font-medium">
+                  ธนาคาร : ไทยพานิชย์ (SCB)
+                </label>
               </div>
-              <div>
-                  <label htmlFor="number" className=" ml-[1190px] font-medium">เลขที่บัญชี : 123-456-7890</label>
+              <div className="ml-[1200px] mt-[5px]">
+                <label htmlFor="number" className="font-medium">
+                  เลขที่บัญชี : 123-456-7890
+                </label>
               </div>
             </div>
           </div>
