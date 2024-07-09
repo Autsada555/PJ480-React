@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 // import { Tooltip } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Form } from "@/components/ui/form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
@@ -15,18 +14,20 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+  } from "@/components/ui/select"
 
 export function Customer() {
   return (
     <>
       <Navbar></Navbar>
-      <div >
+      <div>
         <div className="left-[226px] top-[105px] absolute text-black text-xl font-bold font-['Inter']">
           Overview
         </div>
@@ -34,7 +35,7 @@ export function Customer() {
           User Profile
         </div>
         <div>
-          <div className="w-[348px] h-[380px] bg-slate-100 mt-[122px] ml-[220px] rounded-3xl left-[144px] "></div>
+          <div className="w-[348px] h-[380px] bg-slate-100 mt-[122px] ml-[220px] rounded-3xl left-[144px] border-[1px]"></div>
           <div>
             <Avatar className="left-[330px] w-[122px] h-[122px] top-[-350px]">
               <AvatarImage src="https://github.com/shadcn.png" />
@@ -49,7 +50,7 @@ export function Customer() {
           </div>
           <div className="flex top-[460px] absolute left-[490px]">
             <Button
-              className=" absolute bottom-4 right-4 flex w-[160px] text-[17px] text-white bg-slate-400"
+              className=" absolute bottom-4 right-4 flex w-[160px] text-[17px] text-white bg-slate-500"
               variant="secondary"
             >
               {/* <Link to="/">
@@ -180,17 +181,17 @@ export function Customer() {
               <TabsContent value="account">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Account</CardTitle>
+                    <CardTitle>Account Details</CardTitle>
                     <CardDescription>
-                      Make changes to your account here. Click update when you're
-                      done.
+                      Make changes to your account here. Click update when
+                      you're done.
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-2">
                     <div className="space-y-1 ">
                       <Label
                         htmlFor="firstname"
-                        className="left-[27px] top-[135px] absolute"
+                        className="left-[27px] top-[130px] absolute"
                       >
                         First Name
                       </Label>
@@ -205,7 +206,7 @@ export function Customer() {
                     <div className="space-y-8">
                       <Label
                         htmlFor="lastname"
-                        className="left-[27px] top-[208px] absolute"
+                        className="left-[27px] top-[203px] absolute"
                       >
                         Last Name
                       </Label>
@@ -220,7 +221,7 @@ export function Customer() {
                     <div className="space-y-8">
                       <Label
                         htmlFor="lastname"
-                        className="left-[27px] top-[280px] absolute"
+                        className="left-[27px] top-[275px] absolute"
                       >
                         Gender
                       </Label>
@@ -231,11 +232,31 @@ export function Customer() {
                         //   onChange={handleChange}
                         className="text-[16px] mt-2 w-full"
                       />
+                      {/* <Label className="left-[27px] top-[275px] absolute  text-[16px]">
+                        Gender
+                      </Label>
+                      <Select>
+                        <SelectTrigger className="w-[400px] left-[27px] top-[275px]  absolute">
+                          <SelectValue placeholder="โปรดเลือกเพศ (Gender)" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Gender</SelectLabel>
+                            <SelectItem value="male">เพศชาย (Male)</SelectItem>
+                            <SelectItem value="female">
+                              เพศหญิง (Female)
+                            </SelectItem>
+                            <SelectItem value="others">
+                              ไม่ระบุเพศ (Others)
+                            </SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select> */}
                     </div>
                     <div className="space-y-8">
                       <Label
                         htmlFor="phone"
-                        className="left-[27px] top-[352px] absolute"
+                        className="left-[27px] top-[347px] absolute"
                       >
                         Phone
                       </Label>
@@ -250,7 +271,7 @@ export function Customer() {
                     <div className="space-y-8">
                       <Label
                         htmlFor="email"
-                        className="left-[27px] top-[423px] absolute"
+                        className="left-[27px] top-[418px] absolute"
                       >
                         Email
                       </Label>
@@ -271,48 +292,72 @@ export function Customer() {
               <TabsContent value="address">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Address</CardTitle>
+                    <CardTitle>Address Details</CardTitle>
                     <CardDescription>
-                    Make changes to your address here. Click update when you're
-                      done.
+                      Make changes to your address here. Click update when
+                      you're done.
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-2">
                     <div className="space-y-1">
-                      <Label htmlFor="address" className="left-[27px] top-[135px] absolute">Address</Label>
-                      <Input 
-                      id="address"
-                      placeholder="Address"
-                      //   value={formData.address}
-                      //   onChange={handleChange}
-                      className="text-[16px] mt-2 w-full" />
+                      <Label
+                        htmlFor="address"
+                        className="left-[27px] top-[130px] absolute"
+                      >
+                        Address
+                      </Label>
+                      <Input
+                        id="address"
+                        placeholder="Address"
+                        //   value={formData.address}
+                        //   onChange={handleChange}
+                        className="text-[16px] mt-2 w-full"
+                      />
                     </div>
                     <div className="space-y-8">
-                      <Label htmlFor="district" className="left-[27px] top-[208px] absolute">District</Label>
-                      <Input 
-                      id="district"
+                      <Label
+                        htmlFor="district"
+                        className="left-[27px] top-[203px] absolute"
+                      >
+                        District
+                      </Label>
+                      <Input
+                        id="district"
                         placeholder="District"
                         //   value={formData.district}
                         //   onChange={handleChange}
-                        className="text-[16px] mt-2 w-full" />
+                        className="text-[16px] mt-2 w-full"
+                      />
                     </div>
                     <div className="space-y-8">
-                      <Label htmlFor="province" className="left-[27px] top-[280px] absolute">Province</Label>
-                      <Input 
-                      id="province"
+                      <Label
+                        htmlFor="province"
+                        className="left-[27px] top-[275px] absolute"
+                      >
+                        Province
+                      </Label>
+                      <Input
+                        id="province"
                         placeholder="Province"
                         //   value={formData.province}
                         //   onChange={handleChange}
-                        className="text-[16px] mt-2 w-full" />
+                        className="text-[16px] mt-2 w-full"
+                      />
                     </div>
                     <div className="space-y-8">
-                      <Label htmlFor="postcast" className="left-[27px] top-[352px] absolute">Postcast</Label>
-                      <Input 
-                      id="postcast"
+                      <Label
+                        htmlFor="postcast"
+                        className="left-[27px] top-[348px] absolute"
+                      >
+                        Postcast
+                      </Label>
+                      <Input
+                        id="postcast"
                         placeholder="Postcast"
                         //   value={formData.postcast}
                         //   onChange={handleChange}
-                        className="text-[16px] mt-2 w-full" />
+                        className="text-[16px] mt-2 w-full"
+                      />
                     </div>
                   </CardContent>
                   <CardFooter className="justify-center">
