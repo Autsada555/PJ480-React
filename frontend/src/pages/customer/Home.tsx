@@ -36,7 +36,6 @@ export function Home() {
                     <img className="h-[30px] cursor-pointer" src="src\assets\add.svg" alt="add" />
                 </div>
 
-
             </div>
         </div>
     )
