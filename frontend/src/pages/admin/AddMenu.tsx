@@ -1,8 +1,140 @@
+import { Label } from "@radix-ui/react-label"
 import Navbar from "./navbar"
-export function AddMenu(){
+import { Input } from "@/components/ui/input"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+export function AddMenu() {
     return (
         <div>
-            <Navbar/>
+            <Navbar />
+            <div className="flex space-x-[260px]">
+                <div className="bg-slate-400 h-[800px] w-[250px]">
+                    <button className="bg-slate-300 h-[80px] w-[250px]"><a href="addmenu">Add Menu</a></button>
+                    <button className="bg-slate-300 h-[80px] w-[250px]"><a href="management">Managment Menu</a></button>
+                    <button className="bg-slate-300 h-[80px] w-[250px]"><a href="checkpayment">Check Payment</a></button>
+                </div>
+
+                <div className="mt-6">
+                    <Card className="w-[800px]">
+                        <CardHeader>
+                            <CardTitle>Add Menu</CardTitle>
+                            <CardDescription>
+                                Add your ingredents detail for your food
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-2">
+                            <div className=" ">
+                                <Label
+                                    htmlFor="name"
+                                    className="left-[27px] ]"
+                                >
+                                    Name
+                                </Label>
+                                <Input
+                                    id="name"
+                                    placeholder="name"
+                                    //   value={formData.lastName}
+                                    //   onChange={handleChange}
+                                    className="text-[16px] "
+                                />
+                            </div>
+                            <div className="">
+                                <Label
+                                    htmlFor="Cost"
+                                    className="left-[27px]  "
+                                >
+                                    Cost
+                                </Label>
+                                <Input
+                                    id="cost"
+                                    placeholder="cost"
+                                    //   value={formData.lastName}
+                                    //   onChange={handleChange}
+                                    className="text-[16px] "
+                                />
+                            </div>
+                            <div className="">
+                                <Label
+                                    htmlFor="description"
+                                    className="left-[27px]  "
+                                >
+                                    Description
+                                </Label>
+                                <Input
+                                    id="description"
+                                    placeholder="description"
+                                    //   value={formData.gender}
+                                    //   onChange={handleChange}
+                                    className="text-[16px] "
+                                />
+
+                            </div>
+                            <div className="">
+                                <Label
+                                    htmlFor="component"
+                                    className="left-[27px]  "
+                                >
+                                    Component
+                                </Label>
+                                <Input
+                                    id="component"
+                                    placeholder="component"
+                                    //   value={formData.gender}
+                                    //   onChange={handleChange}
+                                    className="text-[16px] "
+                                />
+
+                            </div>
+                            <div>
+                                <Label
+                                    htmlFor="photo"
+                                    className="left-[27px]  "
+                                >
+                                    Select type food
+                                </Label>
+                                <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option selected>Choose a type of food</option>
+                                    <option value="A">Diabetes</option>
+                                    <option value="B">Heart Disease</option>
+                                    <option value="C">Anemia</option>
+                                    <option value="D">Anothor</option>
+                                </select>
+                            </div>
+                            <div>
+                                <section className="container w-full mx-auto items-center">
+                                    <div className="max-w-xs mx-auto bg-white rounded-lg shadow-md overflow-hidden items-center">
+                                        <div className="px-4 py-4">
+                                            <div id="image-preview" className="max-w-xs p-4 mb-2 bg-gray-100 border-dashed border-2 border-gray-400 rounded-lg items-center mx-auto text-center cursor-pointer">
+                                                <input id="upload" type="file" className="hidden" accept="image/*" />
+                                                <label htmlFor="upload" className="cursor-pointer">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 text-gray-700 mx-auto mb-2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                                                    </svg>
+                                                    <h5 className="mb-1 text-lg font-bold tracking-tight text-gray-700">Upload food picture</h5>
+                                                    <p className="font-normal text-xs text-gray-400">Choose photo size should be less than <b className="text-gray-600">2mb</b></p>
+                                                    <p className="font-normal text-xs text-gray-400">and should be in <b className="text-gray-600">JPG, PNG, or GIF</b> format.</p>
+                                                    <span id="filename" className="text-gray-500 bg-gray-200 z-50"></span>
+                                                </label>
+                                            </div>
+                                            <div className="flex items-center justify-center">
+                                                <div className="w-full">
+                                                    <label className="w-full text-white bg-[#050708] hover:bg-[#050708]/90 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-4 py-2 flex items-center justify-center cursor-pointer">
+                                                        <span className="text-center ml-2">Upload</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                            </div>
+                        </CardContent>
+                        <CardFooter className="justify-center">
+                            <Button type="submit" className="bg-green-600">Confirm</Button>
+                        </CardFooter>
+                    </Card>
+                </div>
+            </div>
         </div>
     )
 }
