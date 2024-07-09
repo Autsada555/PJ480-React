@@ -4,29 +4,39 @@ import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-
+import Qrcode from "@/assets/Qrcode.jpg";
 import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-  } from "@/components/ui/select"
-
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 export function Payment() {
   return (
     <div>
       <Navbar />
       <div>
-        <div className="left-[226px] top-[95px] absolute text-black text-xl font-bold font-['Inter']">
+        <div className="left-[226px] top-[110px] absolute text-black text-xl font-bold font-['Inter']">
           Delivery
         </div>
-        <div className="left-[226px] top-[430px] absolute text-black text-xl font-bold font-['Inter']">
+        <div className="left-[226px] top-[460px] absolute text-black text-xl font-bold font-['Inter']">
           Payment
         </div>
-        <div className="flex items-center space-x-2 left-[270px] top-[145px] absolute">
+        <div className="flex items-center space-x-2 left-[270px] top-[165px] absolute">
           <Checkbox id="terms" />
           <label
             htmlFor="terms"
@@ -35,7 +45,7 @@ export function Payment() {
             รับสินค้าทีหน้าร้าน
           </label>
         </div>
-        <div className="flex items-center space-x-2 left-[270px] top-[175px] absolute">
+        <div className="flex items-center space-x-2 left-[270px] top-[195px] absolute">
           <Checkbox id="terms" />
           <label
             htmlFor="terms"
@@ -46,12 +56,12 @@ export function Payment() {
         </div>
         <Form>
           <div>
-            <div className=" w-full max-w-sm flex-col gap-1 left-[350px] top-[230px] absolute">
+            <div className=" w-full max-w-sm flex-col gap-1 left-[350px] top-[245px] absolute">
               <Label
                 htmlFor="address"
                 className="text-[16px] left-[3px] top-[-16px] absolute"
               >
-                Address
+                Address (ที่อยู่)
               </Label>
               <Input
                 type="text"
@@ -61,12 +71,12 @@ export function Payment() {
                 className="text-[16px] mt-2 w-full h-9"
               />
             </div>
-            <div className=" w-full max-w-sm flex-col gap-1 left-[850px] top-[230px] absolute">
+            <div className=" w-full max-w-sm flex-col gap-1 left-[850px] top-[245px] absolute">
               <Label
                 htmlFor="district"
                 className="text-[16px] left-[3px] top-[-16px] absolute"
               >
-                District
+                District (อำเภอ)
               </Label>
               <Input
                 type="text"
@@ -76,12 +86,12 @@ export function Payment() {
                 className="text-[16px] mt-2 w-full h-9"
               />
             </div>
-            <div className=" w-full max-w-sm flex-col gap-1 left-[350px] top-[300px] absolute">
+            <div className=" w-full max-w-sm flex-col gap-1 left-[350px] top-[320px] absolute">
               <Label
                 htmlFor="province"
                 className="text-[16px] left-[3px] top-[-16px] absolute"
               >
-                Province
+                Province (จังหวัด)
               </Label>
               <Input
                 type="text"
@@ -91,27 +101,27 @@ export function Payment() {
                 className="text-[16px] mt-2 w-full h-9"
               />
             </div>
-            <div className=" w-full max-w-sm flex-col gap-1 left-[850px] top-[300px] absolute">
+            <div className=" w-full max-w-sm flex-col gap-1 left-[850px] top-[320px] absolute">
               <Label
-                htmlFor="postcast"
+                htmlFor="postcode"
                 className="text-[16px] left-[3px] top-[-16px] absolute"
               >
-                Postcast
+                Postcode (รหัสไปรษณีย์)
               </Label>
               <Input
                 type="text"
-                id="postcast"
-                //   value={formData.postcast}
+                id="postcode"
+                //   value={formData.postcode}
                 //   onChange={handleChange}
                 className="text-[16px] mt-2 w-full h-9"
               />
             </div>
-            <div className=" w-full max-w-sm flex-col gap-1 left-[350px] top-[370px] absolute">
+            <div className=" w-full max-w-sm flex-col gap-1 left-[350px] top-[395px] absolute">
               <Label
                 htmlFor="phone"
                 className="text-[16px] left-[3px] top-[-16px] absolute"
               >
-                Phone
+                Phone (เบอร์โทร)
               </Label>
               <Input
                 type="text"
@@ -124,7 +134,7 @@ export function Payment() {
           </div>
 
           <div>
-            <div className="flex items-center space-x-2 left-[270px] top-[480px] absolute">
+            <div className="flex items-center space-x-2 left-[270px] top-[510px] absolute">
               <Checkbox id="terms" />
               <label
                 htmlFor="terms"
@@ -133,7 +143,7 @@ export function Payment() {
                 ชำระด้วยเงินสด
               </label>
             </div>
-            <div className="flex items-center space-x-2 left-[270px] top-[510px] absolute">
+            <div className="flex items-center space-x-2 left-[270px] top-[540px] absolute">
               <Checkbox id="terms" />
               <label
                 htmlFor="terms"
@@ -142,7 +152,7 @@ export function Payment() {
                 ชำระด้วยการโอน (Mobile Banking)
               </label>
             </div>
-            <div className=" w-full max-w-sm flex-col gap-1 left-[350px] top-[560px] absolute">
+            <div className=" w-full max-w-sm flex-col gap-1 left-[350px] top-[590px] absolute">
               <Label
                 htmlFor="count"
                 className="text-[16px] left-[3px] top-[-16px] absolute"
@@ -157,9 +167,11 @@ export function Payment() {
                 className="text-[16px] mt-2 w-full h-9"
               />
             </div>
-            <Label className="left-[800px] top-[540px] absolute text-[16px]">ช่องทางการโอน <span className="text-red-500 ">*</span></Label>
+            <Label className="left-[800px] top-[573px] absolute text-[16px]">
+              ช่องทางการโอน <span className="text-red-500 ">*</span>
+            </Label>
             <Select>
-              <SelectTrigger className="w-[400px] left-[800px] top-[565px] absolute">
+              <SelectTrigger className="w-[400px] left-[800px] top-[597px] absolute">
                 <SelectValue placeholder="โปรดเลือกช่องทางการโอน" />
               </SelectTrigger>
               <SelectContent>
@@ -174,22 +186,63 @@ export function Payment() {
               </SelectContent>
             </Select>
 
-            <div className="left-[800px] top-[640px] absolute w-[400px]"> 
-                <Label className="text-[16px]  top-[-25px] left-[4px] absolute ">
-                      สลีปการโอนเงิน <span className="text-red-500 ">*</span>
-                </Label>
-                    <Input
-                    //   useForm={form}
-                      type="file"
-                      name="Image"
-                      accept="image/*"
-                      className="col-span-3 font-extralight"
-                      placeholder="image"
-                    />
+            <div className="left-[800px] top-[680px] absolute w-[400px]">
+              <Label className="text-[16px]  top-[-25px] left-[4px] absolute ">
+                สลีปการโอนเงิน <span className="text-red-500 ">*</span>
+              </Label>
+              <Input
+                //   useForm={form}
+                type="file"
+                name="Image"
+                accept="image/*"
+                className="col-span-3 font-extralight"
+                placeholder="image"
+              />
             </div>
-                <div classname ="left-[900px] top-[940px] absolute w-[400px]">
-                    <Button>Confirm Transaction</Button>
-                </div>
+            {/* <div className="left-[800px] top-[665px] absolute">
+              <Button className="bg-green-600">Confirm Transaction</Button>
+            </div> */}
+            <div className="left-[580px] top-[765px] absolute ">
+              <Button 
+                variant="outline"
+                className="bg-red-600 w-[160px] text-white">Cancel </Button>
+            </div>
+
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="left-[800px] top-[765px] absolute bg-green-600 text-white"
+                >
+                  Confirm Transaction
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Do you want to confirm the transaction?
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction>Continue</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+            <div>
+              <div className="w-[250px] h-[250px] bg-slate-100 mt-[400px] ml-[1270px] rounded-3xl left-[800px]  border-double border-4 border-gray-300"></div>
+              <img src={Qrcode} alt="qrcode" className="w-[130px] h-[130px]  mt-[-230px] ml-[1330px]"/>
+              <div className="ml-[1190px] mt-[10px]">
+                  <label htmlFor="namebank" className="font-medium">ชื่อบัญชี : FoodforHealth</label>
+              </div>
+              <div>
+                  <label htmlFor="bank" className=" ml-[1190px] font-medium">ธนาคาร : ไทยพานิชย์ (SCB)</label>
+              </div>
+              <div>
+                  <label htmlFor="number" className=" ml-[1190px] font-medium">เลขที่บัญชี : 123-456-7890</label>
+              </div>
+            </div>
           </div>
         </Form>
       </div>

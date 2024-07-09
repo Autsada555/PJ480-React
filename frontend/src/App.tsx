@@ -9,7 +9,7 @@ import { AddMenu } from './pages/admin/AddMenu';
 import { Management } from './pages/admin/Management';
 import { CheckPayment } from './pages/admin/CheckPayment';
 import {Payment} from './pages/customer/payment';
-
+import {Order} from './pages/customer/order';
 import { Home } from './pages/customer/Home';
 
 function App() {
@@ -24,6 +24,8 @@ function App() {
           <Route path="/management" element={<Management />} /> 
           <Route path="/checkpayment" element={<CheckPayment />}/>
           <Route path="/payment" element={<Payment />}/>
+          <Route path="/order" element={<Order />}/>
+
         </Routes>
       </div>
     </BrowserRouter>
