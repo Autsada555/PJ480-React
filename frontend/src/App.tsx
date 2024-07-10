@@ -11,6 +11,8 @@ import { CheckPayment } from './pages/admin/CheckPayment';
 import {Payment} from './pages/customer/payment';
 import {Order} from './pages/customer/order';
 import { Home } from './pages/customer/Home';
+import {Register} from './pages/customer/register';
+
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
           <Route path="/checkpayment" element={<CheckPayment />}/>
           <Route path="/payment" element={<Payment />}/>
           <Route path="/order" element={<Order />}/>
+          <Route path="/register" element={<Register />}/>
 
         </Routes>
       </div>
