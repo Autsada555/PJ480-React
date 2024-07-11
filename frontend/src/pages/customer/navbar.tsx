@@ -23,7 +23,7 @@ function Navbar() {
                             type="submit"
                             className="h-[42px] w-[42px] hover:bg-gray-500 bg-white rounded-[2px]"
                         >
-                            <img className="h-[30px] flex pl-[6px]" src="src\assets\search.png" alt="search" />
+                            {/* <img className="h-[30px] flex pl-[6px]" src="src\assets\search.png" alt="search" /> */}
                             <i className="fas fa-search"></i>
                         </button>
                     </form>
