@@ -5,7 +5,8 @@ import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-// import { UserPlus } from "lucide-react";
+import { UserPlus } from "lucide-react";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -125,9 +126,10 @@ export function Register() {
                             <UserPlus className="mt-[10px]"></UserPlus>
                           </div> */}
                           <div className=" w-full max-w-sm flex-col gap-1 left-[415px] top-[70px] absolute">
+                            <UserPlus className="w-[40px] h-[40px] ml-[95px] mt-[-65px]"></UserPlus>
                             <Label
                               htmlFor="firstname"
-                              className="text-[14px] left-[3px] top-[-16px] font-['Inter'] absolute"
+                              className="text-[14px] left-[3px] top-[-15px] font-['Inter'] absolute"
                             >
                               Firstname <span className="text-red-500 ">*</span>
                             </Label>
@@ -136,7 +138,7 @@ export function Register() {
                               id="firstname"
                               //   value={formData.firstname}
                               //   onChange={handleChange}
-                              className="text-[16px] mt-2 w-[220px] h-8"
+                              className="text-[16px] mt-8 w-[220px] h-8"
                             />
                           </div>
                           <div className=" w-full max-w-sm flex-col gap-1 left-[415px] top-[130px] absolute">

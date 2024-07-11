@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { CircleUserRound } from 'lucide-react';
+import DSLOGO from '@/assets/DS-Logo.png';
 
 
 export function Login() {
@@ -12,10 +13,11 @@ export function Login() {
       <Navbar />
       <div>
         <div className="absolute text-black text-xl font-bold font-['Inter'] left-[705px] top-[130px]">
-          Welcome to Food
+          Welcome to ...
         </div>
+        <img src={DSLOGO} alt="dslogo" className="w-[220px] h-[220px]  ml-[665px] mt-[20px]"/>
         <div>
-          <div className="w-[340px] h-[320px] bg-slate-100 mt-[190px] ml-[610px] rounded-sm  border-[1px]"></div>
+          <div className="w-[340px] h-[320px] bg-slate-100 mt-[-50px] ml-[610px] rounded-sm  border-[1px]"></div>
         </div>
         <div>
         <CircleUserRound className="left-[760px] top-[280px] absolute w-[50px] h-[50px]"/>
