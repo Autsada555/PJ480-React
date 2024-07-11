@@ -32,6 +32,7 @@ import {
   SelectGroup,
   SelectItem,
   SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 
 export function Register() {
@@ -176,7 +177,7 @@ export function Register() {
                           </Label>
                           <Select>
                             <SelectTrigger className="w-[220px] left-[415px] top-[255px] h-[35px] font-['Inter'] absolute">
-                              {/* <SelectValue placeholder="Gender" /> */}
+                              <SelectValue placeholder="Gender" />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectGroup>
