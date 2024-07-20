@@ -5,15 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import Qrcode from "@/assets/Qrcode.jpg";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -152,39 +144,7 @@ export function Payment() {
                 ชำระด้วยการโอน (Mobile Banking)
               </label>
             </div>
-            <div className=" w-full max-w-sm flex-col gap-1 left-[350px] top-[590px] absolute">
-              <Label
-                htmlFor="count"
-                className="text-[16px] left-[3px] top-[-16px] absolute"
-              >
-                จำนวนเงินโอน <span className="text-red-500 ">*</span>
-              </Label>
-              <Input
-                type="text"
-                id="count"
-                //   value={formData.count}
-                //   onChange={handleChange}
-                className="text-[16px] mt-2 w-full h-9"
-              />
-            </div>
-            <Label className="left-[800px] top-[573px] absolute text-[16px]">
-              ช่องทางการโอน <span className="text-red-500 ">*</span>
-            </Label>
-            <Select>
-              <SelectTrigger className="w-[400px] left-[800px] top-[597px] absolute">
-                <SelectValue placeholder="โปรดเลือกช่องทางการโอน" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>ช่องทางการโอน</SelectLabel>
-                  <SelectItem value="khungthai">ธนาคารกรุงไทย</SelectItem>
-                  <SelectItem value="scb">ธนาคารไทยพานิชย์ (SCB)</SelectItem>
-                  <SelectItem value="k">ธนาคารกสิกรไทย</SelectItem>
-                  <SelectItem value="khungthep">ธนาคารกรุงเทพ</SelectItem>
-                  <SelectItem value="o">ธนาคารออมสิน</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            
 
             <div className="left-[800px] top-[680px] absolute w-[400px]">
               <Label className="text-[16px]  top-[-25px] left-[4px] absolute ">

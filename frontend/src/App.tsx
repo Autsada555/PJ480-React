@@ -13,6 +13,8 @@ import {Order} from './pages/customer/order';
 import { Home } from './pages/customer/Home';
 import {Register} from './pages/customer/register';
 import {Login} from './pages/customer/login';
+import { Delivery } from './pages/admin/Delivery';
+import { Employee } from './pages/admin/Employee';
 
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
           <Route path="/order" element={<Order />}/>
           <Route path="/register" element={<Register />}/>
           <Route path="/login" element={<Login />}/>
+          <Route path="/delivery" element={<Delivery />}/>
+          <Route path="/employee" element={<Employee />}/>
 
 
         </Routes>
