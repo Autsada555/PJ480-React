@@ -15,15 +15,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import {
-//     Select,
-//     SelectContent,
-//     SelectGroup,
-//     SelectItem,
-//     SelectLabel,
-//     SelectTrigger,
-//     SelectValue,
-//   } from "@/components/ui/select"
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+  } from "@/components/ui/select"
 
 export function Customer() {
   return (
@@ -137,8 +137,8 @@ export function Customer() {
                       />
                       {/* <Label className="left-[27px] top-[275px] absolute  text-[16px]">
                         Gender
-                      </Label>
-                      <Select>
+                      </Label> */}
+                      {/* <Select>
                         <SelectTrigger className="w-[400px] left-[27px] top-[275px]  absolute">
                           <SelectValue placeholder="โปรดเลือกเพศ (Gender)" />
                         </SelectTrigger>
