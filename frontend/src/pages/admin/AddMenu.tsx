@@ -3,6 +3,7 @@ import Navbar from "./navbar"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 export function AddMenu() {
     return (
         <div>
@@ -85,20 +86,35 @@ export function AddMenu() {
                                 />
 
                             </div>
-                            <div>
-                                <Label
-                                    htmlFor="photo"
-                                    className="left-[27px]  "
-                                >
-                                    Select type food
-                                </Label>
-                                <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option selected>Choose a type of food</option>
-                                    <option value="A">Diabetes</option>
-                                    <option value="B">Heart Disease</option>
-                                    <option value="C">Anemia</option>
-                                    <option value="D">Anothor</option>
-                                </select>
+
+                            <div className="flex flex-warp items-center space-x-2 justify-center">
+                                <div className="flex items-center space-x-2 left-[270px] top-[165px] mt-2">
+                                    <Checkbox id="terms" />
+                                    <label
+                                        htmlFor="terms"
+                                        className="text-[17px] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-['Inter']"
+                                    >
+                                        Diabetes
+                                    </label>
+                                </div>
+                                <div className="flex items-center space-x-2 left-[270px] top-[165px] mt-2">
+                                    <Checkbox id="terms" />
+                                    <label
+                                        htmlFor="terms"
+                                        className="text-[17px] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-['Inter']"
+                                    >
+                                        Heart Disease
+                                    </label>
+                                </div>
+                                <div className="flex items-center space-x-2 left-[270px] top-[165px] mt-2">
+                                    <Checkbox id="terms" />
+                                    <label
+                                        htmlFor="terms"
+                                        className="text-[17px] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-['Inter']"
+                                    >
+                                        Anemia
+                                    </label>
+                                </div>
                             </div>
                             <div>
                                 <section className="container w-full mx-auto items-center">
