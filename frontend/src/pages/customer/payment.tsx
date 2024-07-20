@@ -136,7 +136,36 @@ export function Payment() {
               </label>
             </div>
             <div className="flex items-center space-x-2 left-[270px] top-[540px] absolute">
-              <Checkbox id="terms" />
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Checkbox id="terms" />
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Do you want to pay by transfer?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      <div className="text-[17px] font-['Inter']">
+                      คุณสามารถชำระเงินผ่านช่องทางนี้และทำการบันทึกสลีปการโอนเงินเพื่อใช้เป็นหลักฐานด้วยนะคะ </div> <br></br>                    
+                        <img
+                          src={Qrcode}
+                          alt="qrcode"
+                          // className="w-[200px] h-[200px]"
+                        />
+                        <div className="  ml-[150px]">
+                         ชื่อบัญชี : DS-Delighth<br></br>
+                         ธนาคาร : ไทยพานิชย์ (SCB)<br></br>
+                         เลขที่บัญชี : 123-456-7890
+                         </div>
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction>Continue</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
               <label
                 htmlFor="terms"
                 className="text-[17px] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-['Inter']"
@@ -144,25 +173,8 @@ export function Payment() {
                 ชำระด้วยการโอน (Mobile Banking)
               </label>
             </div>
-            
 
-            <div className="left-[800px] top-[680px] absolute w-[400px]">
-              <Label className="text-[16px]  top-[-25px] left-[4px] absolute ">
-                สลีปการโอนเงิน <span className="text-red-500 ">*</span>
-              </Label>
-              <Input
-                //   useForm={form}
-                type="file"
-                name="Image"
-                accept="image/*"
-                className="col-span-3 font-extralight"
-                placeholder="image"
-              />
-            </div>
-            {/* <div className="left-[800px] top-[665px] absolute">
-              <Button className="bg-green-600">Confirm Transaction</Button>
-            </div> */}
-            <div className="left-[580px] top-[765px] absolute ">
+            <div className="left-[580px] top-[600px] absolute ">
               <Button
                 variant="outline"
                 className="bg-red-600 w-[160px] text-white"
@@ -175,7 +187,7 @@ export function Payment() {
               <AlertDialogTrigger asChild>
                 <Button
                   variant="outline"
-                  className="left-[800px] top-[765px] absolute bg-green-600 text-white"
+                  className="left-[800px] top-[600px] absolute bg-green-600 text-white"
                 >
                   Confirm Transaction
                 </Button>
@@ -192,32 +204,7 @@ export function Payment() {
                   <AlertDialogAction>Continue</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
-            </AlertDialog>
-            <div>
-              <div className="w-[250px] h-[250px] bg-slate-100 mt-[400px] ml-[1270px] rounded-3xl left-[800px]  border-double border-4 border-gray-300"></div>
-              <img
-                src={Qrcode}
-                alt="qrcode"
-                className="w-[130px] h-[130px]  mt-[-230px] ml-[1330px]"
-              />
-            </div>
-            <div>
-              <div className="ml-[1200px] mt-[10px]">
-                <label htmlFor="namebank" className="font-medium">
-                  ชื่อบัญชี : FoodforHealth
-                </label>
-              </div>
-              <div className="ml-[1200px] mt-[5px]">
-                <label htmlFor="bank" className="font-medium">
-                  ธนาคาร : ไทยพานิชย์ (SCB)
-                </label>
-              </div>
-              <div className="ml-[1200px] mt-[5px]">
-                <label htmlFor="number" className="font-medium">
-                  เลขที่บัญชี : 123-456-7890
-                </label>
-              </div>
-            </div>
+            </AlertDialog>            
           </div>
         </Form>
       </div>

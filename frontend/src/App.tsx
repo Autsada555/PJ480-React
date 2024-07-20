@@ -15,6 +15,11 @@ import {Register} from './pages/customer/register';
 import {Login} from './pages/customer/login';
 import { Delivery } from './pages/admin/Delivery';
 import { Employee } from './pages/admin/Employee';
+import {History} from './pages/customer/History';
+import {DiabetesFood} from './pages/customer/DiabetesFood';
+import {KidnyFood} from './pages/customer/KidnyFood';
+import {GastritistFood} from './pages/customer/Gastritist';
+import {ThyroidFood} from './pages/customer/Thyroid';
 
 
 function App() {
@@ -34,6 +39,11 @@ function App() {
           <Route path="/login" element={<Login />}/>
           <Route path="/delivery" element={<Delivery />}/>
           <Route path="/employee" element={<Employee />}/>
+          <Route path="/history" element={<History />}/>
+          <Route path="/diabetesfood" element={<DiabetesFood />}/>
+          <Route path="/kidnyfood" element={<KidnyFood />}/>
+          <Route path="/gastritistfood" element={<GastritistFood />}/>
+          <Route path="/thyroidfood" element={<ThyroidFood />}/>
 
 
         </Routes>

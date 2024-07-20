@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Link } from "react-router-dom";
+
 import {
   Card,
   CardContent,
@@ -53,10 +55,7 @@ export function Customer() {
               className=" absolute bottom-4 right-4 flex w-[160px] text-[17px] text-white bg-slate-500"
               variant="outline"
             >
-              {/* <Link to="/">
-                <CornerUpLeftIcon />
-            </Link> */}
-              {"ประวัติการสั่งซื้อ"}
+              <Link to="/history">{"ประวัติการสั่งซื้อ"}</Link>
             </Button>
           </div>
           <div className="flex top-[530px] absolute left-[490px] ">
@@ -208,7 +207,7 @@ export function Customer() {
                         htmlFor="address"
                         className="left-[27px] top-[130px] absolute"
                       >
-                        Address 
+                        Address
                       </Label>
                       <Input
                         id="address"
@@ -223,7 +222,7 @@ export function Customer() {
                         htmlFor="district"
                         className="left-[27px] top-[203px] absolute"
                       >
-                        District 
+                        District
                       </Label>
                       <Input
                         id="district"
@@ -238,7 +237,7 @@ export function Customer() {
                         htmlFor="province"
                         className="left-[27px] top-[275px] absolute"
                       >
-                        Province 
+                        Province
                       </Label>
                       <Input
                         id="province"
@@ -253,7 +252,7 @@ export function Customer() {
                         htmlFor="postcode"
                         className="left-[27px] top-[348px] absolute"
                       >
-                        Postcode 
+                        Postcode
                       </Label>
                       <Input
                         id="postcode"

@@ -3,7 +3,7 @@ import Navbar from "./navbar";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
-import Healthimg from "@/assets/imgforhome/Healthimg.jpg";
+import Thyroidimg from "@/assets/imgforhome/Thiroidimg.jpg";
 
 import {
   NavigationMenu,
@@ -16,7 +16,7 @@ import {
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 
-export function Home() {
+export function ThyroidFood() {
   const [showModalMenu, setShowModalMenu] = useState(false);
   // const products = dataReward.flatMap((reward) => [
   //     {
@@ -40,7 +40,7 @@ export function Home() {
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-            <NavigationMenuTrigger>Healthy Foods</NavigationMenuTrigger>
+              <NavigationMenuTrigger>Healthy Foods</NavigationMenuTrigger>
               <NavigationMenuTrigger>Diabetes Foods </NavigationMenuTrigger>
               <NavigationMenuTrigger>Kidny Foods </NavigationMenuTrigger>
               <NavigationMenuTrigger>Gastritist Foods </NavigationMenuTrigger>
@@ -55,18 +55,21 @@ export function Home() {
       {/* <div className="w-[230px] h-[42px] bg-slate-100 mt-[16px] ml-[125px] rounded-xl left-[144px] border-[1px]"></div> */}
 
       <div className="left-[100px] top-[155px] absolute text-black text-2xl font-bold font-['Inter']">
-         อาหารเพื่อสุขภาพ (Healthy Foods)
+         อาหารสำหรับผู้ป่วยโรคไทรอยด์เป็นพิษ (Thyroid Foods)
         </div>
         
         <div className="w-[1570px] h-[360px] bg-slate-100   mt-[70px] ml-[5px] rounded-xl left-[144px] border-[1px]"></div>
         <div className="mt-[-328px] ml-[200px] ">
-            <img src={Healthimg} alt="Healthimg" className="w-[500px] h-[300px]" />
+            <img src={Thyroidimg} alt="Thyroidimg" className="w-[500px] h-[300px]" />
         </div>
-        <div className="ml-[770px] mt-[-200px] font-['Inter'] text-[20px] absolute">
-        "อาหารสุขภาพคือการบริโภคอาหารที่มีประโยชน์และเต็มไปด้วย <br />
-        สารอาหารที่จำเป็นต่อร่างกายเช่น ผัก ผลไม้ ธัญพืช และโปรตีนที่มีคุณภาพ  <br />
-        การรับประทานอาหารสุขภาพช่วยเสริมสร้างระบบภูมิคุ้มกัน <br />
-        เพิ่มพลังงาน และส่งเสริมการมีชีวิตที่สมดุลและสุขภาพดี" 🌿🥗
+        <div className="ml-[750px] mt-[-270px] font-['Inter'] text-[20px] absolute">
+        "อาหารสำหรับผู้ป่วยโรคไทรอยด์เป็นพิษควรเน้นการบริโภคอาหารที่ช่วยควบคุม<br />
+        การทำงานของต่อมไทรอยด์ โดยหลีกเลี่ยงอาหารที่มีสารไอโอดีนสูง เช่น อาหารทะเล สาหร่ายทะเล  <br />
+        แนะนำให้รับประทานผักที่ไม่กระตุ้นการทำงานของต่อมไทรอยด์ เช่น ผักกาดขาว  <br />
+        บรอกโคลี ดอกกะหล่ำ และเกลือเสริมไอโอดีน รวมถึงอาหารที่มีโปรตีนสูงจากแหล่งที่มีไขมันต่ำ  <br />
+        เช่น เนื้อไก่ไม่ติดมัน ปลา และถั่วต่างๆ ควรหลีกเลี่ยงการบริโภคคาเฟอีน แอลกอฮอล์  <br />
+        และอาหารที่มีน้ำตาลสูง การวางแผนอาหารที่เหมาะสมและปรึกษาแพทย์หรือนักโภชนาการ <br />
+        จะช่วยให้ควบคุมอาการและรักษาสุขภาพได้ดีขึ้น" 🌿🍗🥦 
         </div>
 
       <div className="flex ml-28 mt-[50px]">
