@@ -15,15 +15,25 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+<<<<<<< HEAD
+=======
+
+>>>>>>> 245e3bd3200501460776f88b9f7fad553b58e276
 import {
     Select,
     SelectContent,
     SelectGroup,
     SelectItem,
+<<<<<<< HEAD
     SelectLabel,
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select"
+=======
+    SelectTrigger,
+    SelectValue,
+  } from "@/components/ui/select";
+>>>>>>> 245e3bd3200501460776f88b9f7fad553b58e276
 
 export function Customer() {
   return (
@@ -128,6 +138,7 @@ export function Customer() {
                       >
                         Gender
                       </Label>
+<<<<<<< HEAD
                       <Input
                         id="gender"
                         placeholder="Gender"
@@ -155,6 +166,20 @@ export function Customer() {
                           </SelectGroup>
                         </SelectContent>
                       </Select> */}
+=======
+                          <Select>
+                            <SelectTrigger className="w-[220px] left-[415px] top-[255px] h-[35px] font-['Inter'] ">
+                              <SelectValue placeholder="Gender" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectItem value="female">Female</SelectItem>
+                                <SelectItem value="male">Male</SelectItem>
+                                <SelectItem value="others">Others</SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+>>>>>>> 245e3bd3200501460776f88b9f7fad553b58e276
                     </div>
                     <div className="space-y-8">
                       <Label
