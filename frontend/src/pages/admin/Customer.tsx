@@ -15,15 +15,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import {
-//     Select,
-//     SelectContent,
-//     SelectGroup,
-//     SelectItem,
-//     SelectLabel,
-//     SelectTrigger,
-//     SelectValue,
-//   } from "@/components/ui/select"
+
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+  } from "@/components/ui/select";
 
 export function Customer() {
   return (
@@ -128,33 +128,18 @@ export function Customer() {
                       >
                         Gender
                       </Label>
-                      <Input
-                        id="gender"
-                        placeholder="Gender"
-                        //   value={formData.gender}
-                        //   onChange={handleChange}
-                        className="text-[16px] mt-2 w-full"
-                      />
-                      {/* <Label className="left-[27px] top-[275px] absolute  text-[16px]">
-                        Gender
-                      </Label>
-                      <Select>
-                        <SelectTrigger className="w-[400px] left-[27px] top-[275px]  absolute">
-                          <SelectValue placeholder="โปรดเลือกเพศ (Gender)" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectLabel>Gender</SelectLabel>
-                            <SelectItem value="male">เพศชาย (Male)</SelectItem>
-                            <SelectItem value="female">
-                              เพศหญิง (Female)
-                            </SelectItem>
-                            <SelectItem value="others">
-                              ไม่ระบุเพศ (Others)
-                            </SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select> */}
+                          <Select>
+                            <SelectTrigger className="w-[220px] left-[415px] top-[255px] h-[35px] font-['Inter'] ">
+                              <SelectValue placeholder="Gender" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectItem value="female">Female</SelectItem>
+                                <SelectItem value="male">Male</SelectItem>
+                                <SelectItem value="others">Others</SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
                     </div>
                     <div className="space-y-8">
                       <Label
