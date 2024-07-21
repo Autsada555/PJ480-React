@@ -1,0 +1,112 @@
+package controllers
+
+import (
+	"net/http"
+
+	"github.com/Autsada555/PJ480-React/backend/entity"
+	"github.com/Autsada555/PJ480-React/backend/utils"
+	"github.com/gin-gonic/gin"
+
+)
+
+var role_data = map[string]struct {
+	ID        uint
+	Value     func() interface{}
+	Table     string
+	TokenName string
+	Hour      int
+}{
+	"customer": {
+		ID:        101,
+		Value:     func() interface{} { return &entity.Customer{} },
+		Table:     "customers",
+		TokenName: "utk",
+		Hour:      24 * 7,
+	},
+	
+	"employee": {
+		ID:        200,
+		Value:     func() interface{} { return &entity.Employee{} },
+		Table:     "employees",
+		TokenName: "etk",
+		Hour:      24,
+	},
+}
+
+type LoginPayload struct {
+	Email    string `binding:"required,email"`
+	Password string `binding:"required"`
+}
+
+func Logout(c *gin.Context) {
+	role := c.Param("role")
+	if role != "customer" && role != "employee" {
+		c.AbortWithStatus(http.StatusNotFound)
+		return
+	}
+	data := role_data[role]
+	c.SetCookie(data.TokenName, "", -1, "/", utils.GetConfig().ORIGIN, false, true)
+	c.JSON(http.StatusOK, gin.H{"data": "you have been logged out"})
+}
+
+func Login(c *gin.Context) {
+	role := c.Param("role")
+	if role != "customer" &&  role != "employee" {
+		c.AbortWithStatus(http.StatusNotFound)
+		return
+	}
+	data := role_data[role]
+	// ตัวแปรสำหรับเก็บข้อมูลจาก database
+	var temp struct {
+		Password string
+	}
+	var payload LoginPayload
+	skip := false
+	if err := c.ShouldBindJSON(&payload); err != nil {
+		_, jwt_payload, jwt_err := utils.ValidateJWT(data.TokenName, c)
+		if jwt_err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Unauthorized"})
+			return
+		}
+		skip = true
+		payload.Email = jwt_payload["email"].(string)
+	}
+
+	base_query := entity.DB().Table(data.Table).Where("email = ?", payload.Email)
+	if role == "customer" || role == "employee" {
+		base_query = base_query.Where("role_id = ?", data.ID)
+	}
+
+	if !skip {
+		// เลือกเฉพาะ email และ password จากตารางมาตรวจสอบ
+		if err := entity.DB().Table(data.Table).Where("email = ?", payload.Email).Select("password").First(&temp).Error; err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		// ตรวจสอบว่า password ตรงกันหรือไม่
+		if err := utils.VerifyPassword(payload.Password, temp.Password); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "password not match"})
+			return
+		}
+	}
+	value := data.Value()
+
+	if err := base_query.Omit("password").First(value).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if !skip {
+		if err := utils.GenerateJWT(data.TokenName, c, payload.Email, data.Hour); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "token could not be created"})
+			return
+		}
+	}
+
+	if err := utils.SetActiveJWT(c, data.TokenName, data.Hour); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "token could not be created"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": OmitEmpty(value)})
+}

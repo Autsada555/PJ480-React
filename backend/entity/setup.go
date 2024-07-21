@@ -1,9 +1,9 @@
 package entity
 
 import (
-	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var db *gorm.DB
@@ -12,36 +12,43 @@ func DB() *gorm.DB {
 	return db
 }
 
-func SetupDatabase() {
-	database, err := gorm.Open(sqlite.Open("DS-DelightDB.db"), &gorm.Config{})
+func SetupDatabase(dbName string) {
+	database, err := gorm.Open(sqlite.Open(dbName+".db"), &gorm.Config{})
 	if err != nil {
-		panic("Failed to connect database")
+		panic("failed to connect database")
 	}
-
-	database.AutoMigrate(
-		// &Baggeg{},
-	
-	)
-
-
+	autoMigrate(database)
 	db = database
+}
 
-	// password, _ := bcrypt.GenerateFromPassword([]byte("admin12345"), 14)
+func SetupTestDatabase() {
+	database, err := gorm.Open(sqlite.Open("TestDB.db"), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Silent),
+	})
+	if err != nil {
+		panic("failed to connect database")
+	}
+	autoMigrate(database)
+	db = database
+}
 
-	// db.Model(&Member{}).Create(&Member{
-	// 	IDcard:         "1111111111111",
-	// 	Firstname:      "admin",
-	// 	Lastname:       "admin",
-	// 	Phone:          "0221415151",
-	// 	Email:          "admin@admin.admin",
-	// 	Passport:       "A123456789",
-	// 	ProfilePicture: "",
-	// 	Coin:           1000000,
-	// 	Password:       string(password),
-	// })
-
-
-
-	
-
+// Migrate the schema
+func autoMigrate(database *gorm.DB) {
+	database.AutoMigrate(
+		&Customer{},
+		&Employee{},
+		&Order{},
+		&Payment{},
+		&Checkpayment{},
+		&Delivery{},
+		&Gender{},
+		&EmployeeType{},
+		&DiseaseType{},
+		&Address{},
+		&MenuType{},
+		&Menu{},
+		&StatusType{},
+		&HistoryOrder{},
+		
+	)
 }
