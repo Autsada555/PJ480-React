@@ -17,7 +17,7 @@ var role_data = map[string]struct {
 	Hour      int
 }{
 	"customer": {
-		ID:        101,
+		ID:        201,
 		Value:     func() interface{} { return &entity.Customer{} },
 		Table:     "customers",
 		TokenName: "utk",

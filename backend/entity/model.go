@@ -16,12 +16,12 @@ type BaseModel struct {
 
 type Customer struct {
 	BaseModel
-	FirstName       string    `gorm:"default:UserFirstName"`
-	LastName        string    `gorm:"default:UserLastName"`
-	Email           string    `valid:"required~Email is required,email~Invalid email address" gorm:"unique"`
-	Password        string    `valid:"required~Password is required,minstringlength(8)~Password must be at least 8 characters"`
-	Phone           string    `valid:"required~Phone number is required,stringlength(10|10)~Phone must be at 10 characters"`
-	UserName 		string    `gorm:"default:UserName"`
+	FirstName string `gorm:"default:UserFirstName"`
+	LastName  string `gorm:"default:UserLastName"`
+	Email     string `valid:"required~Email is required,email~Invalid email address" gorm:"unique"`
+	Password  string `valid:"required~Password is required,minstringlength(8)~Password must be at least 8 characters"`
+	Phone     string `valid:"required~Phone number is required,stringlength(10|10)~Phone must be at 10 characters"`
+	UserName  string `gorm:"default:UserName"`
 
 	// RoleID uint `gorm:"default:101"`
 	// Role   *Role
@@ -32,10 +32,10 @@ type Customer struct {
 	AddressID uint
 	Address   *Address
 
-	Orders          []Order
-	Payments        []Payment
-	Deliverys       []Delivery
-	Addresss       []Address
+	Orders    []Order
+	Payments  []Payment
+	Deliverys []Delivery
+	Addresss  []Address
 }
 
 type Gender struct {
@@ -43,19 +43,18 @@ type Gender struct {
 	Name string `gorm:"unique"`
 
 	Employees []Employee
-	Customers     []Customer
+	Customers []Customer
 }
 
 type Address struct {
 	BaseModel
-	Address          string    `valid:"required~Address is required"`
-	District 		string    `valid:"required~District is required"`
-	Province      string    `valid:"required~Province is required"`
-	Postcode      string    `valid:"required~Postcode is required"`
-	
-	Deliverys []Delivery
-	Customers     []Customer
+	Address  string `valid:"required~Address is required"`
+	District string `valid:"required~District is required"`
+	Province string `valid:"required~Province is required"`
+	Postcode int `valid:"required~Postcode is required"`
 
+	Deliverys []Delivery
+	Customers []Customer
 }
 
 type MenuType struct {
@@ -67,14 +66,14 @@ type MenuType struct {
 
 type DiseaseType struct {
 	BaseModel
-	Name        string `gorm:"unique"`
+	Name string `gorm:"unique"`
 
 	Menus []Menu
 }
 
 type Delivery struct {
 	BaseModel
-	Name        string `gorm:"unique"`
+	Name string `gorm:"unique"`
 
 	CustomerID uint
 	Customer   *Customer
@@ -85,8 +84,8 @@ type Delivery struct {
 
 type Order struct {
 	BaseModel
-	Quantity    string `gorm:"unique"`
-	Total string `gorm:"unique"`
+	Quantity int `gorm:"unique"`
+	Total    float32 `gorm:"unique"`
 
 	Checkpayments []Checkpayment
 
@@ -99,9 +98,9 @@ type Order struct {
 
 type Payment struct {
 	BaseModel
-	Name        string `gorm:"unique"`
+	Name string `gorm:"unique"`
 
-	Customers     []Customer
+	Customers []Customer
 }
 
 type StatusType struct {
@@ -109,42 +108,42 @@ type StatusType struct {
 	Name string `gorm:"unique"`
 
 	Checkpayments []Checkpayment
-	Historys    []HistoryOrder
+	Historys      []HistoryOrder
 }
 
 type EmployeeType struct {
 	BaseModel
-	Name        string `gorm:"unique"`
+	Name string `gorm:"unique"`
 
 	Employees []Employee
 }
 
 type HistoryOrder struct {
 	BaseModel
-	Date  time.Time `valid:"required~Date is required,future~Date must be in the future"`
+	Date time.Time `valid:"required~Date is required,future~Date must be in the future"`
 
-	Orders []Order
-	StatusTypes    []StatusType
+	Orders      []Order
+	StatusTypes []StatusType
 }
 
 type Checkpayment struct {
 	BaseModel
-	Date  time.Time `valid:"required~Date is required,future~Date must be in the future"`
+	Date      time.Time `valid:"required~Date is required,future~Date must be in the future"`
 	SlipImage string    `gorm:"type:longtext"`
 
-	Orders []Order
-	StatusTypes    []StatusType
-	Employees []Employee
+	Orders      []Order
+	StatusTypes []StatusType
+	Employees   []Employee
 }
 
 type Employee struct {
 	BaseModel
-	FirstName       string    `gorm:"default:UserFirstName"`
-	LastName        string    `gorm:"default:UserLastName"`
-	Email           string    `valid:"required~Email is required,email~Invalid email address" gorm:"unique"`
-	Password        string    `valid:"required~Password is required,minstringlength(8)~Password must be at least 8 characters"`
-	Phone           string    `valid:"required~Phone number is required,stringlength(10|10)~Phone must be at 10 characters"`
-	UserName 		string    `gorm:"default:UserName"`
+	FirstName string `gorm:"default:UserFirstName"`
+	LastName  string `gorm:"default:UserLastName"`
+	Email     string `valid:"required~Email is required,email~Invalid email address" gorm:"unique"`
+	Password  string `valid:"required~Password is required,minstringlength(8)~Password must be at least 8 characters"`
+	Phone     string `valid:"required~Phone number is required,stringlength(10|10)~Phone must be at 10 characters"`
+	UserName  string `gorm:"default:UserName"`
 
 	// RoleID uint `gorm:"default:101"`
 	// Role   *Role
@@ -155,16 +154,15 @@ type Employee struct {
 	EmployeeTypeID uint ` valid:"required~Position is required,refer=employeetypes~EmployeeType does not exist"`
 	EmployeeType   *EmployeeType
 
-	Checkpayments        []Checkpayment
+	Checkpayments []Checkpayment
 }
 
 type Menu struct {
 	BaseModel
-	Name    string `gorm:"unique"`
-	Cost string `gorm:"unique"`
+	Name        string `gorm:"unique"`
+	Cost        float32 `gorm:"unique"`
 	Description string `gorm:"unique"`
-	MenuImage string    `gorm:"type:longtext"`
-
+	MenuImage   string `gorm:"type:longtext"`
 
 	Checkpayments []Checkpayment
 

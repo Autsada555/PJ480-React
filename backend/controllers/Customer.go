@@ -17,7 +17,7 @@ func GetAllCustomer(c *gin.Context) {
 	var customers []entity.Customer
 
 	// get data form database and check error
-	if err := entity.DB().Where("role_id = ?", 101).Joins("Gender").Joins("Address").Omit("Password").Find(&customers).Error; err != nil {
+	if err := entity.DB().Where("role_id = ?", 201).Joins("Gender").Joins("Address").Omit("Password").Find(&customers).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -40,4 +40,20 @@ func GetAllGenders(c *gin.Context) {
 	// response data
 	c.JSON(http.StatusOK, gin.H{"data": OmitEmpty(genders)})
 }
+
+// func GetEmployee(c *gin.Context) {
+// 	// create variable for store data as type of Employee
+// 	var employee entity.Employee
+// 	// get id from url
+// 	id := c.Param("id")
+
+// 	// get data form database and check error
+// 	if err := entity.DB().Joins("Gender").Joins("EmployeeType").Omit("CheckpaymentID").First(&employee, id).Error; err != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+// 		return
+// 	}
+
+// 	// response data
+// 	c.JSON(http.StatusOK, gin.H{"data": employee})
+// }
 

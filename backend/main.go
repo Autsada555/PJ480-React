@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	entity.SetupDatabase("DSDB")
+	entity.SetupDatabase("DligthFoodDB")
 	entity.SetupData(entity.DB())
 	route := routers.SetupRouter()
 

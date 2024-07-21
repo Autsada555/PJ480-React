@@ -26,4 +26,164 @@ func SetupData(db *gorm.DB) {
 	}
 
 	db.Create(&genders)
+
+	
+	// position
+	employeetypes := []EmployeeType{
+		{
+			BaseModel: BaseModel{ID: 201},
+			Name:      "Cash",
+		},
+		{
+			BaseModel: BaseModel{ID: 202},
+			Name:      "Deliver",
+		},
+		
+	}
+	db.Create(&employeetypes)
+
+	// employee
+	employees := []Employee{
+		{
+			BaseModel:  BaseModel{ID: 1},
+			FirstName:  "Veter",
+			LastName:   "Veter",
+			Email:      "veter@veter.com",
+			Password:   "veter",
+			EmployeeTypeID: 201,
+			GenderID:   1,
+			Phone:      "0988888888",
+			UserName: "veter",
+		},
+		{
+			BaseModel:  BaseModel{ID: 2},
+			FirstName:  "Groomer",
+			LastName:   "Groomer",
+			Email:      "groom@groom.com",
+			Password:   "groom",
+			EmployeeTypeID: 202,
+			GenderID:   2,
+			Phone:      "0999999999",
+			UserName:  "Groomer",
+		},
+		
+	}
+	db.Create(&employees)
+
+	// employee
+	customers := []Employee{
+		{
+			BaseModel:  BaseModel{ID: 1},
+			FirstName:  "Veter",
+			LastName:   "Veter",
+			Email:      "veter@veter.com",
+			Password:   "veter",
+			EmployeeTypeID: 201,
+			GenderID:   1,
+			Phone:      "0988888888",
+			UserName: "veter",
+		},
+		{
+			BaseModel:  BaseModel{ID: 2},
+			FirstName:  "Groomer",
+			LastName:   "Groomer",
+			Email:      "groom@groom.com",
+			Password:   "groom",
+			EmployeeTypeID: 202,
+			GenderID:   2,
+			Phone:      "0999999999",
+			UserName:  "Groomer",
+		},
+		
+	}
+	db.Create(&customers)
+
+	// diseasetypes data
+	diseasetypes := []DiseaseType{
+		{
+			BaseModel: BaseModel{ID: 1},
+			Name:      "Heathy Food",
+		},
+		{
+			BaseModel: BaseModel{ID: 2},
+			Name:      "Diabetes Food",
+		},
+		{
+			BaseModel: BaseModel{ID: 3},
+			Name:      "Gastritict Food",
+		},
+		{
+			BaseModel: BaseModel{ID: 4},
+			Name:      "Thyroid Food",
+		},
+		{
+			BaseModel: BaseModel{ID: 5},
+			Name:      "Kidny Food",
+		},
+	}
+	db.Create(&diseasetypes)
+
+	// diseasetypes data
+	menutypes := []MenuType{
+		{
+			BaseModel: BaseModel{ID: 1},
+			Name:      "Savory",
+		},
+		{
+			BaseModel: BaseModel{ID: 2},
+			Name:      "Dessert",
+		},
+		{
+			BaseModel: BaseModel{ID: 3},
+			Name:      "Soup",
+		},
+		{
+			BaseModel: BaseModel{ID: 4},
+			Name:      "Drink",
+		},
+	}
+	db.Create(&menutypes)
+
+	// statustypes data
+	statustypes := []StatusType{
+		{
+			BaseModel: BaseModel{ID: 1},
+			Name:      "Success",
+		},
+		{
+			BaseModel: BaseModel{ID: 2},
+			Name:      "Waiting",
+		},
+		{
+			BaseModel: BaseModel{ID: 3},
+			Name:      "Fail",
+		},
+	}
+	db.Create(&statustypes)
+
+	// payment data
+	payment := []Payment{
+		{
+			BaseModel: BaseModel{ID: 1},
+			Name:      "ชำระด้วยเงินสด",
+		},
+		{
+			BaseModel: BaseModel{ID: 2},
+			Name:      "ชำระด้วยการโอน",
+		},
+	}
+	db.Create(&payment)
+
+	// delivery data
+	delivery := []Payment{
+		{
+			BaseModel: BaseModel{ID: 1},
+			Name:      "รับเองที่หน้าร้าน",
+		},
+		{
+			BaseModel: BaseModel{ID: 2},
+			Name:      "จัดส่งตามที่อยู่",
+		},
+	}
+	db.Create(&delivery)
 }
