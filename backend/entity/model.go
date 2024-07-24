@@ -14,36 +14,10 @@ type BaseModel struct {
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
-type Customer struct {
-	BaseModel
-	FirstName string `gorm:"default:UserFirstName"`
-	LastName  string `gorm:"default:UserLastName"`
-	Email     string `valid:"required~Email is required,email~Invalid email address" gorm:"unique"`
-	Password  string `valid:"required~Password is required,minstringlength(8)~Password must be at least 8 characters"`
-	Phone     string `valid:"required~Phone number is required,stringlength(10|10)~Phone must be at 10 characters"`
-	UserName  string `gorm:"default:UserName"`
-
-	// RoleID uint `gorm:"default:101"`
-	// Role   *Role
-
-	GenderID uint
-	Gender   *Gender
-
-	AddressID uint
-	Address   *Address
-
-	Orders    []Order
-	Payments  []Payment
-	Deliverys []Delivery
-	Addresss  []Address
-}
-
 type Gender struct {
 	BaseModel
 	Name string `gorm:"unique"`
 
-	Employees []Employee
-	Customers []Customer
 }
 
 type Address struct {
@@ -53,33 +27,66 @@ type Address struct {
 	Province string `valid:"required~Province is required"`
 	Postcode int `valid:"required~Postcode is required"`
 
-	Deliverys []Delivery
-	Customers []Customer
 }
 
 type MenuType struct {
 	BaseModel
 	Name string `gorm:"unique"`
 
-	Menus []Menu
 }
 
 type DiseaseType struct {
 	BaseModel
 	Name string `gorm:"unique"`
 
-	Menus []Menu
 }
+
+type StatusType struct {
+	BaseModel
+	Name string `gorm:"unique"`
+
+}
+
+type EmployeeType struct {
+	BaseModel
+	Name string `gorm:"unique"`
+
+}
+
+type Customer struct {
+	BaseModel
+	FirstName string `gorm:"default:UserFirstName"`
+	LastName  string `gorm:"default:UserLastName"`
+	Email     string `valid:"required~Email is required,email~Invalid email address" gorm:"unique"`
+	Password  string `valid:"required~Password is required,minstringlength(8)~Password must be at least 8 characters"`
+	Phone     string `valid:"required~Phone number is required,stringlength(10|10)~Phone must be at 10 characters"`
+	UserName  string `gorm:"default:UserName"`
+
+	GenderID uint
+	Gender   *Gender `gorm:"foreignKey:GenderID"`
+
+	AddressID uint
+	Address   *Address `gorm:"foreignKey:AddressID"`
+
+	Payments []Payment `gorm:"foreignKey:CustomerID"`//ส่ง FK ไปที่ payment
+}
+
+type Payment struct {
+	BaseModel
+	Name string `gorm:"unique"`
+
+	CustomerID uint
+	Customer   *Customer `gorm:"foreignKey:CustomerID"`
+}
+
 
 type Delivery struct {
 	BaseModel
 	Name string `gorm:"unique"`
 
 	CustomerID uint
-	Customer   *Customer
-
-	AddressID uint
-	Address   *Address
+	Customer   *Customer `gorm:"foreignKey:CustomerID"`
+ 
 }
 
 type Order struct {
@@ -87,53 +94,39 @@ type Order struct {
 	Quantity int `gorm:"unique"`
 	Total    float32 `gorm:"unique"`
 
-	Checkpayments []Checkpayment
-
 	CustomerID uint
-	Customer   *Customer
+	Customer   *Customer `gorm:"foreignKey:CustomerID"`
 
 	MenuID uint
-	Menu   *Menu
+	Menu   *Menu `gorm:"foreignKey:MenuID"`
 }
 
-type Payment struct {
-	BaseModel
-	Name string `gorm:"unique"`
 
-	Customers []Customer
-}
-
-type StatusType struct {
-	BaseModel
-	Name string `gorm:"unique"`
-
-	Checkpayments []Checkpayment
-	Historys      []HistoryOrder
-}
-
-type EmployeeType struct {
-	BaseModel
-	Name string `gorm:"unique"`
-
-	Employees []Employee
-}
 
 type HistoryOrder struct {
 	BaseModel
 	Date time.Time `valid:"required~Date is required,future~Date must be in the future"`
 
-	Orders      []Order
-	StatusTypes []StatusType
+	OrderID uint
+	Order   *Order `gorm:"foreignKey:OrderID"`
+
+	StatusTypeID uint
+	StatusType   *StatusType `gorm:"foreignKey:StatusTypeID"`
 }
 
 type Checkpayment struct {
 	BaseModel
-	Date      time.Time `valid:"required~Date is required,future~Date must be in the future"`
+	DateE     time.Time `valid:"required~Date is required,future~Date must be in the future"`
 	SlipImage string    `gorm:"type:longtext"`
 
-	Orders      []Order
-	StatusTypes []StatusType
-	Employees   []Employee
+	OrderID uint
+	Order   *Order `gorm:"foreignKey:OrderID"`
+
+	StatusTypeID uint
+	StatusType   *StatusType `gorm:"foreignKey:StatusTypeID"`
+
+	EmployeeID uint
+	Employee   *Employee `gorm:"foreignKey:EmployeeID"`
 }
 
 type Employee struct {
@@ -149,26 +142,24 @@ type Employee struct {
 	// Role   *Role
 
 	GenderID uint
-	Gender   *Gender
+	Gender   *Gender `gorm:"foreignKey:GenderID"`
 
-	EmployeeTypeID uint ` valid:"required~Position is required,refer=employeetypes~EmployeeType does not exist"`
-	EmployeeType   *EmployeeType
+	EmployeeTypeID uint 
+	EmployeeType   *EmployeeType `gorm:"foreignKey:EmployeeTypeID"`
 
-	Checkpayments []Checkpayment
 }
 
 type Menu struct {
 	BaseModel
-	Name        string `gorm:"unique"`
-	Cost        float32 `gorm:"unique"`
-	Description string `gorm:"unique"`
+	Name        string 
+	Cost        float32 
+	Description string 
+	Component 	 map[string]interface{} `gorm:"serializer:json"`
 	MenuImage   string `gorm:"type:longtext"`
 
-	Checkpayments []Checkpayment
+	DiseaseTypeID uint
+	DiseaseType   *DiseaseType `gorm:"foreignKey:DiseaseTypeID"`
 
-	CustomerID uint
-	Customer   *Customer
-
-	MenuID uint
-	Menu   *Menu
+	MenuTypeID uint
+	MenuType   *MenuType `gorm:"foreignKey:MenuTypeID"`
 }

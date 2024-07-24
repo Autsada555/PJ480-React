@@ -35,19 +35,19 @@ func SetupTestDatabase() {
 // Migrate the schema
 func autoMigrate(database *gorm.DB) {
 	database.AutoMigrate(
-		&Customer{},
-		&Employee{},
+		&Customer{}, //
+		&Employee{}, //
 		&Order{},
 		&Payment{},
 		&Checkpayment{},
-		&Delivery{},
-		&Gender{},
-		&EmployeeType{},
-		&DiseaseType{},
+		&Delivery{}, //
+		&Gender{}, //
+		&EmployeeType{}, //
+		&DiseaseType{}, //
 		&Address{},
-		&MenuType{},
+		&MenuType{}, //
 		&Menu{},
-		&StatusType{},
+		&StatusType{}, //
 		&HistoryOrder{},
 		
 	)
