@@ -27,8 +27,22 @@ func GetAllCustomer(c *gin.Context) {
 }
 
 // Get Gender
-func GetAllGenders(c *gin.Context) {
-	// create variable for store data as type of TourType array
+// func GetAllGenders(c *gin.Context) {
+// 	// create variable for store data as type of TourType array
+// 	var genders []entity.Gender
+
+// 	// get data form database and check error
+// 	if err := entity.DB().Find(&genders).Error; err != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+// 		return
+// 	}
+
+// 	// response data
+// 	c.JSON(http.StatusOK, gin.H{"data": OmitEmpty(genders)})
+// }
+
+func GetAllGender(c *gin.Context) {
+	// create variable for store data as type of Gender array
 	var genders []entity.Gender
 
 	// get data form database and check error
@@ -38,8 +52,9 @@ func GetAllGenders(c *gin.Context) {
 	}
 
 	// response data
-	c.JSON(http.StatusOK, gin.H{"data": OmitEmpty(genders)})
+	c.JSON(http.StatusOK, gin.H{"data": genders})
 }
+
 
 // func GetEmployee(c *gin.Context) {
 // 	// create variable for store data as type of Employee

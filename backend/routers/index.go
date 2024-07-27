@@ -26,8 +26,10 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 
 	// User account management
 	route.GET("/customers", controllers.GetAllCustomer)
-	route.GET("/genders", controllers.GetAllGenders)
+	route.GET("/customers/genders", controllers.GetAllGender)
 	// route.GET("/employee/:id", controllers.GetEmployee)
+	// route.GET("/customers/genders", controllers.GetAllGenders)
+
 
 
 	
