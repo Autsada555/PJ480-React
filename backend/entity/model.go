@@ -27,6 +27,9 @@ type Address struct {
 	Province string `valid:"required~Province is required"`
 	Postcode int `valid:"required~Postcode is required"`
 
+	CustomerID uint
+	Customer   *Customer `gorm:"foreignKey:CustomerID"`
+
 }
 
 type MenuType struct {
@@ -64,9 +67,6 @@ type Customer struct {
 
 	GenderID uint
 	Gender   *Gender `gorm:"foreignKey:GenderID"`
-
-	AddressID uint
-	Address   *Address `gorm:"foreignKey:AddressID"`
 
 	Payments []Payment `gorm:"foreignKey:CustomerID"`//ส่ง FK ไปที่ payment
 }

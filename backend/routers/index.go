@@ -40,11 +40,16 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.PATCH("/address/edit", controllers.UpdateAddress)
 
 
-	//member
-	route.GET("/menu", controllers.GetMenu)
+	//menu
+	route.GET("/menu", controllers.GetAllMenu)
+	route.GET("/menu/:id", controllers.GetMenuByID)
 	route.POST("/menu/create", controllers.CreateMenu)
-	route.PATCH("/menu/edit/:id", controllers.UpdateMenu)
+	route.PATCH("/menu/update/:id", controllers.UpdateMenu)
 	route.DELETE("/menu/delete/:id", controllers.DeleteMenu)
+
+	//checkpayment
+	route.GET("/checkpayment", controllers.GetAllMenu)
+	route.PATCH("/checkpayment/update/:id", controllers.UpdateMenu)
 	// user := middlewares.Authorization(101)
 	// user_admin := middlewares.Authorization(101, 100)
 	// employee := middlewares.Authorization(200)
