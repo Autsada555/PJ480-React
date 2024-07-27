@@ -12,9 +12,19 @@ import (
 	// "gorm.io/gorm/clause"
 )
 
-func GetMenu(c *gin.Context) {
+func GetAllMenu(c *gin.Context) {
 	var menu []entity.Menu
 	if err := entity.DB().Raw(`SELECT * From menus`).Scan(&menu).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": menu})
+}
+
+func GetMenuByID(c *gin.Context) {
+	var menu entity.Menu
+	id := c.Param("id")
+	if err := entity.DB().Preload("DiseaseType").Preload("MenuType").Raw("SELECT * FROM menus WHERE id = ?", id).Find(&menu).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

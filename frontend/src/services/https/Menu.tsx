@@ -2,7 +2,7 @@ import { Menu} from "../../interfaces/index";
 
 const apiUrl = "http://localhost:8080";
 //
-const GetMenu = async () => {
+const GetAllMenu = async () => {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -23,6 +23,28 @@ const GetMenu = async () => {
   return res;
 }
 
+const GetMenuByID = async (id: number) => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/menu/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+
 async function CreateMenu(data: Menu) {
   const requestOptions = {
     method: "POST",
@@ -30,7 +52,7 @@ async function CreateMenu(data: Menu) {
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/member/create`, requestOptions)
+  let res = await fetch(`${apiUrl}/menu/create`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -51,7 +73,7 @@ async function UpdateMenu(data: Menu) {
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/menu/edit`, requestOptions)
+  let res = await fetch(`${apiUrl}/menu/update`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -81,4 +103,4 @@ async function DeleteMenu(id: number | undefined) {
 
   return res;
 }
-export { GetMenu, CreateMenu, UpdateMenu, DeleteMenu }
+export { GetAllMenu, GetMenuByID, CreateMenu, UpdateMenu, DeleteMenu }

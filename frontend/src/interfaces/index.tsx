@@ -79,17 +79,17 @@ export interface Menu {
   Name: string;
   Cost: number;
   Description: string;
-  Coponent: string;
+  Component: string;
   MenuImage: string;
-  DiseaseType: DiseaseType;
-  MenuType: MenuType;
+  DiseaseType: number;
+  MenuType: number;
 }
 
 export interface Checkpayment {
   ID: number;
   Date: Date;
   SlipImage: string;
-  StatusType: StatusType;
+  StatusType: number;
   Order: Order;
   Employee: Employee;
 }
