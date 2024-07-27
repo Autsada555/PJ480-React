@@ -30,7 +30,7 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	// route.GET("/employees", controllers.GetEmployee)
 	// route.GET("/customers/genders", controllers.GetAllGenders)
 
-	//memenumber
+	//menu
 	route.GET("/menu", controllers.GetAllMenu)
 	route.GET("/menu/:id", controllers.GetMenuByID)
 	route.POST("/menu/create", controllers.CreateMenu)

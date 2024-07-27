@@ -1,6 +1,6 @@
 import { Checkpayment} from "../../interfaces/index";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "http://localhost:5173";
 
 const GetAllCheckPayment = async () => {
     const requestOptions = {
