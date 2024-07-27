@@ -35,9 +35,7 @@ export function Home() {
     };
     return (
         <div>
-            <div className="h-20 w-20 bg-slate-200 absolute">
-
-            </div>
+            
             <div>
                 <Navbar />
                 <div className="ml-[430px] mt-[20px] text-[18px]">
