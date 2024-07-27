@@ -64,7 +64,6 @@ export interface Delivery {
   ID: number;
   Name: string;
   Customer: Customer;
-  Address: Address;
 }
 
 export interface Order {
@@ -80,6 +79,7 @@ export interface Menu {
   Name: string;
   Cost: number;
   Description: string;
+  Coponent: string;
   MenuImage: string;
   DiseaseType: DiseaseType;
   MenuType: MenuType;
