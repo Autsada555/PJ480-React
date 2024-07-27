@@ -2,7 +2,7 @@ import { Delivery} from "../../interfaces/index";
 import { Address} from "../../interfaces/index";
 
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "http://localhost:5173";
 
 async function CreateDelivery(data: Delivery) {
     const requestOptions = {

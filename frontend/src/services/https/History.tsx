@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:8080";
+const apiUrl = "http://localhost:5173";
 //
 const GetAllHistory = async (id: number) => {
     const requestOptions = {

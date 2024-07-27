@@ -24,21 +24,24 @@ func InitRouter(route *gin.Engine) {
 func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.Use(middlewares.Authentication())
 
-	// User account management
+	// User customer management
 	route.GET("/customer/:id", controllers.GetCustomer)
 	route.PATCH("/customer/edit", controllers.UpdateCustomer)
 	route.DELETE("/customer/delete/:id", controllers.DeleteCustomer)
 
+	//history
 	route.GET("/history/:id", controllers.GetAllHistory)
 
+	//checkpayment
 	route.POST("/payment/create", controllers.CreatePayment)
 
+	//delivery
 	route.POST("/delivery/create", controllers.CreateDelivery)
 	route.GET("/address/:id", controllers.GetAddresss)
 
+	//address
 	route.GET("/address/:id", controllers.GetAddress)
 	route.PATCH("/address/edit", controllers.UpdateAddress)
-
 
 	//menu
 	route.GET("/menu", controllers.GetAllMenu)
@@ -50,15 +53,17 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	//checkpayment
 	route.GET("/checkpayment", controllers.GetAllMenu)
 	route.PATCH("/checkpayment/update/:id", controllers.UpdateMenu)
-	// user := middlewares.Authorization(101)
-	// user_admin := middlewares.Authorization(101, 100)
-	// employee := middlewares.Authorization(200)
 
+	//employee
 	route.GET("/gender/:id", controllers.GetAllGender)
 	route.GET("/emplyeetype/:id", controllers.GetAllEmployeeType)
 	route.PATCH("/employee/edit/:id", controllers.UpdateEmployee)
 	route.DELETE("/employee/delete/:id", controllers.DeleteEmployee)
 	route.POST("/employee/create", controllers.CreateEmployee)
+
+	//order
+	route.POST("/order/create", controllers.CreateOrder)
+	route.DELETE("/order/delete/:id", controllers.DeleteOrder)
 
 
 }

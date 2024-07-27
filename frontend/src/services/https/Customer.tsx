@@ -1,6 +1,6 @@
 import { Customer} from "../../interfaces/index";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "http://localhost:5173";
 //
 const GetCustomer = async (id: number) => {
     const requestOptions = {

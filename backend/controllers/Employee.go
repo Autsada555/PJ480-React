@@ -28,7 +28,7 @@ func GetAllEmployee(c *gin.Context) {
 	var employees []entity.Employee
 
 	// get data form database and check error
-	if err := entity.DB().Joins("Gender").Joins("Position").Joins("Precede").Omit("HorseID", "HealthID", "CourseID", "FoodID").Find(&employees).Error; err != nil {
+	if err := entity.DB().Joins("Gender").Joins("GenderType").Omit("CheckpaymentID").Find(&employees).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -44,7 +44,7 @@ func GetEmployee(c *gin.Context) {
 	id := c.Param("id")
 
 	// get data form database and check error
-	if err := entity.DB().Joins("Gender").Joins("EmployeeType").Omit("HorseID", "HealthID", "CourseID", "FoodID").First(&employee, id).Error; err != nil {
+	if err := entity.DB().Joins("Gender").Joins("GenderType").Omit("CheckpaymentID").First(&employee, id).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
