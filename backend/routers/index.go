@@ -19,9 +19,13 @@ func InitRouter(route *gin.Engine) {
 
 	authRouter := route.Group("/")
 	initRequiredAuthRouter(authRouter)
+
+	// initRequiredAuthRouter(authRouter)
+
 }
 
-func initRequiredAuthRouter(route *gin.RouterGroup) {
+// func initRequiredAuthRouter(route *gin.RouterGroup) {
+	func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.Use(middlewares.Authentication())
 
 	// User customer management
@@ -37,7 +41,7 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 
 	//delivery
 	route.POST("/delivery/create", controllers.CreateDelivery)
-	route.GET("/address/:id", controllers.GetAddresss)
+	// route.GET("/address/:id", controllers.GetAddresss)
 
 	//address
 	route.GET("/address/:id", controllers.GetAddress)

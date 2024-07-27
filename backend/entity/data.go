@@ -8,7 +8,7 @@ import (
 )
 
 func SetupData(db *gorm.DB) {
-	
+
 	// gender data
 	genders := []Gender{
 		{
@@ -27,72 +27,83 @@ func SetupData(db *gorm.DB) {
 
 	db.Create(&genders)
 
-	
 	// position
 	employeetypes := []EmployeeType{
 		{
+			BaseModel: BaseModel{ID: 200},
+			Name:      "admin",
+		},
+		{
 			BaseModel: BaseModel{ID: 201},
-			Name:      "Cash",
+			Name:      "cash",
 		},
 		{
 			BaseModel: BaseModel{ID: 202},
-			Name:      "Deliver",
+			Name:      "deliver",
 		},
-		
 	}
 	db.Create(&employeetypes)
 
 	// employee
 	employees := []Employee{
 		{
-			BaseModel:  BaseModel{ID: 1},
-			FirstName:  "Veter",
-			LastName:   "Veter",
-			Email:      "veter@veter.com",
-			Password:   "veter",
-			EmployeeTypeID: 201,
-			GenderID:   1,
-			Phone:      "0988888888",
-			UserName: "veter",
+			BaseModel:      BaseModel{ID: 1},
+			FirstName:      "Veter",
+			LastName:       "Veter",
+			Email:          "veter@veter.com",
+			Password:       "veter",
+			EmployeeTypeID: 200,
+			GenderID:       1,
+			Phone:          "0988888888",
+			UserName:       "veter",
 		},
 		{
-			BaseModel:  BaseModel{ID: 2},
-			FirstName:  "Groomer",
-			LastName:   "Groomer",
-			Email:      "groom@groom.com",
-			Password:   "groom",
-			EmployeeTypeID: 202,
-			GenderID:   2,
-			Phone:      "0999999999",
-			UserName:  "Groomer",
+			BaseModel:      BaseModel{ID: 2},
+			FirstName:      "Groomer",
+			LastName:       "Groomer",
+			Email:          "groom@groom.com",
+			Password:       "groom",
+			EmployeeTypeID: 201,
+			GenderID:       2,
+			Phone:          "0999999999",
+			UserName:       "Groomer",
 		},
-		
+		{
+			BaseModel:      BaseModel{ID: 3},
+			FirstName:      "Broomer",
+			LastName:       "Broomer",
+			Email:          "broom@groom.com",
+			Password:       "broom",
+			EmployeeTypeID: 202,
+			GenderID:       2,
+			Phone:          "0999999999",
+			UserName:       "Broomer",
+		},
 	}
 	db.Create(&employees)
 
 	// employee
 	customers := []Customer{
 		{
-			BaseModel:  BaseModel{ID: 1},
-			FirstName:  "Veter",
-			LastName:   "Veter",
-			Email:      "veter@veter.com",
-			Password:   "veter",
-			GenderID:   1,
-			Phone:      "0988888888",
-			UserName: "veter",
+			BaseModel: BaseModel{ID: 1},
+			FirstName: "Veter",
+			LastName:  "Veter",
+			Email:     "veter@veter.com",
+			Password:  "veter",
+			GenderID:  1,
+			Phone:     "0988888888",
+			UserName:  "veter",
 		},
 		{
-			BaseModel:  BaseModel{ID: 2},
-			FirstName:  "Groomer",
-			LastName:   "Groomer",
-			Email:      "groom@groom.com",
-			Password:   "groom",
-			GenderID:   2,
-			Phone:      "0999999999",
+			BaseModel: BaseModel{ID: 2},
+			FirstName: "Groomer",
+			LastName:  "Groomer",
+			Email:     "groom@groom.com",
+			Password:  "groom",
+			GenderID:  2,
+			Phone:     "0999999999",
 			UserName:  "Groomer",
 		},
-		
 	}
 	db.Create(&customers)
 
@@ -162,13 +173,13 @@ func SetupData(db *gorm.DB) {
 	// payment data
 	payment := []Payment{
 		{
-			BaseModel: BaseModel{ID: 1},
-			Name:      "ชำระด้วยเงินสด",
+			BaseModel:  BaseModel{ID: 1},
+			Name:       "ชำระด้วยเงินสด",
 			CustomerID: 1,
 		},
 		{
-			BaseModel: BaseModel{ID: 2},
-			Name:      "ชำระด้วยการโอน",
+			BaseModel:  BaseModel{ID: 2},
+			Name:       "ชำระด้วยการโอน",
 			CustomerID: 2,
 		},
 	}
@@ -177,13 +188,13 @@ func SetupData(db *gorm.DB) {
 	// delivery data
 	delivery := []Delivery{
 		{
-			BaseModel: BaseModel{ID: 1},
-			Name:      "รับเองที่หน้าร้าน",
+			BaseModel:  BaseModel{ID: 1},
+			Name:       "รับเองที่หน้าร้าน",
 			CustomerID: 1,
 		},
 		{
-			BaseModel: BaseModel{ID: 2},
-			Name:      "จัดส่งตามที่อยู่",
+			BaseModel:  BaseModel{ID: 2},
+			Name:       "จัดส่งตามที่อยู่",
 			CustomerID: 2,
 		},
 	}
@@ -191,25 +202,24 @@ func SetupData(db *gorm.DB) {
 
 	menu := []Menu{
 		{
-			BaseModel: BaseModel{ID: 1},
-			Name: "bacon",
-			Cost: 1500,
-			Description: "ทำได้ทุกอย่าง",
-			Component: map[string]interface{}{"Component":[]string{"Ford","BMW","Fiat"}},
-			MenuImage: "asdasdasd",
+			BaseModel:     BaseModel{ID: 1},
+			Name:          "bacon",
+			Cost:          1500,
+			Description:   "ทำได้ทุกอย่าง",
+			Component:     map[string]interface{}{"Component": []string{"Ford", "BMW", "Fiat"}},
+			MenuImage:     "asdasdasd",
 			DiseaseTypeID: 1,
-			MenuTypeID: 1,
-
+			MenuTypeID:    1,
 		},
 		{
-			BaseModel: BaseModel{ID: 2},
-			Name: "pool",
-			Cost: 1500,
-			Description: "นอนบนพุง",
-			Component: map[string]interface{}{"Component":[]string{"Ford","BMW","Fiat"}},
-			MenuImage: "asdasdasd",
+			BaseModel:     BaseModel{ID: 2},
+			Name:          "pool",
+			Cost:          1500,
+			Description:   "นอนบนพุง",
+			Component:     map[string]interface{}{"Component": []string{"Ford", "BMW", "Fiat"}},
+			MenuImage:     "asdasdasd",
 			DiseaseTypeID: 2,
-			MenuTypeID: 2,
+			MenuTypeID:    2,
 		},
 	}
 	db.Create(&menu)

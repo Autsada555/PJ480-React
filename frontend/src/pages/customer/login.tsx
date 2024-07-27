@@ -1,5 +1,5 @@
 import Navbar from "./navbar";
-import { Form } from "@/components/ui/form";
+import { Form, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -30,13 +30,14 @@ export function Login() {
             >
               Username or Email <span className="text-red-500 ">*</span>
             </Label>
+            <FormItem>
             <Input
               type="text"
               id="usernameoremail"
               //   value={formData.usernameoremail}
               //   onChange={handleChange}
               className="text-[16px] mt-2 w-[220px] h-8"
-            />
+            /></FormItem>
           </div>
           <div className=" w-full max-w-sm flex-col gap-1 left-[670px] top-[420px] absolute">
             <Label
@@ -45,13 +46,14 @@ export function Login() {
             >
               Password <span className="text-red-500 ">*</span>
             </Label>
+            <FormItem>
             <Input
               type="text"
               id="usernameoremail"
               //   value={formData.usernameoremail}
               //   onChange={handleChange}
               className="text-[16px] mt-2 w-[220px] h-8"
-            />
+            /></FormItem>
           </div>
           <Button
             variant="outline"

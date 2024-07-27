@@ -17,15 +17,29 @@ var role_data = map[string]struct {
 	Hour      int
 }{
 	"customer": {
-		ID:        201,
+		ID:        1,
 		Value:     func() interface{} { return &entity.Customer{} },
 		Table:     "customers",
 		TokenName: "utk",
 		Hour:      24 * 7,
 	},
 	
-	"employee": {
+	"admin": {
 		ID:        200,
+		Value:     func() interface{} { return &entity.Employee{} },
+		Table:     "employees",
+		TokenName: "etk",
+		Hour:      24,
+	},
+	"cash": {
+		ID:        201,
+		Value:     func() interface{} { return &entity.Employee{} },
+		Table:     "employees",
+		TokenName: "etk",
+		Hour:      24,
+	},
+	"delivery": {
+		ID:        202,
 		Value:     func() interface{} { return &entity.Employee{} },
 		Table:     "employees",
 		TokenName: "etk",
@@ -40,7 +54,7 @@ type LoginPayload struct {
 
 func Logout(c *gin.Context) {
 	role := c.Param("role")
-	if role != "customer" && role != "employee" {
+	if role != "customer" && role != "admin" && role != "cash" && role != "deliver" {
 		c.AbortWithStatus(http.StatusNotFound)
 		return
 	}
@@ -51,7 +65,7 @@ func Logout(c *gin.Context) {
 
 func Login(c *gin.Context) {
 	role := c.Param("role")
-	if role != "customer" &&  role != "employee" {
+	if role != "customer" &&  role != "admin" && role != "cash" && role != "deliver" {
 		c.AbortWithStatus(http.StatusNotFound)
 		return
 	}
@@ -73,8 +87,8 @@ func Login(c *gin.Context) {
 	}
 
 	base_query := entity.DB().Table(data.Table).Where("email = ?", payload.Email)
-	if role == "customer" || role == "employee" {
-		base_query = base_query.Where("role_id = ?", data.ID)
+	if role == "admin" || role == "cash" || role == "deliver"{
+		base_query = base_query.Where("employee_type_id = ?", data.ID)
 	}
 
 	if !skip {

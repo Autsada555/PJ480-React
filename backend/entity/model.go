@@ -138,9 +138,6 @@ type Employee struct {
 	Phone     string `valid:"required~Phone number is required,stringlength(10|10)~Phone must be at 10 characters"`
 	UserName  string `gorm:"default:UserName"`
 
-	// RoleID uint `gorm:"default:101"`
-	// Role   *Role
-
 	GenderID uint
 	Gender   *Gender `gorm:"foreignKey:GenderID"`
 
