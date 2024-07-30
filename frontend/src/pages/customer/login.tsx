@@ -91,69 +91,6 @@ export function Login() {
           </div>
         </div>
       </div>
-      {/* <div>
-        <div className="absolute text-black text-xl font-bold font-['Inter'] left-[705px] top-[130px]">
-          Welcome to ...
-        </div>
-        <img src={DSLOGO} alt="dslogo" className="w-[220px] h-[220px]  ml-[665px] mt-[20px]" />
-        <div>
-          <div className="w-[340px] h-[320px] bg-slate-100 mt-[-50px] ml-[610px] rounded-sm  border-[1px]"></div>
-        </div>
-        <div>
-          <CircleUserRound className="left-[760px] top-[280px] absolute w-[50px] h-[50px]" />
-        </div>
-        <Form {...form} >
-          <form onSubmit={form.handleSubmit(onSubmit)} className=" border w-fit max-w-sm flex-col gap-1 left-[670px] top-[330px] absolute">
-            <FormField
-              control={form.control}
-              name="usernameOrEmail"
-              render={({ field }) => (
-                <FormItem className="w-[220px]">
-                  <FormLabel>Username or Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="username or email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-             <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem className="w-[220px]">
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input  placeholder="password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button className="h-8  w-full  mt-4" type="submit">Login</Button>
-          </form>
-        </Form>
-        <div>
-          <div className="absolute text-black text-[10px] font-bold font-['Inter'] left-[705px] top-[540px]">
-            You forget the password?
-          </div>
-          <Button 
-            variant="outline"
-            className="left-[835px] top-[537px] absolute bg-red-600 text-white  text-[8px] w-[10px] h-[10px]"
-          >
-            Click !
-          </Button>
-          <div className="absolute text-black text-[10px] font-bold font-['Inter'] left-[705px] top-[565px]">
-            If you don't have an account?
-          </div>
-          <Button
-            variant="outline"
-            className="left-[850px] top-[562px] absolute bg-gray-600 text-white  text-[8px] w-[14px] h-[10px]"
-          >
-            Sign up
-          </Button>
-        </div>
-      </div> */}
     </div>
   );
 }
