@@ -1,3 +1,4 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 function Navbar() {
 
@@ -39,7 +40,10 @@ function Navbar() {
                         <a href="#" className="text-white hover:text-gray-300">Contact</a>
 
                     </div>
-
+                    <Avatar className=" w-[30px]">
+                        <AvatarImage src="https://github.com/shadcn.png" />
+                        <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
                 </div>
 
             </div>
