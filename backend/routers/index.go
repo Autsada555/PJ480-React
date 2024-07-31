@@ -15,17 +15,14 @@ func InitRouter(route *gin.Engine) {
 	route.Use(middlewares.CORS())
 
 	route.POST("/logout/:role", controllers.Logout)
-	route.POST("/login/:role", controllers.Login)
+	route.POST("/login", controllers.Login)
 
 	authRouter := route.Group("/")
 	initRequiredAuthRouter(authRouter)
 
-	// initRequiredAuthRouter(authRouter)
-
 }
 
-// func initRequiredAuthRouter(route *gin.RouterGroup) {
-	func initRequiredAuthRouter(route *gin.RouterGroup) {
+func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.Use(middlewares.Authentication())
 
 	// User customer management
@@ -59,15 +56,14 @@ func InitRouter(route *gin.Engine) {
 	route.PATCH("/checkpayment/update/:id", controllers.UpdateMenu)
 
 	//employee
-	route.GET("/gender/:id", controllers.GetAllGender)
-	route.GET("/emplyeetype/:id", controllers.GetAllEmployeeType)
-	route.PATCH("/employee/edit/:id", controllers.UpdateEmployee)
-	route.DELETE("/employee/delete/:id", controllers.DeleteEmployee)
-	route.POST("/employee/create", controllers.CreateEmployee)
+	// route.GET("/gender/:id", controllers.GetAllGender)
+	// route.GET("/emplyeetype/:id", controllers.GetAllEmployeeType)
+	// route.PATCH("/employee/edit/:id", controllers.UpdateEmployee)
+	// route.DELETE("/employee/delete/:id", controllers.DeleteEmployee)
+	// route.POST("/employee/create", controllers.CreateEmployee)
 
 	//order
 	route.POST("/order/create", controllers.CreateOrder)
 	route.DELETE("/order/delete/:id", controllers.DeleteOrder)
-
 
 }

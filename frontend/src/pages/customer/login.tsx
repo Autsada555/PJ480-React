@@ -1,4 +1,4 @@
-import Navbar from "./navbar";
+import { useToast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -11,38 +11,76 @@ import {
 import { Input } from "@/components/ui/input"
 import { CircleUserRound } from 'lucide-react';
 import DSLOGO from '@/assets/DS-Logo.png';
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { LoginUser } from "../../services/https/login";
+import { Toaster } from "@/components/ui/toaster";
+import { useNavigate } from "react-router-dom";
 
 
 const formSchema = z.object({
-  usernameOrEmail: z.string(),
-  password: z.string().min(6, { message: "6" }).max(50),
+  EmailOrUsername: z.string(),
+  password: z.string().min(0, { message: "6" }).max(50),
 })
 
 export function Login() {
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      usernameOrEmail: "",
+      EmailOrUsername: "",
       password: "",
     },
   })
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
+    loginUser(values)
   }
   function onSignUp() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(123)
   }
+
+  const { toast } = useToast()
+  const loginUser = async (values: z.infer<typeof formSchema>) => {
+    let res = await LoginUser({ ...values });
+    console.log(res.message.UserType.Name)
+    if (res.status) {
+      toast({
+        description: "Login successful",
+      })
+      setTimeout(() => {
+        if (res.message.UserType.Name === 'customer') {
+          navigate("/login", { replace: true });
+        }
+        else if (res.message.UserType.Name === 'admin') {
+          navigate("/login", { replace: true });
+        }
+        else if (res.message.UserType.Name === 'delivery') {
+          navigate("/login", { replace: true });
+        }
+        else if (res.message.UserType.Name === 'cash') {
+          navigate("/", { replace: true });
+        }
+        else {
+          navigate("/login", { replace: true });
+        }
+
+      },1500)
+    } else {
+      toast({
+        description: res.message,
+      })
+
+    }
+  };
   return (
     <div>
-      {/* <Navbar /> */}
+      <Toaster />
+
       <div className="  relative h-screen ">
         <div className="bg-[#01BD63] h-14"></div>
         <div className="absolute transform -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2  h-fit w-96  ">
@@ -59,7 +97,7 @@ export function Login() {
               <form onSubmit={form.handleSubmit(onSubmit)} className=" ">
                 <FormField
                   control={form.control}
-                  name="usernameOrEmail"
+                  name="EmailOrUsername"
                   render={({ field }) => (
                     <FormItem className="">
                       <FormLabel>Username or Email</FormLabel>

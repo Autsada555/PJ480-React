@@ -27,8 +27,8 @@ type Address struct {
 	Province string `valid:"required~Province is required"`
 	Postcode int `valid:"required~Postcode is required"`
 
-	CustomerID uint
-	Customer   *Customer `gorm:"foreignKey:CustomerID"`
+	UserID uint
+	User   *User `gorm:"foreignKey:UserID"`
 
 }
 
@@ -50,14 +50,15 @@ type StatusType struct {
 
 }
 
-type EmployeeType struct {
+type UserType struct {
 	BaseModel
 	Name string `gorm:"unique"`
 
 }
 
-type Customer struct {
+type User struct {
 	BaseModel
+	
 	FirstName string `gorm:"default:UserFirstName"`
 	LastName  string `gorm:"default:UserLastName"`
 	Email     string `valid:"required~Email is required,email~Invalid email address" gorm:"unique"`
@@ -68,15 +69,18 @@ type Customer struct {
 	GenderID uint
 	Gender   *Gender `gorm:"foreignKey:GenderID"`
 
-	Payments []Payment `gorm:"foreignKey:CustomerID"`//ส่ง FK ไปที่ payment
+	UserTypeID uint
+	UserType   *UserType `gorm:"foreignKey:UserTypeID"`
+
+	Payments []Payment `gorm:"foreignKey:UserID"`//ส่ง FK ไปที่ payment
 }
 
 type Payment struct {
 	BaseModel
 	Name string `gorm:"unique"`
 
-	CustomerID uint
-	Customer   *Customer `gorm:"foreignKey:CustomerID"`
+	UserID uint
+	User   *User `gorm:"foreignKey:UserID"`
 }
 
 
@@ -84,8 +88,8 @@ type Delivery struct {
 	BaseModel
 	Name string `gorm:"unique"`
 
-	CustomerID uint
-	Customer   *Customer `gorm:"foreignKey:CustomerID"`
+	UserID uint
+	User   *User `gorm:"foreignKey:UserID"`
  
 }
 
@@ -94,8 +98,8 @@ type Order struct {
 	Quantity int `gorm:"unique"`
 	Total    float32 `gorm:"unique"`
 
-	CustomerID uint
-	Customer   *Customer `gorm:"foreignKey:CustomerID"`
+	UserID uint
+	User   *User `gorm:"foreignKey:UserID"`
 
 	MenuID uint
 	Menu   *Menu `gorm:"foreignKey:MenuID"`
@@ -125,25 +129,8 @@ type Checkpayment struct {
 	StatusTypeID uint
 	StatusType   *StatusType `gorm:"foreignKey:StatusTypeID"`
 
-	EmployeeID uint
-	Employee   *Employee `gorm:"foreignKey:EmployeeID"`
-}
-
-type Employee struct {
-	BaseModel
-	FirstName string `gorm:"default:UserFirstName"`
-	LastName  string `gorm:"default:UserLastName"`
-	Email     string `valid:"required~Email is required,email~Invalid email address" gorm:"unique"`
-	Password  string `valid:"required~Password is required,minstringlength(8)~Password must be at least 8 characters"`
-	Phone     string `valid:"required~Phone number is required,stringlength(10|10)~Phone must be at 10 characters"`
-	UserName  string `gorm:"default:UserName"`
-
-	GenderID uint
-	Gender   *Gender `gorm:"foreignKey:GenderID"`
-
-	EmployeeTypeID uint 
-	EmployeeType   *EmployeeType `gorm:"foreignKey:EmployeeTypeID"`
-
+	UserID uint
+	User   *User `gorm:"foreignKey:UserID"`
 }
 
 type Menu struct {

@@ -27,8 +27,12 @@ func SetupData(db *gorm.DB) {
 
 	db.Create(&genders)
 
-	// position
-	employeetypes := []EmployeeType{
+	// UserType
+	usertypes := []UserType{
+		{
+			BaseModel: BaseModel{ID: 100},
+			Name:      "customer",
+		},
 		{
 			BaseModel: BaseModel{ID: 200},
 			Name:      "admin",
@@ -42,70 +46,67 @@ func SetupData(db *gorm.DB) {
 			Name:      "deliver",
 		},
 	}
-	db.Create(&employeetypes)
+	db.Create(&usertypes)
 
 	// employee
-	employees := []Employee{
+	employees := []User{
 		{
 			BaseModel:      BaseModel{ID: 1},
+			FirstName:      "VeterA",
+			LastName:       "VeterA",
+			Email:          "veterA@veter.com",
+			Password:       "veterA",
+			UserTypeID: 100,
+			GenderID:       1,
+			Phone:          "0988888888",
+			UserName:       "veterA",
+		},
+		{
+			BaseModel:      BaseModel{ID: 2},
+			FirstName:      "VeterB",
+			LastName:       "VeterB",
+			Email:          "veterB@veter.com",
+			Password:       "veterB",
+			UserTypeID: 100,
+			GenderID:       1,
+			Phone:          "0988888888",
+			UserName:       "veterB",
+		},
+		{
+			BaseModel:      BaseModel{ID: 3},
 			FirstName:      "Veter",
 			LastName:       "Veter",
 			Email:          "veter@veter.com",
 			Password:       "veter",
-			EmployeeTypeID: 200,
+			UserTypeID: 200,
 			GenderID:       1,
 			Phone:          "0988888888",
 			UserName:       "veter",
 		},
 		{
-			BaseModel:      BaseModel{ID: 2},
+			BaseModel:      BaseModel{ID: 4},
 			FirstName:      "Groomer",
 			LastName:       "Groomer",
 			Email:          "groom@groom.com",
 			Password:       "groom",
-			EmployeeTypeID: 201,
+			UserTypeID: 201,
 			GenderID:       2,
 			Phone:          "0999999999",
 			UserName:       "Groomer",
 		},
 		{
-			BaseModel:      BaseModel{ID: 3},
+			BaseModel:      BaseModel{ID: 5},
 			FirstName:      "Broomer",
 			LastName:       "Broomer",
 			Email:          "broom@groom.com",
 			Password:       "broom",
-			EmployeeTypeID: 202,
+			UserTypeID: 202,
 			GenderID:       2,
 			Phone:          "0999999999",
 			UserName:       "Broomer",
 		},
 	}
 	db.Create(&employees)
-
-	// employee
-	customers := []Customer{
-		{
-			BaseModel: BaseModel{ID: 1},
-			FirstName: "Veter",
-			LastName:  "Veter",
-			Email:     "veter@veter.com",
-			Password:  "veter",
-			GenderID:  1,
-			Phone:     "0988888888",
-			UserName:  "veter",
-		},
-		{
-			BaseModel: BaseModel{ID: 2},
-			FirstName: "Groomer",
-			LastName:  "Groomer",
-			Email:     "groom@groom.com",
-			Password:  "groom",
-			GenderID:  2,
-			Phone:     "0999999999",
-			UserName:  "Groomer",
-		},
-	}
-	db.Create(&customers)
 
 	// diseasetypes data
 	diseasetypes := []DiseaseType{
@@ -175,12 +176,12 @@ func SetupData(db *gorm.DB) {
 		{
 			BaseModel:  BaseModel{ID: 1},
 			Name:       "ชำระด้วยเงินสด",
-			CustomerID: 1,
+			UserID: 1,
 		},
 		{
 			BaseModel:  BaseModel{ID: 2},
 			Name:       "ชำระด้วยการโอน",
-			CustomerID: 2,
+			UserID: 2,
 		},
 	}
 	db.Create(&payment)
@@ -190,12 +191,12 @@ func SetupData(db *gorm.DB) {
 		{
 			BaseModel:  BaseModel{ID: 1},
 			Name:       "รับเองที่หน้าร้าน",
-			CustomerID: 1,
+			UserID: 1,
 		},
 		{
 			BaseModel:  BaseModel{ID: 2},
 			Name:       "จัดส่งตามที่อยู่",
-			CustomerID: 2,
+			UserID: 2,
 		},
 	}
 	db.Create(&delivery)

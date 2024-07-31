@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"slices"
 
-	"github.com/gin-gonic/gin"
 	"github.com/Autsada555/PJ480-React/backend/entity"
 	"github.com/Autsada555/PJ480-React/backend/utils"
+	"github.com/gin-gonic/gin"
 )
 
 // role base access control for middleware

@@ -1,6 +1,6 @@
 
 import { Order} from "../../interfaces/index";
-const apiUrl = "http://localhost:5173";
+const apiUrl = "http://localhost:8080";
 
 async function CreateOrder(data: Order) {
     const requestOptions = {

@@ -23,12 +23,12 @@ type CustomerForUpdate struct {
 
 func GetCustomer(c *gin.Context) {
 	// create variable for store data as type of Employee
-	var customer entity.Customer
+	var customer entity.User
 	// get id from url
 	id := c.Param("id")
 
 	// get data form database and check error
-	if err := entity.DB().Joins("Gender").Joins("EmployeeType").Omit("CheckpaymentID").First(&customer, id).Error; err != nil {
+	if err := entity.DB().Joins("Gender").Joins("UserType").Omit("CheckpaymentID").First(&customer, id).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -67,7 +67,7 @@ func UpdateCustomer(c *gin.Context) {
 
 func DeleteCustomer(c *gin.Context) {
 	// create variable for store data as type of TourRegistration
-	var customer entity.Customer
+	var customer entity.User
 
 	// get id from url
 	id := c.Param("id")
