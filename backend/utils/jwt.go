@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	// "net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -45,14 +46,15 @@ func GenerateJWT(token_name string, c *gin.Context, email string, hour int) (str
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"email": email,
 		"exp":   expiration,
-	},)
+	})
 	fmt.Println(SECRET_KEY)
 	token_string, err := token.SignedString(SECRET_KEY)
 	if err != nil {
-		return "",err
+		return err.Error(), err
 	}
 
-	// c.SetCookie(token_name,	 token_string, 3600*hour, "", GetConfig().ORIGIN, false, true)
+	c.SetCookie(token_name, token_string, 3600*hour, "", GetConfig().ORIGIN, false, true)
+
 	return token_string, nil
 }
 
@@ -67,6 +69,6 @@ func SetActiveJWT(c *gin.Context, token_name string, hour int) error {
 	if err != nil {
 		return err
 	}
-	c.SetCookie("token", token_string, 3600*hour, "", GetConfig().ORIGIN, false, true)
+	c.SetCookie("token", token_string, 3600*hour, "", GetConfig().ORIGIN, true, true)
 	return nil
 }

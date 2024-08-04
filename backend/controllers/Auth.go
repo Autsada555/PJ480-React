@@ -58,7 +58,7 @@ func Login(c *gin.Context) {
 	var payload LoginPayload
 	var errBindJSON = c.ShouldBindJSON(&payload)
 	if errBindJSON != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON payload naja"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON payload"})
 		return
 	}
 	
@@ -90,6 +90,10 @@ func Login(c *gin.Context) {
 	tokenResponse := LoginResponse{
 		Token: generateJWT,
 		ID:   value.UserTypeID,
+	}
+	if err := utils.SetActiveJWT(c, data.TokenName, data.Hour); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "token could not be created"})
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data":tokenResponse})

@@ -1,17 +1,16 @@
 const apiUrl = "http://localhost:8080";
 
 async function LoginUser(data: {EmailOrUsername: string, password: string}) {
-  const requestOptions = {
+  const requestOptions :RequestInit = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
-    withCredentials: true
+    credentials: "include"
   };
 
   try {
     let response = await fetch(`${apiUrl}/login`, requestOptions);
     let res = await response.json();
-    console.log(response.headers.getSetCookie());
     if (res.data) {
       return { status: true, message: res.data };
     } else {
