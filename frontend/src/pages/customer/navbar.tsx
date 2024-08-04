@@ -1,10 +1,14 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+} from "@/components/ui/avatar"
 
 function Navbar() {
 
     return (
 
-        <nav className="bg-green-600 p-4">
+        <nav className="bg-green-600 p-4 relative w-screen">
 
             <div className="container mx-auto">
 
@@ -28,22 +32,25 @@ function Navbar() {
                         </button>
                     </form>
 
+                    <div className="flex justify-between">
+                        <div className="flex space-x-4 mt-[6px]">
 
-                    <div className="hidden md:flex space-x-4">
+                            <a href="/" className="text-white hover:text-gray-300">Home</a>
 
-                        <a href="/" className="text-white hover:text-gray-300">Home</a>
+                            <a href="#" className="text-white hover:text-gray-300">About</a>
 
-                        <a href="#" className="text-white hover:text-gray-300">About</a>
+                            <a href="#" className="text-white hover:text-gray-300">Services</a>
 
-                        <a href="#" className="text-white hover:text-gray-300">Services</a>
+                            <a href="#" className="text-white hover:text-gray-300">Contact</a>
 
-                        <a href="#" className="text-white hover:text-gray-300">Contact</a>
-
+                        </div>
+                        <div className="ml-4">
+                            <Avatar>
+                                <AvatarImage src="https://github.com/shadcn.png" />
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                        </div>
                     </div>
-                    <Avatar className=" w-[30px]">
-                        <AvatarImage src="https://github.com/shadcn.png" />
-                        <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
                 </div>
 
             </div>

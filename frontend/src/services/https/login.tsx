@@ -5,16 +5,14 @@ async function LoginUser(data: {EmailOrUsername: string, password: string}) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
+    withCredentials: true
   };
 
   try {
     let response = await fetch(`${apiUrl}/login`, requestOptions);
     let res = await response.json();
+    console.log(response.headers.getSetCookie());
     if (res.data) {
-      const cookieHeader = response.headers.entries().next().value
-      console.log(cookieHeader);
-      console.log(document.cookie);
-
       return { status: true, message: res.data };
     } else {
 

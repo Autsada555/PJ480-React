@@ -47,20 +47,22 @@ export function Login() {
   const { toast } = useToast()
   const loginUser = async (values: z.infer<typeof formSchema>) => {
     let res = await LoginUser({ ...values });
-    console.log(res.message.UserType.Name)
     if (res.status) {
       toast({
         description: "Login successful",
       })
+      console.log(res.message);
+      localStorage.setItem("token", res.message);
+      localStorage.setItem("id", res.message.User.UserType);
       setTimeout(() => {
         if (res.message.UserType.Name === 'customer') {
-          navigate("/login", { replace: true });
+          navigate("/", { replace: true });
         }
         else if (res.message.UserType.Name === 'admin') {
-          navigate("/login", { replace: true });
+          navigate("/addmenu", { replace: true });
         }
         else if (res.message.UserType.Name === 'delivery') {
-          navigate("/login", { replace: true });
+          navigate("/delivery", { replace: true });
         }
         else if (res.message.UserType.Name === 'cash') {
           navigate("/", { replace: true });
@@ -69,7 +71,7 @@ export function Login() {
           navigate("/login", { replace: true });
         }
 
-      },1500)
+      }, 1500)
     } else {
       toast({
         description: res.message,

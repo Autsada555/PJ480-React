@@ -39,21 +39,21 @@ func ValidateJWT(token_name string, c *gin.Context) (*jwt.Token, jwt.MapClaims, 
 	return token, claims, nil
 }
 
-func GenerateJWT(token_name string, c *gin.Context, email string, hour int) error {
+func GenerateJWT(token_name string, c *gin.Context, email string, hour int) (string, error) {
 	expiration := time.Now().Add(time.Hour * time.Duration(hour)).Unix()
 	// token to identify user
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"email": email,
 		"exp":   expiration,
-	})
+	},)
 	fmt.Println(SECRET_KEY)
 	token_string, err := token.SignedString(SECRET_KEY)
 	if err != nil {
-		return err
+		return "",err
 	}
 
-	c.SetCookie(token_name, token_string, 3600*hour, "", GetConfig().ORIGIN, false, true)
-	return nil
+	// c.SetCookie(token_name,	 token_string, 3600*hour, "", GetConfig().ORIGIN, false, true)
+	return token_string, nil
 }
 
 func SetActiveJWT(c *gin.Context, token_name string, hour int) error {
