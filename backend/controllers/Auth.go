@@ -35,6 +35,10 @@ type LoginPayload struct {
 	EmailOrUsername string `binding:"required"`
 	Password        string `binding:"required"`
 }
+type LoginResponse struct {
+	Token string `json:"token"`
+	ID    uint   `json:"id"`
+}
 
 func Logout(c *gin.Context) {
 	role := c.Param("role")
@@ -54,7 +58,7 @@ func Login(c *gin.Context) {
 	var payload LoginPayload
 	var errBindJSON = c.ShouldBindJSON(&payload)
 	if errBindJSON != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON payload"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON payload naja"})
 		return
 	}
 	
@@ -83,6 +87,10 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "token could not be created"})
 		return
 	}
+	tokenResponse := LoginResponse{
+		Token: generateJWT,
+		ID:   value.UserTypeID,
+	}
 
-	c.JSON(http.StatusOK, gin.H{"data":generateJWT})
+	c.JSON(http.StatusOK, gin.H{"data":tokenResponse})
 }

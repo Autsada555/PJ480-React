@@ -52,19 +52,19 @@ export function Login() {
         description: "Login successful",
       })
       console.log(res.message);
-      localStorage.setItem("token", res.message);
-      localStorage.setItem("id", res.message.User.UserType);
+      localStorage.setItem("token", res.message.token);
+      localStorage.setItem("id", res.message.id);
       setTimeout(() => {
-        if (res.message.UserType.Name === 'customer') {
+        if (res.message.id === 100) {
           navigate("/", { replace: true });
         }
-        else if (res.message.UserType.Name === 'admin') {
+        else if (res.message.id === 200) {
           navigate("/addmenu", { replace: true });
         }
-        else if (res.message.UserType.Name === 'delivery') {
+        else if (res.message.id === 202) {
           navigate("/delivery", { replace: true });
         }
-        else if (res.message.UserType.Name === 'cash') {
+        else if (res.message.id === 201) {
           navigate("/", { replace: true });
         }
         else {
