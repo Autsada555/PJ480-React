@@ -224,4 +224,17 @@ func SetupData(db *gorm.DB) {
 		},
 	}
 	db.Create(&menu)
+
+	// address
+	address := []Address{
+		{
+			BaseModel:      BaseModel{ID: 1},
+			Address:      "555 Suranari",
+			District:       "Meaung",
+			Province:          "Nakhon Ratcasima",
+			Postcode:       30000,
+			UserID: 1,			
+		},		
+	}
+	db.Create(&address)
 }

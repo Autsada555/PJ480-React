@@ -2,21 +2,20 @@ import { Button } from "@/components/ui/button";
 // import Form from "@/components/ui/form";
 import { UserPlus } from "lucide-react";
 import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-  } from "@/components/ui/alert-dialog";
+  AlertDialog,
+  AlertDialogAction,
+  // AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const EmployeeCreateDialog = () => {
-
-    return(
-    <AlertDialog >
+  return (
+    <AlertDialog>
       <AlertDialogTrigger asChild>
         <UserPlus className="text-green-500 absolute top-4 left-12 hover:scale-110 cursor-pointer" />
       </AlertDialogTrigger>
@@ -29,14 +28,13 @@ const EmployeeCreateDialog = () => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-            <AlertDialogAction asChild>
-              <Button variant="secondary">Close</Button>
-            </AlertDialogAction>
-            <Button type="submit">Save changes</Button>
-          </AlertDialogFooter>
+          <AlertDialogAction asChild>
+            <Button variant="secondary">Close</Button>
+          </AlertDialogAction>
+          <Button type="submit">Save changes</Button>
+        </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-    );
-
+  );
 };
 export default EmployeeCreateDialog;
