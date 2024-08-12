@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	
 	"net/http"
 
 	"github.com/Autsada555/PJ480-React/backend/entity"
@@ -9,23 +10,38 @@ import (
 )
 
 var role_data = map[string]struct {
+	ID        uint
+	Value     func() interface{}
+	Table     string
 	TokenName string
 	Hour      int
 }{
 	"customer": {
+		ID:        100,
+		Value:     func() interface{} { return &entity.User{} },
+		Table:     "users",
 		TokenName: "utk",
 		Hour:      24 * 7,
 	},
 
 	"admin": {
+		ID:        200,
+		Value:     func() interface{} { return &entity.User{} },
+		Table:     "users",
 		TokenName: "etk",
 		Hour:      24,
 	},
 	"cash": {
+		ID:        201,
+		Value:     func() interface{} { return &entity.User{} },
+		Table:     "users",
 		TokenName: "etk",
 		Hour:      24,
 	},
 	"delivery": {
+		ID:        202,
+		Value:     func() interface{} { return &entity.User{} },
+		Table:     "users",
 		TokenName: "etk",
 		Hour:      24,
 	},
@@ -41,12 +57,12 @@ type LoginResponse struct {
 }
 
 func Logout(c *gin.Context) {
-	role := c.Param("role")
-	if role != "customer" && role != "admin" && role != "cash" && role != "deliver" {
-		c.AbortWithStatus(http.StatusNotFound)
-		return
-	}
-	data := role_data[role]
+	// role := c.Param("role")
+	// if role != "customer" && role != "admin" && role != "cash" && role != "deliver" {
+	// 	c.AbortWithStatus(http.StatusNotFound)
+	// 	return
+	var value entity.User
+	data := role_data[value.UserType.Name]
 	c.SetCookie(data.TokenName, "", -1, "/", utils.GetConfig().ORIGIN, false, true)
 	c.JSON(http.StatusOK, gin.H{"data": "you have been logged out"})
 }
@@ -61,7 +77,7 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON payload"})
 		return
 	}
-	
+
 	base_query := entity.DB().Table("users").Where("email = ? or user_name = ? ", payload.EmailOrUsername, payload.EmailOrUsername)
 
 	// เลือกเฉพาะ email และ password จากตารางมาตรวจสอบ
@@ -82,19 +98,21 @@ func Login(c *gin.Context) {
 	}
 
 	data := role_data[value.UserType.Name]
-	generateJWT,errJWT := utils.GenerateJWT(data.TokenName, c, payload.EmailOrUsername	, data.Hour); 
+
+	generateJWT, errJWT := utils.GenerateJWT(data.TokenName, c, payload.EmailOrUsername, data.Hour)
 	if errJWT != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "token could not be created"})
 		return
 	}
-	tokenResponse := LoginResponse{
-		Token: generateJWT,
-		ID:   value.UserTypeID,
-	}
+	// tokenResponse := LoginResponse{
+	// 	Token: generateJWT,
+	// 	ID:    value.UserTypeID,
+	// }
+	
 	if err := utils.SetActiveJWT(c, data.TokenName, data.Hour); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "token could not be created"})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data":tokenResponse})
+	c.JSON(http.StatusOK, gin.H{"token": generateJWT, "id": value.UserTypeID})
 }

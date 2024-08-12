@@ -1,13 +1,15 @@
 import { Menu} from "../../interfaces/index";
 
-const apiUrl = "http://localhost:5173";
+const apiUrl = "http://localhost:8080";
 //
 const GetAllMenu = async () => {
-  const requestOptions = {
+  const requestOptions :RequestInit= {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include"
+
   };
 
   let res = await fetch(`${apiUrl}/menu`, requestOptions)

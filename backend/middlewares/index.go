@@ -31,13 +31,14 @@ func Authentication() gin.HandlerFunc {
 		if _, payload, err := utils.ValidateJWT("token", c); err == nil {
 			token_name, _ := payload["active_token"].(string)
 			if _, data, err := utils.ValidateJWT(token_name, c); err == nil {
-				c.Set("email", data["email"].(string))
+				c.Set("EmailOrUsername", data["EmailOrUsername"].(string))
 				c.Set("active_token", token_name)
 				c.Set("authenticated", true)
 				c.Next()
 				return
 			}
 		}
+		
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 	}
 }
@@ -56,11 +57,11 @@ func Authorization(role_ids ...uint) gin.HandlerFunc {
 		}
 
 		role := map[string]uint{
-			"atk": 100,
-			"utk": 101,
+			"atk": 101,
+			"utk": 100,
 		}
 		active_token := c.GetString("active_token")
-		email := c.GetString("email")
+		EmailOrUsername := c.GetString("EmailOrUsername")
 
 		if active_token != "etk" {
 			if slices.Contains(role_ids, role[active_token]) {
@@ -71,7 +72,7 @@ func Authorization(role_ids ...uint) gin.HandlerFunc {
 			var emp struct {
 				PositionID uint
 			}
-			if err := entity.DB().Table("users").Where("email = ?", email).First(&emp).Error; err == nil {
+			if err := entity.DB().Table("users").Where("email = ? or user_name = ? ", EmailOrUsername,EmailOrUsername).First(&emp).Error; err == nil {
 				if slices.Contains(role_ids, emp.PositionID) {
 					c.Next()
 					return

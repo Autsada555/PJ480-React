@@ -51,20 +51,20 @@ export function Login() {
       toast({
         description: "Login successful",
       })
-      console.log(res.message);
-      localStorage.setItem("token", res.message.token);
-      localStorage.setItem("id", res.message.id);
+      console.log(res.message1, res.message2);
+      localStorage.setItem("token", res.message1);
+      localStorage.setItem("id", res.message2);
       setTimeout(() => {
-        if (res.message.id === 100) {
+        if (res.message2 === 100) {
           navigate("/", { replace: true });
         }
-        else if (res.message.id === 200) {
+        else if (res.message2 === 200) {
           navigate("/addmenu", { replace: true });
         }
-        else if (res.message.id === 202) {
+        else if (res.message2 === 202) {
           navigate("/delivery", { replace: true });
         }
-        else if (res.message.id === 201) {
+        else if (res.message2 === 201) {
           navigate("/", { replace: true });
         }
         else {
@@ -74,7 +74,7 @@ export function Login() {
       }, 1500)
     } else {
       toast({
-        description: res.message,
+        description: res.message2,
       })
 
     }

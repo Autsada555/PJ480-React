@@ -11,8 +11,8 @@ async function LoginUser(data: {EmailOrUsername: string, password: string}) {
   try {
     let response = await fetch(`${apiUrl}/login`, requestOptions);
     let res = await response.json();
-    if (res.data) {
-      return { status: true, message: res.data };
+    if (res.token && res.id) {
+      return { status: true, message1: res.token, message2: res.id };
     } else {
 
       return { status: false, message: res.error };
