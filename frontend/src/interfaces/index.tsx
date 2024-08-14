@@ -81,8 +81,8 @@ export interface Menu {
   Description: string;
   Component: string;
   MenuImage: string;
-  DiseaseType: number;
-  MenuType: number;
+  DiseaseTypeID: number;
+  MenuTypeID: number;
 }
 
 export interface Checkpayment {

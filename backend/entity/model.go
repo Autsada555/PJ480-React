@@ -41,6 +41,7 @@ type MenuType struct {
 type DiseaseType struct {
 	BaseModel
 	Name string `gorm:"unique"`
+	
 
 }
 

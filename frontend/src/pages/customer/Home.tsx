@@ -46,8 +46,8 @@ export function Home() {
             description: menu.Description,
             component: menu.Component,
             menuImage: menu.MenuImage,
-            diseaseType: menu.DiseaseType,
-            menuType: menu.MenuType,
+            diseaseType: menu.DiseaseTypeID,
+            menuType: menu.MenuTypeID,
         }
     ]);
 

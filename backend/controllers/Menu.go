@@ -2,33 +2,22 @@ package controllers
 
 import (
 	"net/http"
-	// "time"
 
-	// "strconv"
-
+	"github.com/Autsada555/PJ480-React/backend/entity"
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
-	"github.com/Autsada555/PJ480-React/backend/entity"
-	// "gorm.io/gorm/clause"
 )
 
 func GetAllMenu(c *gin.Context) {
-	var menu []entity.Menu
-	if err := entity.DB().Raw(`SELECT * From menus`).Scan(&menu).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{"data": menu})
-}
+	var menus []entity.Menu
 
-func GetMenuByID(c *gin.Context) {
-	var menu entity.Menu
-	id := c.Param("id")
-	if err := entity.DB().Preload("DiseaseType").Preload("MenuType").Raw("SELECT * FROM menus WHERE id = ?", id).Find(&menu).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{"data": menu})
+	if err := entity.DB().
+    InnerJoins("DiseaseType").InnerJoins("MenuType").
+    Find(&menus).Error; err != nil {
+    c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+    return
+}
+	c.JSON(http.StatusOK, gin.H{"data": menus})
 }
 
 func CreateMenu(c *gin.Context) {

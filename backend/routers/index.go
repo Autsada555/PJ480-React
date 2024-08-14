@@ -24,7 +24,7 @@ func InitRouter(route *gin.Engine) {
 
 func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.Use(middlewares.Authentication())
-	customer := middlewares.Authorization(100)
+	customer := middlewares.Authorization(100,200)
 	// User customer management
 	route.GET("/customer/:id", controllers.GetCustomer)
 	route.PATCH("/customer/edit", controllers.UpdateCustomer)
@@ -46,7 +46,6 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 
 	//menu
 	route.GET("/menu",customer, controllers.GetAllMenu)
-	route.GET("/menu/:id", controllers.GetMenuByID)
 	route.POST("/menu/create", controllers.CreateMenu)
 	route.PATCH("/menu/update/:id", controllers.UpdateMenu)
 	route.DELETE("/menu/delete/:id", controllers.DeleteMenu)

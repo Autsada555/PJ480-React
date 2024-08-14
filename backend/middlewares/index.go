@@ -70,10 +70,10 @@ func Authorization(role_ids ...uint) gin.HandlerFunc {
 			}
 		} else {
 			var emp struct {
-				PositionID uint
+				UserTypeID uint
 			}
 			if err := entity.DB().Table("users").Where("email = ? or user_name = ? ", EmailOrUsername,EmailOrUsername).First(&emp).Error; err == nil {
-				if slices.Contains(role_ids, emp.PositionID) {
+				if slices.Contains(role_ids, emp.UserTypeID) {
 					c.Next()
 					return
 				}
