@@ -49,7 +49,7 @@ func SetupData(db *gorm.DB) {
 	db.Create(&usertypes)
 
 	// employee
-	employees := []User{
+	users := []User{
 		{
 			BaseModel:      BaseModel{ID: 1},
 			FirstName:      "VeterA",
@@ -106,7 +106,7 @@ func SetupData(db *gorm.DB) {
 			UserName:       "Broomer",
 		},
 	}
-	db.Create(&employees)
+	db.Create(&users)
 
 	// diseasetypes data
 	diseasetypes := []DiseaseType{

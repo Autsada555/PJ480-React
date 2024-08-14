@@ -4,6 +4,8 @@ export interface Customer {
   LastName: string;
   Email: string;
   Phone: string;
+  UserTypeID: number;
+  GenderID: number;
   Gender: Gender;
   Address: Address;
 }
@@ -23,21 +25,21 @@ export interface Address {
 
 }
 
-export interface Employee {
-  ID: number;
-  EmployeeType: EmployeeType;
-  Gender: Gender;
-  FirstName: string;
-  LastName: string;
-  Email: string;
-  Password: string;
-  Phone: string;
-}
+// export interface Employee {
+//   ID: number;
+//   EmployeeType: EmployeeType;
+//   Gender: Gender;
+//   FirstName: string;
+//   LastName: string;
+//   Email: string;
+//   Password: string;
+//   Phone: string;
+// }
 
-export interface EmployeeType {
-  ID: number;
-  Name: string;
-}
+// export interface EmployeeType {
+//   ID: number;
+//   Name: string;
+// }
 
 export interface StatusType {
   ID: number;
@@ -89,9 +91,9 @@ export interface Checkpayment {
   ID: number;
   Date: Date;
   SlipImage: string;
-  StatusType: number;
+  StatusTypeID: number;
   Order: Order;
-  Employee: Employee;
+  Customer: Customer;
 }
 
 export interface HistoryOrder {

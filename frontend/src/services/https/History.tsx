@@ -1,7 +1,7 @@
 const apiUrl = "http://localhost:5173";
 //
 const GetAllHistory = async (id: number) => {
-    const requestOptions = {
+    const requestOptions :RequestInit= {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -5,7 +5,7 @@ import { Address} from "../../interfaces/index";
 const apiUrl = "http://localhost:8080";
 
 async function CreateDelivery(data: Delivery) {
-    const requestOptions = {
+    const requestOptions :RequestInit={
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -25,7 +25,7 @@ async function CreateDelivery(data: Delivery) {
   }
 
   const GetAddress = async (id: number) => {
-    const requestOptions = {
+    const requestOptions :RequestInit= {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +46,7 @@ async function CreateDelivery(data: Delivery) {
   }
 
   async function UpdateAddress(data: Address) {
-    const requestOptions = {
+    const requestOptions :RequestInit= {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

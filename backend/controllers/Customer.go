@@ -37,6 +37,27 @@ func GetCustomer(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": customer})
 }
 
+func CreateCustomer(c *gin.Context) {
+	var customer entity.User
+
+	if err := c.ShouldBindJSON(&customer); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if _, err := govalidator.ValidateStruct(customer); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := entity.DB().Create(&customer).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": "customer successfully"})
+}
+
 func UpdateCustomer(c *gin.Context) {
 	// create variable for store data as type of employee
 	var customer CustomerForUpdate
@@ -84,7 +105,7 @@ func DeleteCustomer(c *gin.Context) {
 }
 
 // Get Gender
-func GetAllGenders(c *gin.Context) {
+func GetGender(c *gin.Context) {
 	// create variable for store data as type of TourType array
 	var genders []entity.Gender
 
@@ -105,13 +126,25 @@ func GetAddress(c *gin.Context) {
 	id := c.Param("id")
 
 	// get data form database and check error
-	if err := entity.DB().Joins("Custoer").First(&address, id).Error; err != nil {
+	if err := entity.DB().Joins("Customer").First(&address, id).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	// response data
 	c.JSON(http.StatusOK, gin.H{"data": address})
+}
+
+func GetAllCustomer(c *gin.Context) {
+	var customer []entity.User
+
+	if err := entity.DB().
+    InnerJoins("Gender").InnerJoins("UserType").
+    Find(&customer).Error; err != nil {
+    c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+    return
+}
+	c.JSON(http.StatusOK, gin.H{"data": customer})
 }
 
 
