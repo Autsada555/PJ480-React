@@ -1,13 +1,19 @@
 export interface Customer {
+  
   ID: number;
   FirstName: string;
   LastName: string;
   Email: string;
   Phone: string;
+  Address: string;
+  District: string;
+  Province: string;
+  Postcode: string;
+
   UserTypeID: number;
   GenderID: number;
   Gender: Gender;
-  Address: Address;
+
 }
 
 export interface Gender {
@@ -15,30 +21,14 @@ export interface Gender {
   Name: string;
 }
 
-export interface Address {
-  ID: number;
-  Address: string;
-  District: string;
-  Province: string;
-  Postcode: number;
-  Customer: Customer;
-
-}
-
-// export interface Employee {
+// export interface Address {
 //   ID: number;
-//   EmployeeType: EmployeeType;
-//   Gender: Gender;
-//   FirstName: string;
-//   LastName: string;
-//   Email: string;
-//   Password: string;
-//   Phone: string;
-// }
+//   Address: string;
+//   District: string;
+//   Province: string;
+//   Postcode: number;
+//   Customer: Customer;
 
-// export interface EmployeeType {
-//   ID: number;
-//   Name: string;
 // }
 
 export interface StatusType {

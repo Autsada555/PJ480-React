@@ -68,7 +68,7 @@ const GetCustomer = async (id: number) => {
   }
 
   async function UpdateCustomer(data: Customer) {
-    const requestOptions :RequestInit=  {
+    const requestOptions = {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -105,7 +105,7 @@ const GetCustomer = async (id: number) => {
     return res;  
   }
 
-  const GetGender = async () => {
+  const GetAllGender = async () => {
     const requestOptions :RequestInit= {
       method: "GET",
       headers: {
@@ -128,15 +128,17 @@ const GetCustomer = async (id: number) => {
     return res;
   }
 
-  const GetAddress = async (id: number) => {
-    const requestOptions :RequestInit=  {
+  const GetAllUserType = async () => {
+    const requestOptions :RequestInit= {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include"
+  
     };
   
-    let res = await fetch(`${apiUrl}/customer/address/${id}`, requestOptions)
+    let res = await fetch(`${apiUrl}/customer/usertype`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
         if (res.data) {
@@ -148,5 +150,4 @@ const GetCustomer = async (id: number) => {
   
     return res;
   }
-
-export { GetCustomer,  UpdateCustomer, DeleteCustomer, GetAllCustomer, CreateCustomer, GetGender,GetAddress }
+export { GetCustomer,  UpdateCustomer, DeleteCustomer, GetAllCustomer, CreateCustomer, GetAllGender, GetAllUserType }

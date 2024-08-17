@@ -20,18 +20,6 @@ type Gender struct {
 
 }
 
-type Address struct {
-	BaseModel
-	Address  string `valid:"required~Address is required"`
-	District string `valid:"required~District is required"`
-	Province string `valid:"required~Province is required"`
-	Postcode int `valid:"required~Postcode is required"`
-
-	UserID uint
-	User   *User `gorm:"foreignKey:UserID"`
-
-}
-
 type MenuType struct {
 	BaseModel
 	Name string `gorm:"unique"`
@@ -66,6 +54,11 @@ type User struct {
 	Password  string `valid:"required~Password is required,minstringlength(8)~Password must be at least 8 characters"`
 	Phone     string `valid:"required~Phone number is required,stringlength(10|10)~Phone must be at 10 characters"`
 	UserName  string `gorm:"default:UserName"`
+	Address  string `valid:"required~Address is required,minstringlength(2)~Address must be at least 2 characters"`
+	District string `valid:"required~District is required,minstringlength(2)~District must be at least 2 characters"`
+	Province string `valid:"required~Province is required,minstringlength(2)~Province must be at least 2 characters"`
+	Postcode string `valid:"required~Postcode is required,stringlength(5|5)~Postcode must be at 5 characters"`
+
 
 	GenderID uint
 	Gender   *Gender `gorm:"foreignKey:GenderID"`

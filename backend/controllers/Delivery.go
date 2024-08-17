@@ -33,49 +33,19 @@ func CreateDelivery(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": "Delivery successfully"})
 }
 
-
-func GetAddresss(c *gin.Context) {
+func GetDeliveryType(c *gin.Context) {
 	// create variable for store data as type of Employee
-	var address entity.Address
-	// get id from url
-	id := c.Param("id")
+	var deliverytype entity.Delivery
 
 	// get data form database and check error
-	if err := entity.DB().Joins("Customer").First(&address, id).Error; err != nil {
+	if err := entity.DB().Find(&deliverytype).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	// response data
-	c.JSON(http.StatusOK, gin.H{"data": address})
+	c.JSON(http.StatusOK, gin.H{"data": OmitEmpty(deliverytype)})
 }
 
-func UpdateAddress(c *gin.Context) {
-	// create variable for store data as type of employee
-	var address entity.Address
-	// get id from url
-	id := c.Param("id")
-
-	// get data from body and check error
-	if err := c.ShouldBindJSON(&address); err != nil { //ฟังก์ชัน Gin ที่ใช้ในการแยกวิเคราะห์ JSON จากเนื้อหาคำขอและผูกเข้ากับโครงสร้าง
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	// validate struct ตรวจสอบemployeeโครงสร้าง ใช้govalidatorแพ็คเกจเพื่อตรวจสอบความถูกต้องของฟิลด์ struct
-	if _, err := govalidator.ValidateStruct(address); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	// update data in database and check error
-	if err := entity.DB().Table("customers").Where("id = ?", id).Updates(address).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	// response updated data ส่งคืนการตอบกลับ JSON พร้อมรหัสสถานะ 200 OK 
-	c.JSON(http.StatusOK, gin.H{"data": "Updated your Address successfully"})
-}
 
 

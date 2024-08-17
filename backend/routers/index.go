@@ -29,9 +29,11 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.GET("/customer",customer, controllers.GetAllCustomer)
 	route.GET("/customer/:id", controllers.GetCustomer)
 	route.POST("/customer/create", controllers.CreateCustomer)
-	route.PATCH("/customer/edit", controllers.UpdateCustomer)
+	route.PATCH("/customer/edit/:id", controllers.UpdateCustomer)
 	route.DELETE("/customer/delete/:id", controllers.DeleteCustomer)
-	route.GET("/customer/gender", controllers.GetGender)
+	route.GET("/customer/gender", controllers.GetAllGender)
+	route.GET("/customer/usertype", controllers.GetAllUserType)
+
 
 	//history
 	route.GET("/history/:id", controllers.GetAllHistory)
@@ -42,11 +44,6 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	//delivery
 	route.POST("/delivery/create", controllers.CreateDelivery)
 	
-
-
-	//address
-	route.GET("/customer/address/:id",controllers.GetAddress)
-	route.PATCH("/customer/address/edit", controllers.UpdateAddress)
 
 	//menu
 	route.GET("/menu",customer, controllers.GetAllMenu)
