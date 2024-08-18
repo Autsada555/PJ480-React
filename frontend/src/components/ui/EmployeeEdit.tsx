@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Gender, UserType, Customer } from "../../interfaces";
+import { Gender, UserType, User } from "../../interfaces";
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { Edit } from "lucide-react";
@@ -42,7 +42,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface Props {
-  customers: Customer;
+  customers: User;
   onSave(): void;
 }
 

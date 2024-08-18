@@ -70,8 +70,8 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
     async function fetchUserType() {
       try {
         const res = await GetAllUserType();
-        if (res.status) {
-          setUserType(res.data);
+        if (res) {
+          setUserType(res);
         } else {
           // Handle error if needed
           console.error("Failed to fetch user types:", res.message);
@@ -84,8 +84,8 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
     async function fetchGender() {
       try {
         const res = await GetAllGender();
-        if (res.status) {
-          setGender(res.data);
+        if (res) {
+          setGender(res);
         } else {
           // Handle error if needed
           console.error("Failed to fetch gender options:", res.message);
