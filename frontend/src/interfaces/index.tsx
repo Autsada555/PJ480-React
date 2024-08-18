@@ -1,45 +1,56 @@
 export interface Customer {
+  
   ID: number;
   FirstName: string;
   LastName: string;
   Email: string;
   Phone: string;
+  Address: string;
+  District: string;
+  Province: string;
+  Postcode: string;
+
+  UserTypeID: number;
+  GenderID: number;
   Gender: Gender;
-  Address: Address;
+
 }
+// export interface Customer {
+//   ID: number;
+//   FirstName: string;
+//   LastName: string;
+//   Gender: { Name: string };
+//   UserTypeID: string;
+//   Email?: string;
+//   Phone?: string;
+//   Address?: string;
+//   District?: string;
+//   Province?: string;
+//   Postcode?: string;
+// }
+
 
 export interface Gender {
   ID: number;
   Name: string;
 }
 
-export interface Address {
-  ID: number;
-  Address: string;
-  District: string;
-  Province: string;
-  Postcode: number;
-  Customer: Customer;
+// export interface Address {
+//   ID: number;
+//   Address: string;
+//   District: string;
+//   Province: string;
+//   Postcode: number;
+//   Customer: Customer;
 
-}
+// }
 
-export interface Employee {
-  ID: number;
-  EmployeeType: EmployeeType;
-  Gender: Gender;
-  FirstName: string;
-  LastName: string;
-  Email: string;
-  Password: string;
-  Phone: string;
-}
-
-export interface EmployeeType {
+export interface StatusType {
   ID: number;
   Name: string;
 }
 
-export interface StatusType {
+export interface UserType {
   ID: number;
   Name: string;
 }
@@ -91,9 +102,9 @@ export interface Checkpayment {
   ID: number;
   Date: Date;
   SlipImage: string;
-  StatusType: number;
+  StatusTypeID: number;
   Order: Order;
-  Employee: Employee;
+  Customer: Customer;
 }
 
 export interface HistoryOrder {

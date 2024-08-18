@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { DeleteCustomer } from "../../services/https/Customer";
+
 import {
   // AlertDialog,
   AlertDialogAction,
@@ -12,7 +14,20 @@ import {
 } from "@/components/ui/alert-dialog";
 import { AlertTriangleIcon } from "lucide-react";
 
-const EmployeeAlert = ({}) => {
+interface Props {
+  customerID: number;
+  onCancel(): void;
+}
+const EmployeeAlert = ({ customerID, onCancel }: Props) => {
+  async function handleCancel() {
+    const res = await DeleteCustomer("/customer/delete", customerID);
+    if (res.status) {  // Check the status property
+      onCancel();
+    } else {
+      // Handle the case where the status is false, if needed
+      console.error("Failed to delete customer:", res.message);
+    }
+  }
   return (
     <AlertDialogContent className=" sm:max-w-[320px]">
       <AlertDialogHeader className=" items-center sm:text-center">
@@ -27,7 +42,7 @@ const EmployeeAlert = ({}) => {
           <Button variant="secondary">No, don't delete.</Button>
         </AlertDialogAction>
         <AlertDialogTrigger asChild>
-          <Button type="submit" variant={"destructive"}>
+          <Button type="submit" variant={"destructive"} onClick={handleCancel}>
             Yes! delete.
           </Button>
         </AlertDialogTrigger>

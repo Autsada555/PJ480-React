@@ -26,9 +26,14 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.Use(middlewares.Authentication())
 	customer := middlewares.Authorization(100,200)
 	// User customer management
+	route.GET("/customer",customer, controllers.GetAllCustomer)
 	route.GET("/customer/:id", controllers.GetCustomer)
-	route.PATCH("/customer/edit", controllers.UpdateCustomer)
+	route.POST("/customer/create", controllers.CreateCustomer)
+	route.PATCH("/customer/edit/:id", controllers.UpdateCustomer)
 	route.DELETE("/customer/delete/:id", controllers.DeleteCustomer)
+	route.GET("/customer/gender", controllers.GetAllGender)
+	route.GET("/customer/usertype", controllers.GetAllUserType)
+
 
 	//history
 	route.GET("/history/:id", controllers.GetAllHistory)
@@ -38,11 +43,7 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 
 	//delivery
 	route.POST("/delivery/create", controllers.CreateDelivery)
-	// route.GET("/address/:id", controllers.GetAddresss)
-
-	//address
-	route.GET("/address/:id", controllers.GetAddress)
-	route.PATCH("/address/edit", controllers.UpdateAddress)
+	
 
 	//menu
 	route.GET("/menu",customer, controllers.GetAllMenu)
@@ -54,12 +55,6 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.GET("/checkpayment", controllers.GetAllMenu)
 	route.PATCH("/checkpayment/update/:id", controllers.UpdateMenu)
 
-	//employee
-	// route.GET("/gender/:id", controllers.GetAllGender)
-	// route.GET("/emplyeetype/:id", controllers.GetAllEmployeeType)
-	// route.PATCH("/employee/edit/:id", controllers.UpdateEmployee)
-	// route.DELETE("/employee/delete/:id", controllers.DeleteEmployee)
-	// route.POST("/employee/create", controllers.CreateEmployee)
 
 	//order
 	route.POST("/order/create", controllers.CreateOrder)

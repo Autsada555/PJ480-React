@@ -3,7 +3,7 @@ import { Checkpayment} from "../../interfaces/index";
 const apiUrl = "http://localhost:8080";
 
 const GetAllCheckPayment = async () => {
-    const requestOptions = {
+    const requestOptions:RequestInit= {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +24,7 @@ const GetAllCheckPayment = async () => {
   }
   
   async function UpdateCheckPayment(data: Checkpayment) {
-    const requestOptions = {
+    const requestOptions :RequestInit= {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

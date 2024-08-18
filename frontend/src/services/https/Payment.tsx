@@ -3,7 +3,7 @@ import { Payment} from "../../interfaces/index";
 const apiUrl = "http://localhost:8080";
 
 async function CreatePayment(data: Payment) {
-    const requestOptions = {
+    const requestOptions :RequestInit= {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
