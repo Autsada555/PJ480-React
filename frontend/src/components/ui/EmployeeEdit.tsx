@@ -58,7 +58,7 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
       FirstName: customers.FirstName,
       LastName: customers.LastName,
       GenderID: customers.Gender.ID,
-      UserTypeID: customers.UserTypeID,
+      UserTypeID: customers.UserType.ID,
       Phone: customers.Phone,
       Email: customers.Email,
       Address: customers.Address,
@@ -88,9 +88,8 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
 
   const onValid: SubmitHandler<UserUpdateFormData> = async (formData) => {
     try {
-      const data = {}; // Create an appropriate data object if needed
   
-      const res = await UpdateCustomer("/customer/edit", customers.ID, formData, data);
+      const res = await UpdateCustomer( formData);
   
       if (res.status) {
         onSave();

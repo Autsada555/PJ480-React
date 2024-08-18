@@ -82,7 +82,7 @@ export function ListUser() {
                       {customer.Gender?.Name}
                     </TableCell>
                     <TableCell className=" text-center">
-                      {customer.UserTypeID}
+                      {customer.UserType?.Name}
                     </TableCell>
                     <TableCell className=" text-center hidden md:table-cell">
                       {customer.Email}

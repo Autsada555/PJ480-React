@@ -100,7 +100,7 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
   }, []);
 
   const onValid: SubmitHandler<UserFormData> = async (formData) => {
-    const res = await CreateCustomer("/customer/create", formData);
+    const res = await CreateCustomer( formData);
 
     if (res.status) {
       // Use 'status' instead of 'ok'

@@ -1,49 +1,50 @@
-export interface User {
+// export interface User {
+//   [x: string]: any;
   
+//   ID: number;
+//   FirstName: string;
+//   LastName: string;
+//   Email: string;
+//   Phone: string;
+//   Address: string;
+//   District: string;
+//   Province: string;
+//   Postcode: string;
+
+//   UserTypeID: number;
+//   GenderID: number;
+//   Gender: Gender;
+//   UserType: UserType;
+//   // Genderts: string;
+//   // UserTypets: string;
+// }
+export interface User {
+  [x: string]: any;
+
   ID: number;
   FirstName: string;
   LastName: string;
   Email: string;
+  Password?: string;
   Phone: string;
+  UserName?: string;
   Address: string;
   District: string;
   Province: string;
   Postcode: string;
-
-  UserTypeID: number;
   GenderID: number;
-  Gender: Gender;
+  UserTypeID: number;
 
+  Gender: Gender;
+  UserType: UserType;
 }
-// export interface Customer {
-//   ID: number;
-//   FirstName: string;
-//   LastName: string;
-//   Gender: { Name: string };
-//   UserTypeID: string;
-//   Email?: string;
-//   Phone?: string;
-//   Address?: string;
-//   District?: string;
-//   Province?: string;
-//   Postcode?: string;
-// }
+
 
 
 export interface Gender {
   ID: number;
   Name: string;
 }
-
-// export interface Address {
-//   ID: number;
-//   Address: string;
-//   District: string;
-//   Province: string;
-//   Postcode: number;
-//   Customer: Customer;
-
-// }
 
 export interface StatusType {
   ID: number;
