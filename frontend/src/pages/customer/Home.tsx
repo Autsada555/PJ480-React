@@ -17,28 +17,54 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Menu } from "@/interfaces";
 import { GetAllMenu } from "@/services/https/Menu";
+import { TypeOf } from "zod";
 
+interface MenuData {
+    [key: string]: Menu[];
+  }
 export function Home() {
     const [showModalMenu, setShowModalMenu] = useState(false);
     const [dataMenu, setdataMenu] = useState<Menu[]>([]);
     // const [dataMenuID, setdataMenuID] = useState<number | undefined>(0);
+const [temp,setTemp] =useState<MenuData[] | undefined>()
 
     const handleGetAllMenu = async () => {
         let res = await GetAllMenu();
         if (res) {
             setdataMenu(res);
             console.log(res);
+            const r = groupBy<Menu>(res,"MenuTypeID")
+            setTemp([])
+            Object.keys(r).forEach(key => {
+                
+                setTemp(prevTemp => [...(prevTemp || []), r[key as keyof typeof r]]);
+              });
+              
         } else {
             console.log("Get menu not found");
             console.log(res);
         }
-
+        console.log(temp);
     };
     useEffect(() => {
         handleGetAllMenu();
+       
     }, []);
 
-    const menuhealth = dataMenu.flatMap((menu) => [
+    function groupBy<T>(collection: T[], key: keyof T) {
+        const groupedResult = collection.reduce((previous, current) => {
+
+            if (!previous[current[key]]) {
+                previous[current[key]] = [] as T[];
+            }
+
+            previous[current[key]].push(current);
+            return previous;
+        }, {} as any); // tried to figure this out, help!!!!!
+        return groupedResult
+    }
+
+    const menuhealth = dataMenu.filter(menu => menu.DiseaseTypeID == 1 && menu.MenuTypeID == 1).flatMap((menu) => [
         {
             id: menu.ID,
             name: menu.Name,
@@ -46,8 +72,8 @@ export function Home() {
             description: menu.Description,
             component: menu.Component,
             menuImage: menu.MenuImage,
-            diseaseType: menu.DiseaseTypeID,
-            menuType: menu.MenuTypeID,
+            diseaseType: menu.DiseaseType.Name,
+            menuType: menu.MenuType.Name,
         }
     ]);
 
