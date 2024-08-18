@@ -4,7 +4,7 @@ import EmployeeCreateDialog from "@/components/ui/EmployeeCreateDialog";
 import EmployeeEdit from "@/components/ui/EmployeeEdit";
 import { useEffect, useState } from "react";
 import { XSquare } from "lucide-react";
-import { Customer } from "../../interfaces";
+import { User } from "../../interfaces";
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { GetAllCustomer } from "../../services/https/Customer";
 
@@ -19,12 +19,13 @@ import {
 } from "@/components/ui/table";
 
 export function ListUser() {
-  const [customer, setCustomer] = useState<Customer[]>([]);
+  const [customer, setCustomer] = useState<User[]>([]);
   async function fetchCustomer() {
     try {
       const res = await GetAllCustomer();
-      if (res.ok) {
-        setCustomer(res.data);
+      if (res) {
+        setCustomer(res);
+        console.log(res);
       } else {
         console.error('Failed to fetch customers');
       }
@@ -68,7 +69,7 @@ export function ListUser() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {customer.length > 0 ? (
+              {Array.isArray(customer) && customer.length > 0 ? (
                 customer.map((customer) => (
                   <TableRow key={customer.ID}>
                     <TableCell className="font-medium text-center">

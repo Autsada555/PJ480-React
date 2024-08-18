@@ -1,4 +1,4 @@
-import { Customer} from "../../interfaces/index";
+import { User} from "../../interfaces/index";
 
 const apiUrl = "http://localhost:8080";
 
@@ -47,7 +47,7 @@ const GetCustomer = async (id: number) => {
     return res;
   }
 
-  async function CreateCustomer(data: Customer) {
+  async function CreateCustomer(data: User) {
     const requestOptions :RequestInit=  {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -67,7 +67,7 @@ const GetCustomer = async (id: number) => {
     return res;
   }
 
-  async function UpdateCustomer(data: Customer) {
+  async function UpdateCustomer(data: User) {
     const requestOptions = {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },

@@ -1,4 +1,4 @@
-export interface Customer {
+export interface User {
   
   ID: number;
   FirstName: string;
@@ -68,20 +68,20 @@ export interface DiseaseType {
 export interface Payment {
   ID: number;
   Name: string;
-  Customer: Customer;
+  User: User;
 }
 
 export interface Delivery {
   ID: number;
   Name: string;
-  Customer: Customer;
+  User: User;
 }
 
 export interface Order {
   ID: number;
   Quantity: number;
   Total: number;
-  Customer: Customer;
+  User: User;
   Menu: Menu;
 }
 
@@ -104,7 +104,7 @@ export interface Checkpayment {
   SlipImage: string;
   StatusTypeID: number;
   Order: Order;
-  Customer: Customer;
+  User: User;
 }
 
 export interface HistoryOrder {
