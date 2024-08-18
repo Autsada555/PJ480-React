@@ -20,12 +20,11 @@ export const userFormSchema = z.object({
   
   export type UserFormData = z.infer<typeof userFormSchema>;
 
-  export const userUpdateSchema = z.object({
+  export const userUpdateFormSchema = z.object({
     FirstName: z.string().min(2, "FirstName must be at least 2 characters"),
     LastName: z.string().min(2, "LastName must be at least 2 characters"),
     Email: z.string().email({ message: "Invalid email address" }),
     Phone: z.string().length(10, "Phone number must be 10 characters"),
-    UserName: z.string().min(2, "UserName must be at least 2 characters"),
     Address: z.string().min(2, "Address must be at least 2 characters"),
     District: z.string().min(2, "District must be at least 2 characters"),
     Province: z.string().min(2, "Province must be at least 2 characters"),
@@ -35,7 +34,7 @@ export const userFormSchema = z.object({
     UserTypeID: z.number({ required_error: "Please select user type" }),
   });
   
-  export type UserUpdateData = z.infer<typeof userFormSchema>;
+  export type UserUpdateFormData = z.infer<typeof userUpdateFormSchema>;
 
   export const menuFormSchema = z.object({
     Name: z.string().min(1, "Name is required"),

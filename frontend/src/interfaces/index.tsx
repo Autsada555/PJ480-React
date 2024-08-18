@@ -15,6 +15,20 @@ export interface Customer {
   Gender: Gender;
 
 }
+// export interface Customer {
+//   ID: number;
+//   FirstName: string;
+//   LastName: string;
+//   Gender: { Name: string };
+//   UserTypeID: string;
+//   Email?: string;
+//   Phone?: string;
+//   Address?: string;
+//   District?: string;
+//   Province?: string;
+//   Postcode?: string;
+// }
+
 
 export interface Gender {
   ID: number;
@@ -32,6 +46,11 @@ export interface Gender {
 // }
 
 export interface StatusType {
+  ID: number;
+  Name: string;
+}
+
+export interface UserType {
   ID: number;
   Name: string;
 }
