@@ -100,21 +100,31 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
   }, []);
 
   const onValid: SubmitHandler<UserFormData> = async (formData: UserFormData) => {
-    const res = await CreateCustomer(formData);
-    console.log(formData)
-    if (res.status) {
-      toast({
-        title: res.message,
-        duration: 1500,
-        variant: "default",
-      });
+    try {
+      const res = await CreateCustomer(formData);
+      console.log(formData);
+      if (res.status) {
+        toast({
+          title: "Customer created successfully",
+          description: "The new customer has been added.",
+          duration: 1500,
+          variant: "default",
+        });
 
-      onCreated();
-      setOpen(false);
-    } else {
+        onCreated();
+        setOpen(false);
+      } else {
+        toast({
+          title: "Creation Failed",
+          description: res.message,
+          duration: 1500,
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
       toast({
-        title: "Creation Failed",
-        description: res.message,
+        title: "Error",
+        description: "An error occurred while creating the customer.",
         duration: 1500,
         variant: "destructive",
       });

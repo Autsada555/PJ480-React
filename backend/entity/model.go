@@ -59,7 +59,6 @@ type User struct {
 	Province string `valid:"required~Province is required,minstringlength(2)~Province must be at least 2 characters"`
 	Postcode string `valid:"required~Postcode is required,stringlength(5|5)~Postcode must be at 5 characters"`
 
-
 	GenderID uint
 	Gender   *Gender `gorm:"foreignKey:GenderID"`
 
@@ -73,17 +72,25 @@ type Payment struct {
 	BaseModel
 	Name string `gorm:"unique"`
 
-	UserID uint
+	UserID uint 
 	User   *User `gorm:"foreignKey:UserID"`
+
+	PaymentTypeID uint
+	PaymentType   *PaymentType `gorm:"foreignKey:PaymentTypeID"`
+
+	DeliveryTypeID uint
+	DeliveryType   *DeliveryType `gorm:"foreignKey:DeliveryTypeID"`
 }
 
-
-type Delivery struct {
+type PaymentType struct {
 	BaseModel
 	Name string `gorm:"unique"`
 
-	UserID uint
-	User   *User `gorm:"foreignKey:UserID"`
+}
+
+type DeliveryType struct {
+	BaseModel
+	Name string `gorm:"unique"`
  
 }
 

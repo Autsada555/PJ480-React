@@ -22,4 +22,52 @@ async function CreatePayment(data: Payment) {
     return res;
   }
 
-  export { CreatePayment }
+  const GetDeliveryType = async () => {
+    const requestOptions :RequestInit= {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include"
+  
+    };
+  
+    let res = await fetch(`${apiUrl}/payment/deliverytype`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+          return res.data;
+        } else {
+          return false;
+        }
+      });
+  
+    return res;
+  }
+
+  const GetPaymentType = async () => {
+    const requestOptions :RequestInit= {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include"
+  
+    };
+  
+    let res = await fetch(`${apiUrl}/payment/paymenttype`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+          return res.data;
+        } else {
+          return false;
+        }
+      });
+  
+    return res;
+  }
+
+
+
+  export { CreatePayment , GetDeliveryType, GetPaymentType}
