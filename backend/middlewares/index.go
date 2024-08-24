@@ -57,7 +57,7 @@ func Authorization(role_ids ...uint) gin.HandlerFunc {
 		}
 
 		role := map[string]uint{
-			"atk": 101,
+			"etk": 101,
 			"utk": 100,
 		}
 		active_token := c.GetString("active_token")

@@ -86,10 +86,10 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
     fetchUserType();
   }, []);
 
-  const onValid: SubmitHandler<UserUpdateFormData> = async (formData) => {
+  const onValid: SubmitHandler<UserUpdateFormData> = async (formData:UserUpdateFormData) => {
     try {
   
-      const res = await UpdateCustomer( formData);
+      const res = await UpdateCustomer(formData);
   
       if (res.status) {
         onSave();

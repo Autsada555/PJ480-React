@@ -1,4 +1,5 @@
-import { User} from "../../interfaces/index";
+import { UserFormData, UserUpdateFormData } from "@/validator";
+// import { User} from "../../interfaces/index";
 
 const apiUrl = "http://localhost:8080";
 
@@ -47,11 +48,11 @@ const GetCustomer = async (id: number) => {
     return res;
   }
 
-  async function CreateCustomer(data: User) {
+  async function CreateCustomer(formData: UserFormData){
     const requestOptions :RequestInit=  {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(formData),
     };
   
     let res = await fetch(`${apiUrl}/customer/create`, requestOptions)
@@ -67,11 +68,11 @@ const GetCustomer = async (id: number) => {
     return res;
   }
 
-  async function UpdateCustomer(data: User) {
-    const requestOptions = {
+  async function UpdateCustomer(formData: UserUpdateFormData) {
+    const requestOptions :RequestInit= {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(formData),
     };
   
     let res = await fetch(`${apiUrl}/customer/edit`, requestOptions)

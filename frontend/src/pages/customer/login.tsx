@@ -74,7 +74,7 @@ export function Login() {
       }, 1500)
     } else {
       toast({
-        description: res.message2,
+        description: "Login Failed",
       })
 
     }

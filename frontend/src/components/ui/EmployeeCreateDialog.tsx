@@ -99,27 +99,28 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
     fetchUserType();
   }, []);
 
-  const onValid: SubmitHandler<UserFormData> = async (formData) => {
+  const onValid: SubmitHandler<UserFormData> = async (formData: UserFormData) => {
     const res = await CreateCustomer(formData);
-
+    console.log(formData)
     if (res.status) {
-      // Use 'status' instead of 'ok'
       toast({
-        title: res.message, // Use 'message' instead of 'data'
+        title: res.message,
         duration: 1500,
-        variant: "default", // Use a valid variant value
+        variant: "default",
       });
+
       onCreated();
       setOpen(false);
     } else {
       toast({
         title: "Creation Failed",
-        description: res.message, // Use 'message' for error feedback
+        description: res.message,
         duration: 1500,
-        variant: "destructive", // Use 'destructive' for error toasts
+        variant: "destructive",
       });
     }
   };
+
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
