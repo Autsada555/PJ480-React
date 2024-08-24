@@ -27,7 +27,7 @@ function App() {
     <BrowserRouter>
       <div className="router ">
         <Routes>
-          <Route path="/" element={<Home />}/>
+          <Route path="/home" element={<Home />}/>
           <Route path="/customer" element={<Customer />} /> 
           <Route path="/addmenu" element={<AddMenu />}/>
           <Route path="/management" element={<Management />} /> 
@@ -35,7 +35,7 @@ function App() {
           <Route path="/payment" element={<Payment />}/>
           <Route path="/order" element={<Order />}/>
           <Route path="/register" element={<Register />}/>
-          <Route path="/login" element={<Login />}/>
+          <Route path="/" element={<Login />}/>
           <Route path="/delivery" element={<Delivery />}/>
           <Route path="/history" element={<History />}/>
           <Route path="/diabetesfood" element={<DiabetesFood />}/>

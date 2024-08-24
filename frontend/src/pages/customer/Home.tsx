@@ -1,23 +1,23 @@
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import Navbar from "./navbar";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+// import { Link } from "react-router-dom";
+// import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import Healthimg from "@/assets/imgforhome/Healthimg.jpg";
 
 import {
     NavigationMenu,
     NavigationMenuContent,
-    NavigationMenuIndicator,
+    // NavigationMenuIndicator,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
-    NavigationMenuViewport,
+    // NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import { Menu } from "@/interfaces";
 import { GetAllMenu } from "@/services/https/Menu";
-import { TypeOf } from "zod";
+// import { TypeOf } from "zod";
 
 interface MenuData {
     [key: string]: Menu[];
@@ -36,7 +36,7 @@ const [temp,setTemp] =useState<MenuData[] | undefined>()
             const r = groupBy<Menu>(res,"MenuTypeID")
             setTemp([])
             Object.keys(r).forEach(key => {
-                
+
                 setTemp(prevTemp => [...(prevTemp || []), r[key as keyof typeof r]]);
               });
               

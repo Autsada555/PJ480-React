@@ -24,16 +24,15 @@ func InitRouter(route *gin.Engine) {
 
 func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.Use(middlewares.Authentication())
-	customer := middlewares.Authorization(100,200)
+	customer := middlewares.Authorization(100,200,201,202)
 	// User customer management
 	route.GET("/customer",customer, controllers.GetAllCustomer)
-	route.GET("/customer/:id", controllers.GetCustomer)
-	route.POST("/customer/create", controllers.CreateCustomer)
-	route.PATCH("/customer/edit/:id", controllers.UpdateCustomer)
-	route.DELETE("/customer/delete/:id", controllers.DeleteCustomer)
-	route.GET("/customer/gender", controllers.GetAllGender)
-	route.GET("/customer/usertype", controllers.GetAllUserType)
-
+	route.GET("/customer/:id",customer, controllers.GetCustomer)
+	route.POST("/customer/create",customer, controllers.CreateCustomer)
+	route.PATCH("/customer/edit/:id",customer, controllers.UpdateCustomer)
+	route.DELETE("/customer/delete/:id",customer, controllers.DeleteCustomer)
+	route.GET("/customer/gender",customer, controllers.GetAllGender)
+	route.GET("/customer/usertype",customer, controllers.GetAllUserType)
 
 	//history
 	route.GET("/history/:id", controllers.GetAllHistory)
@@ -44,17 +43,11 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	//delivery
 	route.POST("/delivery/create", controllers.CreateDelivery)
 	
-
 	//menu
 	route.GET("/menu",customer, controllers.GetAllMenu)
-	route.POST("/menu/create", controllers.CreateMenu)
-	route.PATCH("/menu/update/:id", controllers.UpdateMenu)
-	route.DELETE("/menu/delete/:id", controllers.DeleteMenu)
-
-	//checkpayment
-	route.GET("/checkpayment", controllers.GetAllMenu)
-	route.PATCH("/checkpayment/update/:id", controllers.UpdateMenu)
-
+	route.POST("/menu/create",customer, controllers.CreateMenu)
+	route.PATCH("/menu/update/:id",customer, controllers.UpdateMenu)
+	route.DELETE("/menu/delete/:id",customer, controllers.DeleteMenu)
 
 	//order
 	route.POST("/order/create", controllers.CreateOrder)
