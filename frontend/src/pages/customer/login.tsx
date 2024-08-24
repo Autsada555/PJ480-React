@@ -56,7 +56,7 @@ export function Login() {
       localStorage.setItem("id", res.message2);
       setTimeout(() => {
         if (res.message2 === 100) {
-          navigate("/", { replace: true });
+          navigate("/home", { replace: true });
         }
         else if (res.message2 === 200) {
           navigate("/addmenu", { replace: true });

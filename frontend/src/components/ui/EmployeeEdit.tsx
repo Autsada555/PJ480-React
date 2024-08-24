@@ -86,11 +86,11 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
     fetchUserType();
   }, []);
 
-  const onValid: SubmitHandler<UserUpdateFormData> = async (formData:UserUpdateFormData) => {
+  const onValid: SubmitHandler<UserUpdateFormData> = async (formData: UserUpdateFormData) => {
     try {
-  
-      const res = await UpdateCustomer( formData);
-  
+
+      const res = await UpdateCustomer(formData);
+      console.log(formData)
       if (res.status) {
         onSave();
         toast({
@@ -113,7 +113,7 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
       });
     }
   };
-  
+
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
