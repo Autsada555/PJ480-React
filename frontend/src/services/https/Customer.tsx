@@ -87,7 +87,7 @@ const GetCustomer = async (id: number) => {
     return res;
     } 
 
-  async function DeleteCustomer(p0: string, id: number | undefined) {
+  async function DeleteCustomer(id: number | undefined) {
     const requestOptions :RequestInit=  {
       method: "DELETE"
     };

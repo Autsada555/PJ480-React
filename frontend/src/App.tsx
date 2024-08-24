@@ -4,7 +4,6 @@ import { BrowserRouter } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
 
 import './App.css';
-import { Customer} from './pages/admin/Customer';
 import { AddMenu } from './pages/admin/AddMenu';
 import { Management } from './pages/admin/Management';
 import { CheckPayment } from './pages/admin/CheckPayment';
@@ -14,13 +13,13 @@ import { Home } from './pages/customer/Home';
 import {Register} from './pages/customer/register';
 import {Login} from './pages/customer/login';
 import { Delivery } from './pages/admin/Delivery';
-import { Employee } from './pages/admin/Employee';
 import {History} from './pages/customer/History';
 import {DiabetesFood} from './pages/customer/DiabetesFood';
 import {KidnyFood} from './pages/customer/KidnyFood';
 import {GastritistFood} from './pages/customer/Gastritist';
 import {ThyroidFood} from './pages/customer/Thyroid';
 import {ListUser} from './pages/admin/ListUser';
+import  Customer  from "./pages/admin/Customer";
 
 function App() {
   return (
@@ -38,14 +37,12 @@ function App() {
           <Route path="/register" element={<Register />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/delivery" element={<Delivery />}/>
-          <Route path="/employee" element={<Employee />}/>
           <Route path="/history" element={<History />}/>
           <Route path="/diabetesfood" element={<DiabetesFood />}/>
           <Route path="/kidnyfood" element={<KidnyFood />}/>
           <Route path="/gastritistfood" element={<GastritistFood />}/>
           <Route path="/thyroidfood" element={<ThyroidFood />}/>
           <Route path="/listuser" element={<ListUser />}/>
-
 
         </Routes>
       </div>

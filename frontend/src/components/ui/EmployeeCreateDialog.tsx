@@ -100,7 +100,7 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
   }, []);
 
   const onValid: SubmitHandler<UserFormData> = async (formData) => {
-    const res = await CreateCustomer( formData);
+    const res = await CreateCustomer(formData);
 
     if (res.status) {
       // Use 'status' instead of 'ok'
@@ -165,61 +165,64 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
                 )}
               />
 
-<FormField
-  name="GenderID"
-  control={form.control}
-  render={({ field }) => (
-    <FormItem>
-      <FormLabel>Gender</FormLabel>
-      <FormControl>
-        <Select
-          value={field.value !== undefined ? String(field.value) : ""} // Convert number to string
-          onValueChange={(value) => field.onChange(Number(value))} // Convert string to number
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Pick Gender" />
-          </SelectTrigger>
-          <SelectContent>
-            {gender.map((g) => (
-              <SelectItem key={g.ID} value={String(g.ID)}>
-                {g.Name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </FormControl>
-      <FormMessage />
-    </FormItem>
-  )}
-/>
-<FormField
-  name="UserTypeID"
-  control={form.control}
-  render={({ field }) => (
-    <FormItem>
-      <FormLabel>User Type</FormLabel>
-      <FormControl>
-        <Select
-          value={field.value !== undefined ? String(field.value) : ""} // Convert number to string
-          onValueChange={(value) => field.onChange(Number(value))} // Convert string to number
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Pick User Type" />
-          </SelectTrigger>
-          <SelectContent>
-            {usertype.map((u) => (
-              <SelectItem key={u.ID} value={String(u.ID)}>
-                {u.Name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </FormControl>
-      <FormMessage />
-    </FormItem>
-  )}
-/>
-
+              <FormField
+                name="GenderID"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Gender</FormLabel>
+                    <FormControl>
+                      <Select
+                        value={
+                          field.value !== undefined ? String(field.value) : ""
+                        } // Convert number to string
+                        onValueChange={(value) => field.onChange(Number(value))} // Convert string to number
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Pick Gender" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {gender.map((g) => (
+                            <SelectItem key={g.ID} value={String(g.ID)}>
+                              {g.Name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="UserTypeID"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>User Type</FormLabel>
+                    <FormControl>
+                      <Select
+                        value={
+                          field.value !== undefined ? String(field.value) : ""
+                        } // Convert number to string
+                        onValueChange={(value) => field.onChange(Number(value))} // Convert string to number
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Pick User Type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {usertype.map((u) => (
+                            <SelectItem key={u.ID} value={String(u.ID)}>
+                              {u.Name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
               <FormField
                 name="Phone"
