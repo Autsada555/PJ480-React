@@ -38,12 +38,13 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	//history
 	route.GET("/history/:id", controllers.GetAllHistory)
 
-	//checkpayment
-	route.POST("/payment/create", controllers.CreatePayment)
 
-	//delivery
-	route.POST("/delivery/create", controllers.CreateDelivery)
-	
+
+	//payment
+	route.POST("/payment/create", controllers.CreatePayment)
+	route.GET("/payment/deliverytype", controllers.GetDeliveryType)
+	route.GET("/payment/paymenttype", controllers.GetPaymentType)
+
 	//menu
 	route.GET("/menu",customer, controllers.GetAllMenu)
 	route.POST("/menu/create",customer, controllers.CreateMenu)

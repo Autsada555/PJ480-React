@@ -32,3 +32,31 @@ func CreatePayment(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": "Payment successfully"})
 }
+
+func GetDeliveryType(c *gin.Context) {
+	// create variable for store data as type of Employee
+	var deliverytype entity.DeliveryType
+
+	// get data form database and check error
+	if err := entity.DB().Find(&deliverytype).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// response data
+	c.JSON(http.StatusOK, gin.H{"data": OmitEmpty(deliverytype)})
+}
+
+func GetPaymentType(c *gin.Context) {
+	// create variable for store data as type of Employee
+	var paymenttype entity.PaymentType
+
+	// get data form database and check error
+	if err := entity.DB().Find(&paymenttype).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// response data
+	c.JSON(http.StatusOK, gin.H{"data": OmitEmpty(paymenttype)})
+}

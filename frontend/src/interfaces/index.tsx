@@ -68,14 +68,26 @@ export interface DiseaseType {
 
 export interface Payment {
   ID: number;
-  Name: string;
+
+  UserID: number;
+  PaymentTypeID: number;
+  DeliveryTypeID: number;
+  
   User: User;
+  PaymentType: PaymentType;
+  DeliveryType: DeliveryType;
 }
 
-export interface Delivery {
+export interface PaymentType {
   ID: number;
   Name: string;
-  User: User;
+
+}
+
+export interface DeliveryType {
+  ID: number;
+  Name: string;
+
 }
 
 export interface Order {

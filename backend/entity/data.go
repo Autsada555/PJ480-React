@@ -192,34 +192,34 @@ func SetupData(db *gorm.DB) {
 	db.Create(&statustypes)
 
 	// payment data
-	payment := []Payment{
+	paymenttype := []PaymentType{
 		{
 			BaseModel:  BaseModel{ID: 1},
 			Name:       "ชำระด้วยเงินสด",
-			UserID: 1,
+			
 		},
 		{
 			BaseModel:  BaseModel{ID: 2},
 			Name:       "ชำระด้วยการโอน",
-			UserID: 2,
+			
 		},
 	}
-	db.Create(&payment)
+	db.Create(&paymenttype)
 
 	// delivery data
-	delivery := []Delivery{
+	deliverytype := []DeliveryType{
 		{
 			BaseModel:  BaseModel{ID: 1},
 			Name:       "รับเองที่หน้าร้าน",
-			UserID: 1,
+			
 		},
 		{
 			BaseModel:  BaseModel{ID: 2},
 			Name:       "จัดส่งตามที่อยู่",
-			UserID: 2,
+			
 		},
 	}
-	db.Create(&delivery)
+	db.Create(&deliverytype)
 
 	menu := []Menu{
 		{
