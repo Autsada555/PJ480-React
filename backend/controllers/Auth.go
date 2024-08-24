@@ -57,10 +57,6 @@ type LoginResponse struct {
 }
 
 func Logout(c *gin.Context) {
-	// role := c.Param("role")
-	// if role != "customer" && role != "admin" && role != "cash" && role != "deliver" {
-	// 	c.AbortWithStatus(http.StatusNotFound)
-	// 	return
 	var value entity.User
 	data := role_data[value.UserType.Name]
 	c.SetCookie(data.TokenName, "", -1, "/", utils.GetConfig().ORIGIN, false, true)
@@ -104,10 +100,6 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "token could not be created"})
 		return
 	}
-	// tokenResponse := LoginResponse{
-	// 	Token: generateJWT,
-	// 	ID:    value.UserTypeID,
-	// }
 	
 	if err := utils.SetActiveJWT(c, data.TokenName, data.Hour); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "token could not be created"})

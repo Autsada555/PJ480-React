@@ -28,7 +28,7 @@ function Navbar() {
 
           <div className="flex justify-between">
             <div className="flex space-x-4 mt-[6px]">
-              <a href="/" className="text-white hover:text-gray-300">
+              <a href="/home" className="text-white hover:text-gray-300">
                 Home
               </a>
 

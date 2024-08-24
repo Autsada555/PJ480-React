@@ -38,8 +38,8 @@ func Authentication() gin.HandlerFunc {
 				return
 			}
 		}
-		
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized0"})
 	}
 }
 
@@ -47,7 +47,7 @@ func Authentication() gin.HandlerFunc {
 func Authorization(role_ids ...uint) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if !c.GetBool("authenticated") {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized1"})
 			return
 		}
 
@@ -64,7 +64,8 @@ func Authorization(role_ids ...uint) gin.HandlerFunc {
 		EmailOrUsername := c.GetString("EmailOrUsername")
 
 		if active_token != "etk" {
-			if slices.Contains(role_ids, role[active_token]) {
+			roleValue, exists := role[active_token]
+			if exists && slices.Contains(role_ids, roleValue) {
 				c.Next()
 				return
 			}
@@ -72,7 +73,7 @@ func Authorization(role_ids ...uint) gin.HandlerFunc {
 			var emp struct {
 				UserTypeID uint
 			}
-			if err := entity.DB().Table("users").Where("email = ? or user_name = ? ", EmailOrUsername,EmailOrUsername).First(&emp).Error; err == nil {
+			if err := entity.DB().Table("users").Where("email = ? or user_name = ? ", EmailOrUsername, EmailOrUsername).First(&emp).Error; err == nil {
 				if slices.Contains(role_ids, emp.UserTypeID) {
 					c.Next()
 					return
