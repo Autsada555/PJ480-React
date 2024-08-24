@@ -89,7 +89,7 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
   const onValid: SubmitHandler<UserUpdateFormData> = async (formData) => {
     try {
   
-      const res = await UpdateCustomer( formData);
+      const res = await UpdateCustomer( formData );
   
       if (res.status) {
         onSave();
@@ -113,7 +113,6 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
       });
     }
   };
-  
   
 
   return (

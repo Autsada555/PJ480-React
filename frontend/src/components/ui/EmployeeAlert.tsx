@@ -20,7 +20,7 @@ interface Props {
 }
 const EmployeeAlert = ({ customerID, onCancel }: Props) => {
   async function handleCancel() {
-    const res = await DeleteCustomer("/customer/delete", customerID);
+    const res = await DeleteCustomer(customerID);
     if (res.status) {  // Check the status property
       onCancel();
     } else {
