@@ -79,7 +79,7 @@ func UpdateCustomer(c *gin.Context) {
 		return
 	}
 
-	if err := entity.DB().Table("users").Where("id = ?", id).Updates(&customer).Error; err != nil {
+	if err := entity.DB().Table("users").Where("id = ?", id).Save(&customer).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

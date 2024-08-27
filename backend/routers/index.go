@@ -30,8 +30,8 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	// User customer management
 	route.GET("/customer", controllers.GetAllCustomer)
 	route.GET("/customer/:id", controllers.GetCustomer)
-	route.PATCH("/customer/edit",customer, controllers.UpdateCustomer)
-	route.DELETE("/customer/delete/:id",customer, controllers.DeleteCustomer)
+	route.PATCH("/customer/edit",controllers.UpdateCustomer)
+	route.DELETE("/customer/delete/:id",controllers.DeleteCustomer)
 	route.GET("/customer/gender", controllers.GetAllGender)
 	route.GET("/customer/usertype", controllers.GetAllUserType)
 
