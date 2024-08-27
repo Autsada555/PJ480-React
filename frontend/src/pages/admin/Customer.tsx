@@ -25,6 +25,7 @@ export function Customer() {
     fetchCustomer();
   }, [customerID]); // Add customerID to the dependency array if it can change
 
+  
   const handleSave = () => {
     // Reload customer data or display a success message
     console.log("Customer data has been saved.");

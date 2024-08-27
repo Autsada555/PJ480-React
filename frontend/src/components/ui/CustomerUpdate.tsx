@@ -49,13 +49,12 @@ const CustomerUpdate = ({ customers, onSave }: Props) => {
       FirstName: customers.FirstName,
       LastName: customers.LastName,
       GenderID: customers.Gender.ID,
-      UserTypeID: customers.UserType.ID,
       Phone: customers.Phone,
       Email: customers.Email,
       Address: customers.Address,
       District: customers.District,
       Province: customers.Province,
-      Postcode: customers.Postcode,
+      Postcode: customers.Postcode
     },
   });
 
@@ -74,12 +73,13 @@ const CustomerUpdate = ({ customers, onSave }: Props) => {
     }
 
     fetchGender();
-  }, []);
+  }, []); // No dependencies needed unless fetching when customerID changes
 
-  const onValid: SubmitHandler<UserUpdateFormData> = async (formData) => {
+  const onValid: SubmitHandler<UserUpdateFormData> = async (formData: UserUpdateFormData) => {
     try {
-      const res = await UpdateCustomer(formData);
 
+      const res = await UpdateCustomer(formData);
+      console.log(formData)
       if (res.status) {
         onSave();
         toast({
@@ -103,212 +103,156 @@ const CustomerUpdate = ({ customers, onSave }: Props) => {
     }
   };
 
+
   return (
-    <>
-      <div>
-        <div className="absolute left-[226px] top-[105px] text-black text-xl font-bold font-['Inter']">
-          Overview
-        </div>
-        <div className="absolute left-[226px] top-[135px] text-black text-3xl font-bold font-['Inter']">
-          User Profile
-        </div>
-        <div>
-          <div className="w-[348px] h-[380px] bg-slate-100 mt-[122px] ml-[220px] rounded-3xl border-[1px]"></div>
-          <div>
-            <Avatar className="absolute left-[330px] w-[122px] h-[122px] top-[-350px]">
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </div>
-          <div className="absolute flex left-[300px] top-[350px]">
-            <p className="text-[19px] text-gray-700 space-x-4">
-              <span className="font-semibold">{customers.FirstName}</span>
-              <span className="font-semibold">{customers.LastName}</span>
-            </p>
-          </div>
-          <div className="absolute flex left-[490px] top-[460px]">
-            <Button
-              className="w-[160px] text-[17px] text-white bg-slate-500"
-              variant="outline"
-            >
-              <Link to="/history">{"ประวัติการสั่งซื้อ"}</Link>
-            </Button>
-          </div>
-          <div className="absolute flex left-[490px] top-[530px]">
-            <Button
-              variant="outline"
-              className="w-[160px] text-[17px] text-white bg-red-700"
-            >
-              {"Log out"}
-            </Button>
-          </div>
-        </div>
-        <div>
-          <Tabs
-            defaultValue="account"
-            className="absolute left-[740px] top-[132px] w-[500px]"
+    <div className="relative p-6">
+      <div className="text-black text-xl font-bold font-['Inter'] mb-4">
+        Overview
+      </div>
+      <div className="text-black text-3xl font-bold font-['Inter'] mb-8">
+        User Profile
+      </div>
+      <div className="flex items-center">
+        <div className="w-[348px] h-[380px] bg-slate-100 rounded-3xl border-[1px] mr-6"></div>
+        <Avatar className="w-[122px] h-[122px]">
+          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+        <div className="ml-6">
+          <p className="text-[19px] text-gray-700">
+            <span className="font-semibold">{customers.FirstName}</span>{" "}
+            <span className="font-semibold">{customers.LastName}</span>
+          </p>
+          <Button
+            className="mt-4 w-[160px] text-[17px] text-white bg-slate-500"
+            variant="outline"
           >
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="account">Account</TabsTrigger>
-              <TabsTrigger value="address">Address</TabsTrigger>
-            </TabsList>
-            <TabsContent value="account">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Account Details</CardTitle>
-                  <CardDescription>
-                    Make changes to your account here. Click update when
-                    you're done.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <div className="space-y-1">
-                    <Label
-                      htmlFor="firstname"
-                      className="left-[27px] top-[130px] absolute"
-                    >
-                      First Name
-                    </Label>
-                    <Input
-                      id="firstname"
-                      placeholder="FirstName"
-                      {...form.register("FirstName")}
-                      className="text-[16px] mt-2 w-full"
-                    />
-                  </div>
-                  <div className="space-y-8">
-                    <Label
-                      htmlFor="lastname"
-                      className="left-[27px] top-[203px] absolute"
-                    >
-                      Last Name
-                    </Label>
-                    <Input
-                      id="lastname"
-                      placeholder="LastName"
-                      {...form.register("LastName")}
-                      className="text-[16px] mt-2 w-full"
-                    />
-                  </div>
-                  <div className="space-y-8">
-                    <Label
-                      htmlFor="gender"
-                      className="left-[27px] top-[275px] absolute"
-                    >
-                      Gender
-                    </Label>
-                    <Select
-                      onValueChange={(value) =>
-                        form.setValue("GenderID", parseInt(value))
-                      }
-                      defaultValue={String(customers.Gender.ID)}
-                    >
-                      <SelectTrigger className="w-[450px] left-[27px]">
-                        <SelectValue placeholder="Select Gender" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Gender</SelectLabel>
-                          {gender.map((gen) => (
-                            <SelectItem key={gen.ID} value={String(gen.ID)}>
-                              {gen.Name}
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button
-                    onClick={form.handleSubmit(onValid)}
-                    className="w-full"
-                  >
-                    Update account
-                  </Button>
-                </CardFooter>
-              </Card>
-            </TabsContent>
-            <TabsContent value="address">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Address</CardTitle>
-                  <CardDescription>
-                    Update your residential information.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <div className="space-y-1">
-                    <Label
-                      htmlFor="address"
-                      className="left-[27px] top-[130px] absolute"
-                    >
-                      Address
-                    </Label>
-                    <Input
-                      id="address"
-                      placeholder="Address"
-                      {...form.register("Address")}
-                      className="text-[16px] mt-2 w-full"
-                    />
-                  </div>
-                  <div className="space-y-8">
-                    <Label
-                      htmlFor="district"
-                      className="left-[27px] top-[203px] absolute"
-                    >
-                      District
-                    </Label>
-                    <Input
-                      id="district"
-                      placeholder="District"
-                      {...form.register("District")}
-                      className="text-[16px] mt-2 w-full"
-                    />
-                  </div>
-                  <div className="space-y-8">
-                    <Label
-                      htmlFor="province"
-                      className="left-[27px] top-[275px] absolute"
-                    >
-                      Province
-                    </Label>
-                    <Input
-                      id="province"
-                      placeholder="Province"
-                      {...form.register("Province")}
-                      className="text-[16px] mt-2 w-full"
-                    />
-                  </div>
-                  <div className="space-y-8">
-                    <Label
-                      htmlFor="postcode"
-                      className="left-[27px] top-[347px] absolute"
-                    >
-                      Postcode
-                    </Label>
-                    <Input
-                      id="postcode"
-                      placeholder="Postcode"
-                      {...form.register("Postcode")}
-                      className="text-[16px] mt-2 w-full"
-                    />
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button
-                    onClick={form.handleSubmit(onValid)}
-                    className="w-full"
-                  >
-                    Update address
-                  </Button>
-                </CardFooter>
-              </Card>
-            </TabsContent>
-          </Tabs>
+            <Link to="/history">ประวัติการสั่งซื้อ</Link>
+          </Button>
+          <Button
+            variant="outline"
+            className="mt-4 w-[160px] text-[17px] text-white bg-red-700"
+          >
+            Log out
+          </Button>
         </div>
       </div>
-    </>
+      <Tabs defaultValue="account" className="mt-8 w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="account">Account</TabsTrigger>
+          <TabsTrigger value="address">Address</TabsTrigger>
+        </TabsList>
+        <TabsContent value="account">
+          <Card>
+            <CardHeader>
+              <CardTitle>Account Details</CardTitle>
+              <CardDescription>
+                Make changes to your account here. Click update when you're done.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <div className="space-y-1">
+                <Label htmlFor="firstname">First Name</Label>
+                <Input
+                  id="firstname"
+                  placeholder="FirstName"
+                  {...form.register("FirstName")}
+                  className="text-[16px] w-full"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="lastname">Last Name</Label>
+                <Input
+                  id="lastname"
+                  placeholder="LastName"
+                  {...form.register("LastName")}
+                  className="text-[16px] w-full"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="gender">Gender</Label>
+                <Select
+                  onValueChange={(value) => form.setValue("GenderID", parseInt(value))}
+                  defaultValue={String(customers.Gender.ID)}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Gender" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Gender</SelectLabel>
+                      {gender.map((gen) => (
+                        <SelectItem key={gen.ID} value={String(gen.ID)}>
+                          {gen.Name}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button onClick={form.handleSubmit(onValid)} className="w-full">
+                Update account
+              </Button>
+            </CardFooter>
+          </Card>
+        </TabsContent>
+        <TabsContent value="address">
+          <Card>
+            <CardHeader>
+              <CardTitle>Address</CardTitle>
+              <CardDescription>
+                Update your residential information.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <div className="space-y-1">
+                <Label htmlFor="address">Address</Label>
+                <Input
+                  id="address"
+                  placeholder="Address"
+                  {...form.register("Address")}
+                  className="text-[16px] w-full"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="district">District</Label>
+                <Input
+                  id="district"
+                  placeholder="District"
+                  {...form.register("District")}
+                  className="text-[16px] w-full"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="province">Province</Label>
+                <Input
+                  id="province"
+                  placeholder="Province"
+                  {...form.register("Province")}
+                  className="text-[16px] w-full"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="postcode">Postcode</Label>
+                <Input
+                  id="postcode"
+                  placeholder="Postcode"
+                  {...form.register("Postcode")}
+                  className="text-[16px] w-full"
+                />
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button onClick={form.handleSubmit(onValid)} className="w-full">
+                Update address
+              </Button>
+            </CardFooter>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 };
 
