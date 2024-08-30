@@ -36,18 +36,45 @@ export function KidnyFood() {
   return (
     <div>
       <Navbar />
-      <div className="ml-[430px] mt-[20px] text-[18px]">
+      <div className="mt-3 justify-center flex">
         <NavigationMenu>
           <NavigationMenuList>
-            <NavigationMenuItem>
-            <NavigationMenuTrigger>Healthy Foods</NavigationMenuTrigger>
-              <NavigationMenuTrigger>Diabetes Foods </NavigationMenuTrigger>
-              <NavigationMenuTrigger>Kidny Foods </NavigationMenuTrigger>
-              <NavigationMenuTrigger>Gastritist Foods </NavigationMenuTrigger>
-              <NavigationMenuTrigger>Thyroid Foods</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <NavigationMenuLink>Link</NavigationMenuLink>
-              </NavigationMenuContent>
+            <NavigationMenuItem className="flex">
+              <NavigationMenuItem>
+                <Link to={"/home"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Health Food
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to={"/diabetesfood"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Diabetes Food
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to={"/kidnyfood"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Kidny Foods
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to={"/gastritistfood"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Gastritist Foods
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to={"/thyroidfood"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Thyroid Foods
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
@@ -55,21 +82,21 @@ export function KidnyFood() {
       {/* <div className="w-[230px] h-[42px] bg-slate-100 mt-[16px] ml-[125px] rounded-xl left-[144px] border-[1px]"></div> */}
 
       <div className="left-[100px] top-[155px] absolute text-black text-2xl font-bold font-['Inter']">
-         อาหารสำหรับผู่ป่วยโรคไตเรื้อรัง (Kidny Foods)
-        </div>
-        
-        <div className="w-[1570px] h-[360px] bg-slate-100   mt-[70px] ml-[5px] rounded-xl left-[144px] border-[1px]"></div>
-        <div className="mt-[-328px] ml-[200px] ">
-            <img src={Kidnyimg} alt="Kidnyimg" className="w-[500px] h-[300px]" />
-        </div>
-        <div className="ml-[750px] mt-[-250px] font-['Inter'] text-[20px] absolute">
+        อาหารสำหรับผู่ป่วยโรคไตเรื้อรัง (Kidny Foods)
+      </div>
+
+      <div className="w-[1570px] h-[360px] bg-slate-100   mt-[70px] ml-[5px] rounded-xl left-[144px] border-[1px]"></div>
+      <div className="mt-[-328px] ml-[200px] ">
+        <img src={Kidnyimg} alt="Kidnyimg" className="w-[500px] h-[300px]" />
+      </div>
+      <div className="ml-[750px] mt-[-250px] font-['Inter'] text-[20px] absolute">
         "อาหารสำหรับผู้ป่วยโรคไตเรื้อรังควรเน้นการควบคุมปริมาณโซเดียม โพแทสเซียม  <br />
         และฟอสฟอรัสในอาหาร โดยเลือกบริโภคอาหารที่มีโซเดียมต่ำ เช่น ผัก ผลไม้ที่มีโพแทสเซียมต่ำ <br />
         ข้าวขาว และเนื้อสัตว์ที่ไม่ติดมัน หลีกเลี่ยงอาหารที่มีปริมาณเกลือสูง เช่น อาหารกระป๋อง <br />
         อาหารสำเร็จรูป และขนมขบเคี้ยว ลดการบริโภคผลิตภัณฑ์นมที่มีฟอสฟอรัสสูง เช่น ชีส นม โยเกิร์ต <br />
         ควรปรึกษานักโภชนาการหรือแพทย์เพื่อการวางแผนอาหารที่เหมาะสมสำหรับแต่ละบุคคล <br />
-        เพื่อให้สามารถควบคุมอาการและรักษาสุขภาพไตได้อย่างมีประสิทธิภาพ" 🍎🍚🥦 
-        </div>
+        เพื่อให้สามารถควบคุมอาการและรักษาสุขภาพไตได้อย่างมีประสิทธิภาพ" 🍎🍚🥦
+      </div>
 
       <div className="flex ml-28 mt-[50px]">
         <h1 className="text-2xl  font-['Inter'] font-bold">Savory Food</h1>

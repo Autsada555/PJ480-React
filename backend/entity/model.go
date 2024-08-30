@@ -17,47 +17,42 @@ type BaseModel struct {
 type Gender struct {
 	BaseModel
 	Name string `gorm:"unique"`
-
 }
 
 type MenuType struct {
 	BaseModel
 	Name string `gorm:"unique"`
-
 }
 
 type DiseaseType struct {
 	BaseModel
-	Name string `gorm:"unique"`
-	
-
+	Name  string  `gorm:"unique"`
+	// Menus []*Menu `gorm:"many2many:menu_disease_types;"`
 }
 
 type StatusType struct {
 	BaseModel
 	Name string `gorm:"unique"`
-
 }
 
 type UserType struct {
 	BaseModel
 	Name string `gorm:"unique"`
-
 }
 
 type User struct {
 	BaseModel
-	
+
 	FirstName string `gorm:"default:UserFirstName"`
 	LastName  string `gorm:"default:UserLastName"`
 	Email     string `valid:"required~Email is required,email~Invalid email address" gorm:"unique"`
 	Password  string `valid:"required~Password is required,minstringlength(8)~Password must be at least 8 characters"`
 	Phone     string `valid:"required~Phone number is required,stringlength(10|10)~Phone must be at 10 characters"`
 	UserName  string `gorm:"default:UserName"`
-	Address  string `valid:"required~Address is required,minstringlength(2)~Address must be at least 2 characters"`
-	District string `valid:"required~District is required,minstringlength(2)~District must be at least 2 characters"`
-	Province string `valid:"required~Province is required,minstringlength(2)~Province must be at least 2 characters"`
-	Postcode string `valid:"required~Postcode is required,stringlength(5|5)~Postcode must be at 5 characters"`
+	Address   string `valid:"required~Address is required,minstringlength(2)~Address must be at least 2 characters"`
+	District  string `valid:"required~District is required,minstringlength(2)~District must be at least 2 characters"`
+	Province  string `valid:"required~Province is required,minstringlength(2)~Province must be at least 2 characters"`
+	Postcode  string `valid:"required~Postcode is required,stringlength(5|5)~Postcode must be at 5 characters"`
 
 	GenderID uint
 	Gender   *Gender `gorm:"foreignKey:GenderID"`
@@ -65,14 +60,14 @@ type User struct {
 	UserTypeID uint
 	UserType   *UserType `gorm:"foreignKey:UserTypeID"`
 
-	Payments []Payment `gorm:"foreignKey:UserID"`//ส่ง FK ไปที่ payment
+	Payments []Payment `gorm:"foreignKey:UserID"` //ส่ง FK ไปที่ payment
 }
 
 type Payment struct {
 	BaseModel
 	Name string `gorm:"unique"`
 
-	UserID uint 
+	UserID uint
 	User   *User `gorm:"foreignKey:UserID"`
 
 	PaymentTypeID uint
@@ -85,18 +80,16 @@ type Payment struct {
 type PaymentType struct {
 	BaseModel
 	Name string `gorm:"unique"`
-
 }
 
 type DeliveryType struct {
 	BaseModel
 	Name string `gorm:"unique"`
- 
 }
 
 type Order struct {
 	BaseModel
-	Quantity int `gorm:"unique"`
+	Quantity int     `gorm:"unique"`
 	Total    float32 `gorm:"unique"`
 
 	UserID uint
@@ -105,8 +98,6 @@ type Order struct {
 	MenuID uint
 	Menu   *Menu `gorm:"foreignKey:MenuID"`
 }
-
-
 
 type HistoryOrder struct {
 	BaseModel
@@ -136,14 +127,14 @@ type Checkpayment struct {
 
 type Menu struct {
 	BaseModel
-	Name        string 
-	Cost        float32 
-	Description string 
-	Component 	 map[string]interface{} `gorm:"serializer:json"`
-	MenuImage   string `gorm:"type:longtext"`
+	Name        string
+	Cost        float32
+	Description string
+	Component   map[string]interface{} `gorm:"serializer:json"`
+	MenuImage   string                 `gorm:"type:longtext"`
 
-	DiseaseTypeID uint
-	DiseaseType   *DiseaseType `gorm:"foreignKey:DiseaseTypeID"`
+	// DiseaseTypeID uint
+	DiseaseType []DiseaseType `gorm:"many2many:menu_disease_types"`
 
 	MenuTypeID uint
 	MenuType   *MenuType `gorm:"foreignKey:MenuTypeID"`

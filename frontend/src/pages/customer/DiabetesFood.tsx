@@ -36,18 +36,45 @@ export function DiabetesFood() {
   return (
     <div>
       <Navbar />
-      <div className="ml-[430px] mt-[20px] text-[18px]">
+      <div className="mt-3 justify-center flex">
         <NavigationMenu>
           <NavigationMenuList>
-            <NavigationMenuItem>
-            <NavigationMenuTrigger>Healthy Foods</NavigationMenuTrigger>
-              <NavigationMenuTrigger>Diabetes Foods </NavigationMenuTrigger>
-              <NavigationMenuTrigger>Kidny Foods </NavigationMenuTrigger>
-              <NavigationMenuTrigger>Gastritist Foods </NavigationMenuTrigger>
-              <NavigationMenuTrigger>Thyroid Foods</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <NavigationMenuLink>Link</NavigationMenuLink>
-              </NavigationMenuContent>
+            <NavigationMenuItem className="flex">
+              <NavigationMenuItem>
+                <Link to={"/home"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Health Food
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to={"/diabetesfood"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Diabetes Food
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to={"/kidnyfood"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Kidny Foods
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to={"/gastritistfood"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Gastritist Foods
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to={"/thyroidfood"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Thyroid Foods
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
@@ -55,22 +82,22 @@ export function DiabetesFood() {
       {/* <div className="w-[230px] h-[42px] bg-slate-100 mt-[16px] ml-[125px] rounded-xl left-[144px] border-[1px]"></div> */}
 
       <div className="left-[100px] top-[155px] absolute text-black text-2xl font-bold font-['Inter']">
-         อาหารสำหรับผู่ป่วยโรคเบาหวาน (Diabetes Foods)
-        </div>
-        
-        <div className="w-[1570px] h-[360px] bg-slate-100   mt-[70px] ml-[5px] rounded-xl left-[144px] border-[1px]"></div>
-        <div className="mt-[-328px] ml-[200px] ">
-            <img src={Diabetesimg} alt="Diabetesimg" className="w-[500px] h-[300px]" />
-        </div>
-        <div className="ml-[770px] mt-[-250px] font-['Inter'] text-[20px] absolute">
+        อาหารสำหรับผู่ป่วยโรคเบาหวาน (Diabetes Foods)
+      </div>
+
+      <div className="w-[1570px] h-[360px] bg-slate-100   mt-[70px] ml-[5px] rounded-xl left-[144px] border-[1px]"></div>
+      <div className="mt-[-328px] ml-[200px] ">
+        <img src={Diabetesimg} alt="Diabetesimg" className="w-[500px] h-[300px]" />
+      </div>
+      <div className="ml-[770px] mt-[-250px] font-['Inter'] text-[20px] absolute">
         "อาหารสำหรับผู้ป่วยโรคเบาหวานควรเน้นการควบคุมระดับน้ำตาลในเลือด  <br />
         โดยเลือกบริโภคอาหารที่มีคาร์โบไฮเดรตเชิงซ้อน เช่น ข้าวกล้อง ขนมปังโฮลวีท และผักใบเขียว <br />
         ควรหลีกเลี่ยงอาหารที่มีน้ำตาลสูงและไขมันอิ่มตัว เช่น ขนมหวานและอาหารทอด <br />
         การเลือกอาหารที่มีโปรตีนสูง เช่น ปลา เนื้อไก่ไม่ติดมัน และถั่ว   <br />
         สามารถช่วยควบคุมระดับน้ำตาลในเลือดได้ดีขึ้น <br />
         พร้อมกับการรับประทานผักและผลไม้ที่มีดัชนีน้ำตาลต่ำ <br />
-        เพื่อส่งเสริมสุขภาพที่ดีและควบคุมโรคเบาหวานได้อย่างมีประสิทธิภาพ" 🥦🍗 
-        </div>
+        เพื่อส่งเสริมสุขภาพที่ดีและควบคุมโรคเบาหวานได้อย่างมีประสิทธิภาพ" 🥦🍗
+      </div>
 
       <div className="flex ml-28 mt-[50px]">
         <h1 className="text-2xl  font-['Inter'] font-bold">Savory Food</h1>

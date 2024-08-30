@@ -36,18 +36,45 @@ export function ThyroidFood() {
   return (
     <div>
       <Navbar />
-      <div className="ml-[430px] mt-[20px] text-[18px]">
+      <div className="mt-3 justify-center flex">
         <NavigationMenu>
           <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Healthy Foods</NavigationMenuTrigger>
-              <NavigationMenuTrigger>Diabetes Foods </NavigationMenuTrigger>
-              <NavigationMenuTrigger>Kidny Foods </NavigationMenuTrigger>
-              <NavigationMenuTrigger>Gastritist Foods </NavigationMenuTrigger>
-              <NavigationMenuTrigger>Thyroid Foods</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <NavigationMenuLink>Link</NavigationMenuLink>
-              </NavigationMenuContent>
+            <NavigationMenuItem className="flex">
+              <NavigationMenuItem>
+                <Link to={"/home"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Health Food
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to={"/diabetesfood"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Diabetes Food
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to={"/kidnyfood"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Kidny Foods
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to={"/gastritistfood"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Gastritist Foods
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to={"/thyroidfood"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Thyroid Foods
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
@@ -55,22 +82,22 @@ export function ThyroidFood() {
       {/* <div className="w-[230px] h-[42px] bg-slate-100 mt-[16px] ml-[125px] rounded-xl left-[144px] border-[1px]"></div> */}
 
       <div className="left-[100px] top-[155px] absolute text-black text-2xl font-bold font-['Inter']">
-         อาหารสำหรับผู้ป่วยโรคไทรอยด์เป็นพิษ (Thyroid Foods)
-        </div>
-        
-        <div className="w-[1570px] h-[360px] bg-slate-100   mt-[70px] ml-[5px] rounded-xl left-[144px] border-[1px]"></div>
-        <div className="mt-[-328px] ml-[200px] ">
-            <img src={Thyroidimg} alt="Thyroidimg" className="w-[500px] h-[300px]" />
-        </div>
-        <div className="ml-[750px] mt-[-270px] font-['Inter'] text-[20px] absolute">
+        อาหารสำหรับผู้ป่วยโรคไทรอยด์เป็นพิษ (Thyroid Foods)
+      </div>
+
+      <div className="w-[1570px] h-[360px] bg-slate-100   mt-[70px] ml-[5px] rounded-xl left-[144px] border-[1px]"></div>
+      <div className="mt-[-328px] ml-[200px] ">
+        <img src={Thyroidimg} alt="Thyroidimg" className="w-[500px] h-[300px]" />
+      </div>
+      <div className="ml-[750px] mt-[-270px] font-['Inter'] text-[20px] absolute">
         "อาหารสำหรับผู้ป่วยโรคไทรอยด์เป็นพิษควรเน้นการบริโภคอาหารที่ช่วยควบคุม<br />
         การทำงานของต่อมไทรอยด์ โดยหลีกเลี่ยงอาหารที่มีสารไอโอดีนสูง เช่น อาหารทะเล สาหร่ายทะเล  <br />
         แนะนำให้รับประทานผักที่ไม่กระตุ้นการทำงานของต่อมไทรอยด์ เช่น ผักกาดขาว  <br />
         บรอกโคลี ดอกกะหล่ำ และเกลือเสริมไอโอดีน รวมถึงอาหารที่มีโปรตีนสูงจากแหล่งที่มีไขมันต่ำ  <br />
         เช่น เนื้อไก่ไม่ติดมัน ปลา และถั่วต่างๆ ควรหลีกเลี่ยงการบริโภคคาเฟอีน แอลกอฮอล์  <br />
         และอาหารที่มีน้ำตาลสูง การวางแผนอาหารที่เหมาะสมและปรึกษาแพทย์หรือนักโภชนาการ <br />
-        จะช่วยให้ควบคุมอาการและรักษาสุขภาพได้ดีขึ้น" 🌿🍗🥦 
-        </div>
+        จะช่วยให้ควบคุมอาการและรักษาสุขภาพได้ดีขึ้น" 🌿🍗🥦
+      </div>
 
       <div className="flex ml-28 mt-[50px]">
         <h1 className="text-2xl  font-['Inter'] font-bold">Savory Food</h1>

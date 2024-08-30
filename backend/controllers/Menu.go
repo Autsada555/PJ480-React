@@ -12,7 +12,7 @@ func GetAllMenu(c *gin.Context) {
 	var menus []entity.Menu
 
 	if err := entity.DB().
-    InnerJoins("DiseaseType").InnerJoins("MenuType").
+    Preload("DiseaseType").InnerJoins("MenuType").
     Find(&menus).Error; err != nil {
     c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
     return

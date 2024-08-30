@@ -19,6 +19,8 @@ export function Management() {
                     <button className="bg-slate-300 h-[80px] w-[250px]"><a href="addmenu">Add Menu</a></button>
                     <button className="bg-slate-300 h-[80px] w-[250px]"><a href="management">Managment Menu</a></button>
                     <button className="bg-slate-300 h-[80px] w-[250px]"><a href="checkpayment">Check Payment</a></button>
+                    <button className="bg-slate-300 h-[80px] w-[250px]"><a href="listuser">List User</a></button>
+
                 </div>
                 <div className="left-[260px] top-[125px] absolute text-black text-2xl font-bold font-['Inter']">
                     Management Menu

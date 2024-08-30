@@ -36,18 +36,45 @@ export function GastritistFood() {
   return (
     <div>
       <Navbar />
-      <div className="ml-[430px] mt-[20px] text-[18px]">
+      <div className="mt-3 justify-center flex">
         <NavigationMenu>
           <NavigationMenuList>
-            <NavigationMenuItem>
-            <NavigationMenuTrigger>Healthy Foods</NavigationMenuTrigger>
-              <NavigationMenuTrigger>Diabetes Foods </NavigationMenuTrigger>
-              <NavigationMenuTrigger>Kidny Foods </NavigationMenuTrigger>
-              <NavigationMenuTrigger>Gastritist Foods </NavigationMenuTrigger>
-              <NavigationMenuTrigger>Thyroid Foods</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <NavigationMenuLink>Link</NavigationMenuLink>
-              </NavigationMenuContent>
+            <NavigationMenuItem className="flex">
+              <NavigationMenuItem>
+                <Link to={"/home"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Health Food
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to={"/diabetesfood"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Diabetes Food
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to={"/kidnyfood"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Kidny Foods
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to={"/gastritistfood"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Gastritist Foods
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to={"/thyroidfood"}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Thyroid Foods
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
@@ -55,14 +82,14 @@ export function GastritistFood() {
       {/* <div className="w-[230px] h-[42px] bg-slate-100 mt-[16px] ml-[125px] rounded-xl left-[144px] border-[1px]"></div> */}
 
       <div className="left-[100px] top-[155px] absolute text-black text-2xl font-bold font-['Inter']">
-         อาหารสำหรับผู้ป่วยโรคกระเพาะอาหารอักเสบ (Gastritist Foods)
-        </div>
-        
-        <div className="w-[1570px] h-[360px] bg-slate-100   mt-[70px] ml-[5px] rounded-xl left-[144px] border-[1px]"></div>
-        <div className="mt-[-328px] ml-[200px] ">
-            <img src={Gastritistimg} alt="Gastritist" className="w-[500px] h-[300px]" />
-        </div>
-        <div className="ml-[750px] mt-[-270px] font-['Inter'] text-[20px] absolute">
+        อาหารสำหรับผู้ป่วยโรคกระเพาะอาหารอักเสบ (Gastritist Foods)
+      </div>
+
+      <div className="w-[1570px] h-[360px] bg-slate-100   mt-[70px] ml-[5px] rounded-xl left-[144px] border-[1px]"></div>
+      <div className="mt-[-328px] ml-[200px] ">
+        <img src={Gastritistimg} alt="Gastritist" className="w-[500px] h-[300px]" />
+      </div>
+      <div className="ml-[750px] mt-[-270px] font-['Inter'] text-[20px] absolute">
         "อาหารสำหรับผู้ป่วยโรคกระเพาะอาหารอักเสบควรเน้นการเลือกรับประทานอาหารที่ย่อยง่าย <br />
         และไม่กระตุ้นให้เกิดการระคายเคืองในกระเพาะอาหาร เช่น ข้าวสวย ข้าวต้ม เนื้อสัตว์ที่ไม่ติดมัน ปลา <br />
         ผักที่ต้มสุกและผลไม้ที่ไม่เป็นกรด หลีกเลี่ยงอาหารที่มีไขมันสูง อาหารรสจัด เช่น เผ็ด เปรี้ยว เค็ม <br />
@@ -70,7 +97,7 @@ export function GastritistFood() {
         ควรแบ่งอาหารเป็นมื้อย่อยๆ หลายครั้งในวันเพื่อช่วยลดการสร้างกรดในกระเพาะอาหาร  <br />
         การเลือกอาหารที่เหมาะสม สามารถช่วยลดอาการอักเสบและส่งเสริมสุขภาพของกระเพาะอาหาร <br />
         ได้อย่างมีประสิทธิภาพ" 🍲🍗🥕
-        </div>
+      </div>
 
       <div className="flex ml-28 mt-[50px]">
         <h1 className="text-2xl  font-['Inter'] font-bold">Savory Food</h1>

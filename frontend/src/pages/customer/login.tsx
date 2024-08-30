@@ -65,10 +65,10 @@ export function Login() {
           navigate("/delivery", { replace: true });
         }
         else if (res.message2 === 201) {
-          navigate("/", { replace: true });
+          navigate("/cash", { replace: true });
         }
         else {
-          navigate("/login", { replace: true });
+          navigate("/", { replace: true });
         }
 
       }, 1500)
