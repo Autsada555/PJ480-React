@@ -99,8 +99,8 @@ async function DeleteCustomer(id: number | undefined) {
     .then((response) => response.json())
     .then((res) => {
 
-      if (res.message) {
-        return { status: true, message: res.message };
+      if (res.data) {
+        return { status: true, message: res.data };
       } else {
         return { status: false, message: res.error };
       }

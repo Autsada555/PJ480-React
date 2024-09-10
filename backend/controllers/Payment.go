@@ -11,6 +11,42 @@ import (
 	"github.com/Autsada555/PJ480-React/backend/entity"
 	// "gorm.io/gorm/clause"
 )
+// Define a struct to only include address-related fields
+type AddressResponse struct {
+	Address  string `json:"address"`
+	District string `json:"district"`
+	Province string `json:"province"`
+	Postcode string `json:"postcode"`
+}
+
+func GetAddressByUserId(c *gin.Context) {
+	// Create a variable to store user data with specific fields
+	var user struct {
+		Address  string `json:"address"`
+		District string `json:"district"`
+		Province string `json:"province"`
+		Postcode string `json:"postcode"`
+	}
+
+	// Get the user ID from URL parameters
+	id := c.Param("id")
+
+	// Query the database and select only the necessary fields
+	if err := entity.DB().
+		Model(&entity.User{}).
+		Select("address, district, province, postcode").
+		Where("id = ?", id).
+		First(&user).Error; err != nil {
+		// Return error response if no data found or query fails
+		c.JSON(http.StatusBadRequest, gin.H{"error": "User not found or unable to retrieve address"})
+		return
+	}
+
+	// Return the address data as JSON response
+	c.JSON(http.StatusOK, gin.H{"data": user})
+}
+
+
 
 func CreatePayment(c *gin.Context) {
 	var payment entity.Payment

@@ -19,7 +19,7 @@ import {KidnyFood} from './pages/customer/KidnyFood';
 import {GastritistFood} from './pages/customer/Gastritist';
 import {ThyroidFood} from './pages/customer/Thyroid';
 import {ListUser} from './pages/admin/ListUser';
-import  Customer  from "./pages/admin/Customer";
+import {Customer} from "./pages/admin/Customer";
 
 function App() {
   return (

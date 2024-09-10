@@ -8,7 +8,6 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogAction,
-  // AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { AlertTriangleIcon } from "lucide-react";
 
@@ -25,10 +24,9 @@ const EmployeeAlert = ({ customerID, onCancel }: Props) => {
         onCancel();
       } else {
         // Handle the case where the status is false, if needed
-        console.error("Failed to delete customer:", res.message);
+        console.error("Failed to delete customer:", res.status);
       }
     } catch (error) {
-      // Handle any errors that occur during the fetch
       console.error("Error occurred while deleting customer:", error);
     }
   }
@@ -44,7 +42,9 @@ const EmployeeAlert = ({ customerID, onCancel }: Props) => {
       </AlertDialogHeader>
       <AlertDialogFooter className="sm:justify-between">
         <AlertDialogAction asChild>
-          <Button variant="secondary">No, don't delete.</Button>
+          <Button variant="secondary" onClick={onCancel}>
+            No, don't delete.
+          </Button>
         </AlertDialogAction>
         <Button type="button" variant={"destructive"} onClick={handleCancel}>
           Yes! Delete.
