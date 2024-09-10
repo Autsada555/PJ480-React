@@ -81,3 +81,16 @@ export const userFormSchema = z.object({
   // });
   
   // export type AddressUpdateData = z.infer<typeof addressUpdateSchema>;
+
+  export const paymentFormSchema = z.object({
+    Address: z.string().min(2, "Address must be at least 2 characters"),
+    District: z.string().min(2, "District must be at least 2 characters"),
+    Province: z.string().min(2, "Province must be at least 2 characters"),
+    Postcode: z.string().length(5, "Postcode must be 5 characters"),
+
+    PaymentTypeID: z.number({ required_error: "Please select payment type" }),
+    DeliveryTypeID: z.number({ required_error: "Please select delivery type" }),
+
+  });
+  
+  export type PaymentFormData = z.infer<typeof paymentFormSchema>;
