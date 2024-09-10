@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Healthimg from "@/assets/imgforhome/Healthimg.jpg";
 
+
 import {
     NavigationMenu,
     NavigationMenuItem,
@@ -10,12 +11,16 @@ import {
     NavigationMenuList,
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+import { useToast } from "@/components/ui/use-toast"
 import { Menu } from "@/interfaces";
 import { GetAllMenu } from "@/services/https/Menu";
+import { CreateOrder } from "@/services/https/Order";
 
 export function Home() {
     const [showModalMenu, setShowModalMenu] = useState(false);
     const [temp, setTemp] = useState<Menu[][] | undefined>()
+    const { toast } = useToast()
+
 
     const handleGetAllMenu = async () => {
         let res = await GetAllMenu();
@@ -56,6 +61,22 @@ export function Home() {
             setShowModalMenu(false);
         }
     };
+    // const onFinishOrder = async () => {
+    //     const storedValue: string | null = localStorage.getItem("id");
+    //     const memberId: number = parseInt(storedValue ?? "0", 10);
+    //     let res = await CreateOrder(memberId, rewardID);
+    //     if (res.status) {
+    //         toast({
+    //             type: "success",
+    //             description: "Login successful",
+    //           })
+
+    //     } else {
+    //         toast({
+    //             description: "Login successful",
+    //           })
+    //     }
+    // };
     return (
         <div>
             <Navbar />

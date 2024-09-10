@@ -34,14 +34,10 @@ export function Login() {
     },
   })
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     loginUser(values)
   }
   function onSignUp() {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(123)
+    navigate("/register", { replace: true });
   }
 
   const { toast } = useToast()
