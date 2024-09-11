@@ -31,7 +31,6 @@ export const userFormSchema = z.object({
     Postcode: z.string().length(5, "Postcode must be 5 characters"),
 
     GenderID: z.number({ required_error: "Please select gender" }),
-    UserTypeID: z.number({ required_error: "Please select user type" }),
   });
   
   export type UserUpdateFormData = z.infer<typeof userUpdateFormSchema>;

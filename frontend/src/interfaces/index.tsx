@@ -39,6 +39,22 @@ export interface User {
   UserType: UserType;
 }
 
+export interface UserID {
+  [x: string]: any;
+
+  ID: number;
+  FirstName: string;
+  LastName: string;
+  Email: string;
+  Phone: string;
+  Address: string;
+  District: string;
+  Province: string;
+  Postcode: string;
+  GenderID: number;
+
+  Gender: Gender;
+}
 
 
 export interface Gender {

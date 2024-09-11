@@ -70,7 +70,7 @@ async function CreateCustomer(formData: UserFormData) {
   return res;
 }
 
-async function UpdateCustomer(formData: UserUpdateFormData) {
+async function UpdateCustomer(formData: UserUpdateFormData, id:number) {
   const requestOptions: RequestInit = {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
@@ -78,7 +78,7 @@ async function UpdateCustomer(formData: UserUpdateFormData) {
     credentials: "include"
   };
 
-  let res = await fetch(`${apiUrl}/customer/edit`, requestOptions)
+  let res = await fetch(`${apiUrl}/customer/edit/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -98,7 +98,7 @@ async function DeleteCustomer(id: number | undefined) {
   let res = await fetch(`${apiUrl}/customer/delete/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-
+      console.log(res)
       if (res.data) {
         return { status: true, message: res.data };
       } else {
@@ -154,4 +154,26 @@ const GetAllUserType = async () => {
 
   return res;
 }
-export { GetCustomer, UpdateCustomer, DeleteCustomer, GetAllCustomer, CreateCustomer, GetAllGender, GetAllUserType }
+
+const GetCustomerByID = async (id: number) => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/customer/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+export { GetCustomer, UpdateCustomer, DeleteCustomer, GetAllCustomer, CreateCustomer, GetAllGender, GetAllUserType ,GetCustomerByID}

@@ -19,7 +19,11 @@ func InitRouter(route *gin.Engine) {
 	route.POST("/customer/create", controllers.CreateCustomer)
 	route.GET("/customer/gender", controllers.GetAllGender)
 	route.GET("/customer/usertype", controllers.GetAllUserType)
-
+	route.DELETE("/customer/delete/:id",controllers.DeleteCustomer)
+	route.GET("/customer/", controllers.GetCustomer)
+	route.GET("/customer/:id", controllers.GetCustomerByID)
+	// route.PATCH("/customer/edit/:id",controllers.UpdateCustomerByID)
+	route.PATCH("/customer/edit/:id",controllers.UpdateCustomer)
 
 	authRouter := route.Group("/")
 	initRequiredAuthRouter(authRouter)
@@ -31,9 +35,7 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	customer := middlewares.Authorization(100)
 	// User customer management
 	route.GET("/customer", controllers.GetAllCustomer)
-	route.GET("/customer/", controllers.GetCustomer)
-	route.PATCH("/customer/edit",controllers.UpdateCustomer)
-	route.DELETE("/customer/delete/:id",controllers.DeleteCustomer)
+
 
 
 	//history

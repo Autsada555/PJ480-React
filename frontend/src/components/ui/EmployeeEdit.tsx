@@ -3,7 +3,11 @@ import { Gender, UserType, User } from "../../interfaces";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify"; // Import toast from react-toastify
 import { Edit } from "lucide-react";
-import { GetAllGender, GetAllUserType, UpdateCustomer } from "../../services/https/Customer";
+import {
+  GetAllGender,
+  GetAllUserType,
+  UpdateCustomer,
+} from "../../services/https/Customer";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
@@ -25,10 +29,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import {
-  userUpdateFormSchema,
-  UserUpdateFormData,
-} from "@/validator";
+import { userUpdateFormSchema, UserUpdateFormData } from "@/validator";
 
 import {
   AlertDialog,
@@ -63,7 +64,7 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
       Address: customers.Address,
       District: customers.District,
       Province: customers.Province,
-      Postcode: customers.Postcode
+      Postcode: customers.Postcode,
     },
   });
 
@@ -85,9 +86,12 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
     fetchUserType();
   }, []);
 
-  const onValid: SubmitHandler<UserUpdateFormData> = async (formData: UserUpdateFormData) => {
+  const onValid: SubmitHandler<UserUpdateFormData> = async (
+    formData: UserUpdateFormData
+  ) => {
     try {
-      const res = await UpdateCustomer(formData);
+      console.log(formData);
+      const res = await UpdateCustomer(formData, customers.ID);
       if (res.status) {
         onSave();
         toast.success("Update Successful", {
@@ -96,12 +100,14 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
         });
         setOpen(false); // Close the pop-up
       } else {
+        console.log(res);
         toast.error("Update Failed: An error occurred while updating.", {
           position: "bottom-right",
           autoClose: 1500,
         });
       }
     } catch (error) {
+      console.log(res);
       toast.error("Error: Something went wrong.", {
         position: "bottom-right",
         autoClose: 1500,
@@ -161,7 +167,10 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
                     <FormItem>
                       <FormLabel>Gender</FormLabel>
                       <FormControl>
-                        <Select onValueChange={field.onChange} defaultValue={String(customers.Gender.ID)}>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={String(customers.Gender.ID)}
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Pick Gender" />
                           </SelectTrigger>
@@ -188,7 +197,10 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
                     <FormItem>
                       <FormLabel>UserType</FormLabel>
                       <FormControl>
-                        <Select onValueChange={field.onChange} defaultValue={String(customers.UserTypeID)}>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={String(customers.UserTypeID)}
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Pick UserType" />
                           </SelectTrigger>

@@ -45,13 +45,13 @@ export function ListUser() {
     <div>
       <Navbar />
       <div>
-        <div className=" ml-[135px] mt-[25px] absolute text-black text-2xl font-bold font-['Inter']">
-          A list of User
+        <div className=" ml-[135px] mt-[-2px] absolute text-black text-2xl font-bold font-['Inter']">
+        User list
         </div>
         <div>
           <EmployeeCreateDialog onCreated={fetchEmployee} />
-          <Table className=" border-double border-4 border-gray-300 mt-[40px] w-[1300px] ml-[135px] bg-gray-200">
-            <TableCaption>A list of User.</TableCaption>
+          <Table className=" border-double border-4 border-gray-300 mt-[20px] w-[1300px] ml-[135px] bg-gray-200 ">
+            <TableCaption>A list of User. </TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[10%] text-center">FirstName</TableHead>

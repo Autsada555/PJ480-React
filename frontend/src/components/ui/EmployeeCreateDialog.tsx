@@ -125,12 +125,11 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
     <>
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>
-          <UserPlus className="text-green-500 mt-[30px] ml-[60px] hover:scale-110 cursor-pointer" />
+          <UserPlus className="text-green-500 mt-[35px] ml-[250px] hover:scale-110 cursor-pointer " />
         </AlertDialogTrigger>
-
         <AlertDialogContent className="sm:max-w-[480px] h-[80%] overflow-auto">
           <AlertDialogHeader>
-            <AlertDialogTitle>Create Employee Data</AlertDialogTitle>
+            <AlertDialogTitle>Create User Data</AlertDialogTitle>
             <AlertDialogDescription>
               Make changes to your Employee here. Click save when you're done.
             </AlertDialogDescription>
