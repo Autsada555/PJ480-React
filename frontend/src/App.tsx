@@ -13,13 +13,13 @@ import { Home } from './pages/customer/Home';
 import { Register } from './pages/customer/register';
 import { Login } from './pages/customer/login';
 import { Delivery } from './pages/admin/Delivery';
-import {History} from './pages/customer/History';
-import {DiabetesFood} from './pages/customer/DiabetesFood';
-import {KidnyFood} from './pages/customer/KidnyFood';
-import {GastritistFood} from './pages/customer/Gastritist';
-import {ThyroidFood} from './pages/customer/Thyroid';
-import {ListUser} from './pages/admin/ListUser';
-import  Customer  from "./pages/admin/Customer";
+import { History } from './pages/customer/History';
+import { DiabetesFood } from './pages/customer/DiabetesFood';
+import { KidnyFood } from './pages/customer/KidnyFood';
+import { GastritistFood } from './pages/customer/Gastritist';
+import { ThyroidFood } from './pages/customer/Thyroid';
+import { ListUser } from './pages/admin/ListUser';
+import { Customer } from "./pages/admin/Customer";
 
 function App() {
   return (

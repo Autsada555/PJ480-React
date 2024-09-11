@@ -27,7 +27,7 @@ const GetAllCustomer = async () => {
   return res;
 }
 
-const GetCustomer = async (id: number) => {
+const GetCustomer = async () => {
   const requestOptions: RequestInit = {
     method: "GET",
     headers: {
@@ -36,7 +36,7 @@ const GetCustomer = async (id: number) => {
     credentials: "include"
   };
 
-  let res = await fetch(`${apiUrl}/customer/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/customer/`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {

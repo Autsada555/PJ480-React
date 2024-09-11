@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { Gender, User } from "../../interfaces";
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import { GetAllGender, UpdateCustomer } from "../../services/https/Customer";
+import { GetAllGender, GetCustomer, UpdateCustomer } from "../../services/https/Customer";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -33,29 +33,32 @@ import {
   userUpdateFormSchema,
   UserUpdateFormData,
 } from "@/validator";
+// import { get } from "http";
 
-interface Props {
-  customers: User;
-  onSave(): void;
-}
+// interface Props {
+//   customers: User;
+//   onSave(): void;
+// }
+// export function Customer({ customers, onSave }: Props): JSX.Element {
 
-export function Customer({ customers, onSave }: Props): JSX.Element {
+export function Customer(): JSX.Element {
   const { toast } = useToast();
   const [gender, setGender] = useState<Gender[]>([]);
+  const [customers, setCustomer] = useState<User>();
 
   const form = useForm<UserUpdateFormData>({
     resolver: zodResolver(userUpdateFormSchema),
     defaultValues: {
-      FirstName: customers.FirstName,
-      LastName: customers.LastName,
-      GenderID: customers.Gender.ID,
-      UserTypeID: customers.UserType.ID,
-      Phone: customers.Phone,
-      Email: customers.Email,
-      Address: customers.Address,
-      District: customers.District,
-      Province: customers.Province,
-      Postcode: customers.Postcode,
+      FirstName: customers?.FirstName,
+      LastName: customers?.LastName,
+      GenderID: customers?.Gender.ID,
+      UserTypeID: customers?.UserType.ID,
+      Phone: customers?.Phone,
+      Email: customers?.Email,
+      Address: customers?.Address,
+      District: customers?.District,
+      Province: customers?.Province,
+      Postcode: customers?.Postcode,
     },
   });
 
@@ -63,8 +66,8 @@ export function Customer({ customers, onSave }: Props): JSX.Element {
     async function fetchGender() {
       try {
         const res = await GetAllGender();
-        if (res.status) {
-          setGender(res.data);
+        if (res) {
+          setGender(res);
         } else {
           console.error("Failed to fetch gender options:", res.message);
         }
@@ -72,14 +75,29 @@ export function Customer({ customers, onSave }: Props): JSX.Element {
         console.error("Error fetching gender options:", error);
       }
     }
+    async function fetchCustomer() {
+      try {
+        const res = await GetCustomer();
+        console.log(res);
+        if (res) {
+          setCustomer(res);
+        } else {
+          console.error("Failed to fetch customer options:", res.message);
+        }
+      } catch (error) {
+        console.error("Error fetching customer options:", error);
+      }
+    }
     fetchGender();
+    fetchCustomer();
+    console.log(customers);
   }, []);
-
+useEffect(() => {})
   const onValid: SubmitHandler<UserUpdateFormData> = async (formData) => {
     try {
       const res = await UpdateCustomer(formData);
       if (res.status) {
-        onSave();
+        // onSave();
         toast({
           title: "Update Successful",
           description: res.message,
@@ -121,8 +139,8 @@ export function Customer({ customers, onSave }: Props): JSX.Element {
           </div>
           <div className="absolute top-[350px] left-[300px] flex">
             <p className="text-[19px] text-gray-700 space-x-4">
-              <span className="font-semibold">{customers.FirstName}</span>
-              <span className="font-semibold">{customers.LastName}</span>
+              <span className="font-semibold">{customers?.FirstName}</span>
+              <span className="font-semibold">{customers?.LastName}</span>
             </p>
           </div>
           <div className="absolute top-[460px] left-[490px] flex">
@@ -168,6 +186,7 @@ export function Customer({ customers, onSave }: Props): JSX.Element {
                       placeholder="FirstName"
                       {...form.register("FirstName")}
                       className="text-[16px] mt-2 w-full"
+                      defaultValue={customers?.FirstName}
                     />
                   </div>
                   <div className="space-y-8">
@@ -177,6 +196,7 @@ export function Customer({ customers, onSave }: Props): JSX.Element {
                       placeholder="LastName"
                       {...form.register("LastName")}
                       className="text-[16px] mt-2 w-full"
+                      defaultValue={customers?.LastName}
                     />
                   </div>
                   <div className="space-y-8">
@@ -186,7 +206,7 @@ export function Customer({ customers, onSave }: Props): JSX.Element {
                       onValueChange={(value) =>
                         form.setValue("GenderID", parseInt(value))
                       }
-                      defaultValue={String(customers.Gender.ID)}
+                      defaultValue={String(customers?.Gender.ID)}
                     >
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select Gender" />
@@ -210,6 +230,7 @@ export function Customer({ customers, onSave }: Props): JSX.Element {
                       placeholder="Phone"
                       {...form.register("Phone")}
                       className="text-[16px] mt-2 w-full"
+                      defaultValue={customers?.Phone}
                     />
                   </div>
                   <div className="space-y-8">
@@ -219,6 +240,7 @@ export function Customer({ customers, onSave }: Props): JSX.Element {
                       placeholder="Email"
                       {...form.register("Email")}
                       className="text-[16px] mt-2 w-full"
+                      defaultValue={customers?.Email}
                     />
                   </div>
                 </CardContent>
@@ -246,6 +268,7 @@ export function Customer({ customers, onSave }: Props): JSX.Element {
                       placeholder="Address"
                       {...form.register("Address")}
                       className="text-[16px] mt-2 w-full"
+                      defaultValue={customers?.Address}
                     />
                   </div>
                   <div className="space-y-8">
@@ -255,6 +278,7 @@ export function Customer({ customers, onSave }: Props): JSX.Element {
                       placeholder="District"
                       {...form.register("District")}
                       className="text-[16px] mt-2 w-full"
+                      defaultValue={customers?.District}
                     />
                   </div>
                   <div className="space-y-8">
@@ -264,6 +288,7 @@ export function Customer({ customers, onSave }: Props): JSX.Element {
                       placeholder="Province"
                       {...form.register("Province")}
                       className="text-[16px] mt-2 w-full"
+                      defaultValue={customers?.Province}
                     />
                   </div>
                   <div className="space-y-8">
@@ -273,6 +298,7 @@ export function Customer({ customers, onSave }: Props): JSX.Element {
                       placeholder="Postcode"
                       {...form.register("Postcode")}
                       className="text-[16px] mt-2 w-full"
+                      defaultValue={customers?.Postcode}
                     />
                   </div>
                 </CardContent>
