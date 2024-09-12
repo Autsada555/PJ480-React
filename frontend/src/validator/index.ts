@@ -29,12 +29,13 @@ export const userFormSchema = z.object({
     District: z.string().min(2, "District must be at least 2 characters"),
     Province: z.string().min(2, "Province must be at least 2 characters"),
     Postcode: z.string().length(5, "Postcode must be 5 characters"),
-
+    UserTypeID: z.number({ required_error: "Please select user type" }),
     GenderID: z.number({ required_error: "Please select gender" }),
   });
   
   export type UserUpdateFormData = z.infer<typeof userUpdateFormSchema>;
 
+  
   export const menuFormSchema = z.object({
     Name: z.string().min(1, "Name is required"),
     Cost: z

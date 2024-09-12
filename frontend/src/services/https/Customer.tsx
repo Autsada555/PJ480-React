@@ -70,7 +70,7 @@ async function CreateCustomer(formData: UserFormData) {
   return res;
 }
 
-async function UpdateCustomer(formData: UserUpdateFormData, id:number) {
+async function UpdateCustomer(formData: UserUpdateFormData, id:number | undefined) {
   const requestOptions: RequestInit = {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },

@@ -7,8 +7,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "react-router-dom";
 import { Gender, UserID } from "../../interfaces";
 import { useEffect, useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify"; // Import toast from react-toastify
 
@@ -38,12 +36,27 @@ import {
 } from "@/components/ui/select";
 
 import { userUpdateFormSchema, UserUpdateFormData } from "@/validator";
+import { Form } from "@/components/ui/form";
 
 export function Customer(): JSX.Element {
-  const { toast } = useToast();
   const [gender, setGender] = useState<Gender[]>([]);
   const [customers, setCustomer] = useState<UserID>();
   const [open, setOpen] = useState(false);
+
+  const form = useForm<UserUpdateFormData>({
+    resolver: zodResolver(userUpdateFormSchema),
+    defaultValues: {
+      FirstName: customers?.FirstName,
+      LastName: customers?.LastName,
+      GenderID: customers?.Gender.ID,
+      Phone: customers?.Phone,
+      Email: customers?.Email,
+      Address: customers?.Address,
+      District: customers?.District,
+      Province: customers?.Province,
+      Postcode: customers?.Postcode,
+    },
+  });
 
   const { register, handleSubmit, setValue, reset } =
     useForm<UserUpdateFormData>({
@@ -106,6 +119,7 @@ export function Customer(): JSX.Element {
   const onValid: SubmitHandler<UserUpdateFormData> = async (
     formData: UserUpdateFormData
   ) => {
+    console.log(formData)
     try {
       const res = await UpdateCustomer(formData, customers?.ID);
       if (res.status) {
@@ -175,7 +189,7 @@ export function Customer(): JSX.Element {
         </div>
         <div>
           <Tabs
-            Value="account"
+            defaultValue="account"
             className="absolute w-[500px] left-[740px] top-[132px]"
           >
             <TabsList className="grid w-full grid-cols-2">
@@ -193,6 +207,7 @@ export function Customer(): JSX.Element {
                 </CardHeader>
                 <CardContent className="space-y-2">
                   <form onSubmit={handleSubmit(onValid)}>
+                  <Form {...form}>
                     <div className="flex items-center space-y-3">
                       <Label htmlFor="firstname" className="w-1/4 mt-2">
                         First Name
@@ -221,7 +236,7 @@ export function Customer(): JSX.Element {
                         Gender
                       </Label>
                       <Select
-                        defaultValue={String(customers?.Gender.ID)}
+                        value={String(customers?.Gender.ID)}
                         onValueChange={(value) =>
                           setValue("GenderID", parseInt(value))
                         }
@@ -268,6 +283,7 @@ export function Customer(): JSX.Element {
                         Update Account
                       </Button>
                     </CardFooter>
+                    </Form>
                   </form>
                 </CardContent>
               </Card>
@@ -284,6 +300,7 @@ export function Customer(): JSX.Element {
                 <CardContent className="space-y-4 ">
                   {/* Address Form */}
                   <form onSubmit={handleSubmit(onValid)}>
+                  <Form {...form}>
                     <div className="space-y-2 flex items-center">
                       <Label htmlFor="address" className="w-1/4 mt-2">
                         Address
@@ -333,6 +350,7 @@ export function Customer(): JSX.Element {
                         Update Address
                       </Button>
                     </CardFooter>
+                    </Form>
                   </form>
                 </CardContent>
               </Card>

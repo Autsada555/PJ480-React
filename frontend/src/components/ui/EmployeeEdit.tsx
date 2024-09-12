@@ -107,7 +107,6 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
         });
       }
     } catch (error) {
-      console.log(res);
       toast.error("Error: Something went wrong.", {
         position: "bottom-right",
         autoClose: 1500,
