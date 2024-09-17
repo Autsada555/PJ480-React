@@ -58,7 +58,7 @@ export function Customer(): JSX.Element {
     },
   });
 
-  const { register, handleSubmit, setValue, reset } =
+  const { register, setValue, reset } =
     useForm<UserUpdateFormData>({
       resolver: zodResolver(userUpdateFormSchema),
       defaultValues: {
