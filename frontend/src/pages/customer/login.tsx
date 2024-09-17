@@ -110,10 +110,10 @@ export function Login() {
                   control={form.control}
                   name="password"
                   render={({ field }) => (
-                    <FormItem className="">
+                    <FormItem >
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <Input placeholder="password" {...field} />
+                        <Input type= "password" placeholder="password" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
