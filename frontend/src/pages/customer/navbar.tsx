@@ -6,8 +6,8 @@ function Navbar() {
     <nav className="bg-green-600 p-4 relative w-screen">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
-          <div className="text-white font-bold text-xl">
-            My Website Customer
+          <div >
+            <a href="/home"><img className=" w-36" src="src\assets\Brown Simple Icon Food Logo-depositphotos-bgremover.png" /></a>
           </div>
 
           <form className="flex items-center">
@@ -21,7 +21,6 @@ function Navbar() {
               type="submit"
               className="h-[42px] w-[42px] hover:bg-gray-500 bg-white rounded-[2px]"
             >
-              {/* <img className="h-[30px] flex pl-[6px]" src="src\assets\search.png" alt="search" /> */}
               <i className="fas fa-search"></i>
             </button>
           </form>
@@ -54,6 +53,9 @@ function Navbar() {
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
               </Link>
+            </div>
+            <div className=" mt-2 ml-5">
+              <a href="/order"><i className="fa-solid fa-cart-shopping fa-2xl text-white hover:text-gray-300"></i></a>
             </div>
           </div>
         </div>
