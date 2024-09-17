@@ -119,7 +119,7 @@ export function Customer(): JSX.Element {
   const onValid: SubmitHandler<UserUpdateFormData> = async (
     formData: UserUpdateFormData
   ) => {
-    console.log(formData)
+    console.log(formData);
     try {
       const res = await UpdateCustomer(formData, customers?.ID);
       if (res.status) {
@@ -206,83 +206,83 @@ export function Customer(): JSX.Element {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <form onSubmit={handleSubmit(onValid)}>
-                  <Form {...form}>
-                    <div className="flex items-center space-y-3">
-                      <Label htmlFor="firstname" className="w-1/4 mt-2">
-                        First Name
-                      </Label>
-                      <Input
-                        id="firstname"
-                        placeholder="FirstName"
-                        {...register("FirstName")}
-                        className="text-[16px] mt-2 w-full"
-                      />
-                    </div>
+                  <form onSubmit={form.handleSubmit(onValid)}>
+                    <Form {...form}>
+                      <div className="flex items-center space-y-3">
+                        <Label htmlFor="firstname" className="w-1/4 mt-2">
+                          First Name
+                        </Label>
+                        <Input
+                          id="firstname"
+                          placeholder="FirstName"
+                          {...register("FirstName")}
+                          className="text-[16px] mt-2 w-full"
+                        />
+                      </div>
 
-                    <div className="flex items-center space-y-4">
-                      <Label htmlFor="lastname" className="w-1/4 mt-2">
-                        Last Name
-                      </Label>
-                      <Input
-                        id="lastname"
-                        placeholder="LastName"
-                        {...register("LastName")}
-                        className="text-[16px] mt-2 w-full"
-                      />
-                    </div>
-                    <div className="space-y-4 flex items-center">
-                      <Label htmlFor="gender" className="w-1/4 mt-2">
-                        Gender
-                      </Label>
-                      <Select
-                        value={String(customers?.Gender.ID)}
-                        onValueChange={(value) =>
-                          setValue("GenderID", parseInt(value))
-                        }
-                      >
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select Gender" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectLabel>Gender</SelectLabel>
-                            {gender.map((g) => (
-                              <SelectItem key={g.ID} value={String(g.ID)}>
-                                {g.Name}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-4 flex items-center">
-                      <Label htmlFor="phone" className="w-1/4 mt-2">
-                        Phone
-                      </Label>
-                      <Input
-                        id="phone"
-                        placeholder="Phone"
-                        {...register("Phone")}
-                        className="text-[16px] mt-2 w-full"
-                      />
-                    </div>
-                    <div className="space-y-4 flex items-center">
-                      <Label htmlFor="email" className="w-1/4 mt-2">
-                        Email
-                      </Label>
-                      <Input
-                        id="email"
-                        placeholder="Email"
-                        {...register("Email")}
-                        className="text-[16px] mt-2 w-full"
-                      />
-                    </div>
-                    <CardFooter className="justify-center mt-6">
-                      <Button className="bg-green-600" type="submit">
-                        Update Account
-                      </Button>
-                    </CardFooter>
+                      <div className="flex items-center space-y-4">
+                        <Label htmlFor="lastname" className="w-1/4 mt-2">
+                          Last Name
+                        </Label>
+                        <Input
+                          id="lastname"
+                          placeholder="LastName"
+                          {...register("LastName")}
+                          className="text-[16px] mt-2 w-full"
+                        />
+                      </div>
+                      <div className="space-y-4 flex items-center">
+                        <Label htmlFor="gender" className="w-1/4 mt-2">
+                          Gender
+                        </Label>
+                        <Select
+                          value={String(customers?.Gender.ID)}
+                          onValueChange={(value) =>
+                            setValue("GenderID", parseInt(value))
+                          }
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select Gender" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Gender</SelectLabel>
+                              {gender.map((g) => (
+                                <SelectItem key={g.ID} value={String(g.ID)}>
+                                  {g.Name}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-4 flex items-center">
+                        <Label htmlFor="phone" className="w-1/4 mt-2">
+                          Phone
+                        </Label>
+                        <Input
+                          id="phone"
+                          placeholder="Phone"
+                          {...register("Phone")}
+                          className="text-[16px] mt-2 w-full"
+                        />
+                      </div>
+                      <div className="space-y-4 flex items-center">
+                        <Label htmlFor="email" className="w-1/4 mt-2">
+                          Email
+                        </Label>
+                        <Input
+                          id="email"
+                          placeholder="Email"
+                          {...register("Email")}
+                          className="text-[16px] mt-2 w-full"
+                        />
+                      </div>
+                      <CardFooter className="justify-center mt-6">
+                        <Button className="bg-green-600" type="submit">
+                          Update Account
+                        </Button>
+                      </CardFooter>
                     </Form>
                   </form>
                 </CardContent>
@@ -299,57 +299,57 @@ export function Customer(): JSX.Element {
                 </CardHeader>
                 <CardContent className="space-y-4 ">
                   {/* Address Form */}
-                  <form onSubmit={handleSubmit(onValid)}>
-                  <Form {...form}>
-                    <div className="space-y-2 flex items-center">
-                      <Label htmlFor="address" className="w-1/4 mt-2">
-                        Address
-                      </Label>
-                      <Input
-                        id="address"
-                        placeholder="Address"
-                        {...register("Address")}
-                        className="text-[16px] mt-2 w-full"
-                      />
-                    </div>
-                    <div className="space-y-4 flex items-center">
-                      <Label htmlFor="district" className="w-1/4 mt-2">
-                        District
-                      </Label>
-                      <Input
-                        id="district"
-                        placeholder="District"
-                        {...register("District")}
-                        className="text-[16px] mt-2 w-full"
-                      />
-                    </div>
-                    <div className="space-y-4 flex items-center">
-                      <Label htmlFor="province" className="w-1/4 mt-2">
-                        Province
-                      </Label>
-                      <Input
-                        id="province"
-                        placeholder="Province"
-                        {...register("Province")}
-                        className="text-[16px] mt-2 w-full"
-                      />
-                    </div>
-                    <div className="space-y-4 flex items-center">
-                      <Label htmlFor="postcode" className="w-1/4 mt-2">
-                        Postcode
-                      </Label>
-                      <Input
-                        id="postcode"
-                        placeholder="Postcode"
-                        {...register("Postcode")}
-                        className="text-[16px] mt-2 w-full"
-                      />
-                    </div>
-                    <CardFooter className="justify-center">
-                      <Button className="bg-green-600 mt-6" type="submit">
-                        Update Address
-                      </Button>
-                    </CardFooter>
+                  <form onSubmit={form.handleSubmit(onValid)}>
+                    <Form {...form}>
+                      <div className="space-y-2 flex items-center">
+                        <Label htmlFor="address" className="w-1/4 mt-2">
+                          Address
+                        </Label>
+                        <Input
+                          id="address"
+                          placeholder="Address"
+                          {...register("Address")}
+                          className="text-[16px] mt-2 w-full"
+                        />
+                      </div>
+                      <div className="space-y-4 flex items-center">
+                        <Label htmlFor="district" className="w-1/4 mt-2">
+                          District
+                        </Label>
+                        <Input
+                          id="district"
+                          placeholder="District"
+                          {...register("District")}
+                          className="text-[16px] mt-2 w-full"
+                        />
+                      </div>
+                      <div className="space-y-4 flex items-center">
+                        <Label htmlFor="province" className="w-1/4 mt-2">
+                          Province
+                        </Label>
+                        <Input
+                          id="province"
+                          placeholder="Province"
+                          {...register("Province")}
+                          className="text-[16px] mt-2 w-full"
+                        />
+                      </div>
+                      <div className="space-y-4 flex items-center">
+                        <Label htmlFor="postcode" className="w-1/4 mt-2">
+                          Postcode
+                        </Label>
+                        <Input
+                          id="postcode"
+                          placeholder="Postcode"
+                          {...register("Postcode")}
+                          className="text-[16px] mt-2 w-full"
+                        />
+                      </div>
+                      <CardFooter className="justify-center">
+                        <Button className="bg-green-600 mt-6" type="submit">
+                          Update Address
+                        </Button>
+                      </CardFooter>
                     </Form>
                   </form>
                 </CardContent>
