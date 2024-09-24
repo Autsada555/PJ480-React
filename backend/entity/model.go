@@ -65,7 +65,7 @@ type User struct {
 
 type Payment struct {
 	BaseModel
-	Name string `gorm:"unique"`
+	Time time.Time  `gorm:"unique"`
 
 	UserID uint
 	User   *User `gorm:"foreignKey:UserID"`

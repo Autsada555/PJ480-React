@@ -87,6 +87,7 @@ export const userFormSchema = z.object({
     District: z.string().min(2, "District must be at least 2 characters"),
     Province: z.string().min(2, "Province must be at least 2 characters"),
     Postcode: z.string().length(5, "Postcode must be 5 characters"),
+    Phone: z.string().length(10, "Phone number must be 10 characters"),
 
     PaymentTypeID: z.number({ required_error: "Please select payment type" }),
     DeliveryTypeID: z.number({ required_error: "Please select delivery type" }),
