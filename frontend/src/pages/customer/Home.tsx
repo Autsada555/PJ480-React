@@ -1,5 +1,5 @@
 import Navbar from "./navbar";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Healthimg from "@/assets/imgforhome/Healthimg.jpg";
 
@@ -15,11 +15,19 @@ import { useToast } from "@/components/ui/use-toast"
 import { Menu } from "@/interfaces";
 import { GetAllMenu } from "@/services/https/Menu";
 import { CreateOrder } from "@/services/https/Order";
+import { cartContext } from "@/components/ui/cartContext";
 
 export function Home() {
     const [showModalMenu, setShowModalMenu] = useState(false);
-    const [temp, setTemp] = useState<Menu[][] | undefined>()
-    const { toast } = useToast()
+    const [temp, setTemp] = useState<Menu[][] | undefined>();
+    const { toast } = useToast();
+    const { menuID, addToCart, cartCount } = useContext(cartContext);
+
+    // const [cartCount, setCartCount] = useState(0);
+
+    // const addToCart = () => {
+    //     setCartCount(cartCount + 1);
+    // };
 
 
     const handleGetAllMenu = async () => {
@@ -78,141 +86,175 @@ export function Home() {
     //     }
     // };
     return (
-        <div>
+        <>
             <Navbar />
-            <div className="mt-3 justify-center flex">
-                <NavigationMenu>
-                    <NavigationMenuList>
-                        <NavigationMenuItem className="flex">
-                            <NavigationMenuItem>
-                                <Link to={"/home"}>
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                        Health Food
-                                    </NavigationMenuLink>
-                                </Link>
+            <div>
+                <div className="mt-28 justify-center flex ">
+                    <NavigationMenu>
+                        <NavigationMenuList>
+                            <NavigationMenuItem className="flex">
+                                <NavigationMenuItem>
+                                    <Link to={"/home"}>
+                                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                            Health Food
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem>
+                                    <Link to={"/diabetesfood"}>
+                                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                            Diabetes Food
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem>
+                                    <Link to={"/kidnyfood"}>
+                                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                            Kidny Foods
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem>
+                                    <Link to={"/gastritistfood"}>
+                                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                            Gastritist Foods
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem>
+                                    <Link to={"/thyroidfood"}>
+                                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                            Thyroid Foods
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
                             </NavigationMenuItem>
-                            <NavigationMenuItem>
-                                <Link to={"/diabetesfood"}>
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                        Diabetes Food
-                                    </NavigationMenuLink>
-                                </Link>
-                            </NavigationMenuItem>
-                            <NavigationMenuItem>
-                                <Link to={"/kidnyfood"}>
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                        Kidny Foods
-                                    </NavigationMenuLink>
-                                </Link>
-                            </NavigationMenuItem>
-                            <NavigationMenuItem>
-                                <Link to={"/gastritistfood"}>
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                        Gastritist Foods
-                                    </NavigationMenuLink>
-                                </Link>
-                            </NavigationMenuItem>
-                            <NavigationMenuItem>
-                                <Link to={"/thyroidfood"}>
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                        Thyroid Foods
-                                    </NavigationMenuLink>
-                                </Link>
-                            </NavigationMenuItem>
-                        </NavigationMenuItem>
-                    </NavigationMenuList>
-                </NavigationMenu>
-            </div>
-            <div className="left-[100px] top-[155px] absolute text-black text-2xl font-bold font-['Inter']">
-                อาหารเพื่อสุขภาพ (Healthy Foods)
-            </div>
-            <div className="w-[1570px] h-[360px] bg-slate-100   mt-[70px] ml-[5px] rounded-xl left-[144px] border-[1px]"></div>
-            <div className="mt-[-328px] ml-[200px] ">
-                <img src={Healthimg} alt="Healthimg" className="w-[500px] h-[300px]" />
-            </div>
-            <div className="ml-[770px] mt-[-200px] font-['Inter'] text-[20px] absolute">
-                "อาหารสุขภาพคือการบริโภคอาหารที่มีประโยชน์และเต็มไปด้วย <br />
-                สารอาหารที่จำเป็นต่อร่างกายเช่น ผัก ผลไม้ ธัญพืช และโปรตีนที่มีคุณภาพ  <br />
-                การรับประทานอาหารสุขภาพช่วยเสริมสร้างระบบภูมิคุ้มกัน <br />
-                เพิ่มพลังงาน และส่งเสริมการมีชีวิตที่สมดุลและสุขภาพดี" 🌿🥗
-            </div>
-            {temp &&
-                temp.map((temps, outerKey) => (
-                    <div key={outerKey}>
-                        <div className="flex ml-28 mt-[50px]">
-                            <h1 className="text-2xl  font-['Inter'] font-bold">{`${temps[0].MenuType.Name} Foods`}</h1>
+                        </NavigationMenuList>
+                    </NavigationMenu>
+                </div>
+                <div>
+                    <div className="flex ml-[100px] text-black text-2xl font-bold font-['Inter']">
+                        อาหารเพื่อสุขภาพ (Healthy Foods)
+                    </div>
+                    <div className="w-full h-[360px] bg-slate-100  rounded-xl left-[144px] border-[1px]">
+                        <div className="flex w-full justify-center mt-7">
+                            <div className="">
+                                <img src={Healthimg} alt="Healthimg" className="w-[500px] h-[300px]" />
+                            </div>
+                            <div className="ml-[200px] font-['Inter'] text-[20px] flex items-center">
+                                "อาหารสุขภาพคือการบริโภคอาหารที่มีประโยชน์และเต็มไปด้วย <br />
+                                สารอาหารที่จำเป็นต่อร่างกายเช่น ผัก ผลไม้ ธัญพืช และโปรตีนที่มีคุณภาพ  <br />
+                                การรับประทานอาหารสุขภาพช่วยเสริมสร้างระบบภูมิคุ้มกัน <br />
+                                เพิ่มพลังงาน และส่งเสริมการมีชีวิตที่สมดุลและสุขภาพดี" 🌿🥗
+                            </div>
                         </div>
-                        <div className="ml-28 px-7 flex gap-10 mt-3 flex-wrap">
-                            {temps.map((menu: Menu, innerKey: number) => (
-                                <div key={`${outerKey}-${innerKey}`}>
-                                    <img
-                                        className="h-[125px] w-[230px] cursor-pointer rounded-[20px]"
-                                        src={menu.MenuImage}
-                                        alt="image"
-                                        onClick={() => setShowModalMenu(true)}
-                                    />
-                                    <div className=" flex flex-row space-x-[100px] pl-2 mt-[20px]">
-                                        <h1>{menu.Name}</h1>
-                                        <h1>{`${menu.Cost} ฿`}</h1>
-                                    </div>
-                                    <h2 className="flex pl-2">{temps[0].MenuType.Name}</h2>
-                                    <div className="flex pt-3 space-x-[115px] ">
-                                        <div className="flex">
-                                            <img
-                                                className="h-[20px] pl-2 cursor-pointer"
-                                                src="src\assets\star.svg"
-                                                alt="star"
-                                            />
-                                            <h1 className="pl-2">4.0</h1>
-                                        </div>
+                    </div>
+                </div>
+                {temp &&
+                    temp.map((temps, outerKey) => (
+                        <div key={outerKey}>
+                            <div className="flex ml-28 mt-[50px]">
+                                <h1 className="text-2xl  font-['Inter'] font-bold">{`${temps[0].MenuType.Name} Foods`}</h1>
+                            </div>
+                            <div className="ml-28 px-7 flex gap-10 mt-3 flex-wrap ">
+                                {temps.map((menu: Menu, innerKey: number) => (
+                                    <div key={`${outerKey}-${innerKey}`} className="border rounded-[20px]">
                                         <img
-                                            typeof="button"
-                                            className="h-[30px] cursor-pointer"
-                                            src="src\assets\add.svg"
-                                            alt="add"
+                                            className="h-[125px] w-[230px] cursor-pointer rounded-[20px]"
+                                            src={menu.MenuImage}
+                                            alt="image"
+                                            onClick={() => setShowModalMenu(true)}
                                         />
-                                    </div>
-                                    {showModalMenu ? (
-                                        <div
-                                            id="BG"
-                                            onClick={hangleOnCloseModalMenu}
-                                            className="fixed inset-0 flex justify-center w-full h-full"
-                                        >
-                                            <div className="w-[600px] h-[600px] mt-[100px] bg-slate-100 rounded-t-lg shadow-lg ">
-                                                <h1 className="mt-6 text-4xl">Details Menu</h1>
-                                                <div className="flex space-x-0">
-                                                    <img
-                                                        className="h-[200px] w-[230px] rounded-[20px] ml-6 mt-5"
-                                                        src={menu.MenuImage}
-                                                        alt="image"
-                                                    />
-                                                    <div className=" flex flex-row space-x-[100px] pl-2 mt-[20px]">
-                                                        <h1>{menu.Name}</h1>
-                                                        <h1>{`${menu.Cost}฿`}</h1>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <h1 className="mt-6 text-4xl">Component Food</h1>
-                                                    <h1>{`${menu.Component[3]}`}</h1>
-                                                </div>
-                                                <div>
-                                                    <h1 className="mt-6 text-4xl">Type Food</h1>
-                                                    {/* <h1>{menu.MenuType[0]}</h1>
-                                                    <h1>{menu.MenuType[0]}</h1>
-                                                    <h1>{menu.MenuType[0]}</h1>
-                                                    <h1>{menu.MenuType[0]}</h1> */}
-                                                </div>
+                                        <div className="w-full flex flex-row justify-between p-2  ">
+                                            <h1>{menu.Name}</h1>
+                                            <h1>{`${menu.Cost} ฿`}</h1>
+                                        </div>
+                                        <h2 className="flex pl-2">{temps[0].MenuType.Name}</h2>
+                                        <div className="flex space-x-[115px] ">
+                                            <div className="flex p-2">
+                                                <img
+                                                    className="h-[20px] pl-2 cursor-pointer"
+                                                    src="src\assets\star.svg"
+                                                    alt="star"
+                                                />
+                                                <h1 className="pl-3">5.0</h1>
+                                            </div>
+                                            <div
+                                                onClick={() => addToCart(menu.ID)}
+                                            >
+                                                <img
+                                                    className="h-[30px] cursor-pointer"
+                                                    src="src\assets\add.svg"
+                                                    alt="add"
+                                                />
                                             </div>
                                         </div>
-                                    ) : null}
+                                        {showModalMenu && (
+                                            <div
+                                                id="BG"
+                                                onClick={hangleOnCloseModalMenu}
+                                                className="fixed inset-0 bg-opacity-60 flex justify-center items-center z-30"
+                                            >
+                                                <div className="w-[600px] bg-white rounded-lg shadow-xl overflow-hidden flex ">
+                                                    <div className="bg-gray-100 p-4">
+                                                        <h1 className="w-24 text-3xl font-bold">Details Menu</h1>
+                                                    </div>
+                                                    <div className="p-6">
+                                                        <div className="flex space-x-6">
+                                                            <img
+                                                                className="h-[200px] w-[230px] rounded-lg object-cover"
+                                                                src={menu.MenuImage}
+                                                                alt="Product Image"
+                                                            />
 
-                                </div>
-                            ))}</div>
-                    </div>
+                                                            <div className="flex flex-col justify-between">
+                                                                <h1 className="text-2xl font-semibold">{menu.Name}</h1>
+                                                                <h1 className="text-xl text-gray-700">{`${menu.Cost}฿`}</h1>
+                                                            </div>
+                                                        </div>
 
-                ))
-            }
+                                                        <div className="mt-6">
+                                                            <h2 className="text-3xl font-bold">Component Food</h2>
+                                                            {Array.isArray(menu.Component) && (
+                                                                <ul className="list-disc pl-6 text-lg mt-2">
+                                                                    {menu.Component.map((component: string, index: number) => (
+                                                                        <li key={index}>{component}</li>
+                                                                    ))}
+                                                                </ul>
+                                                            )}
+                                                        </div>
 
-        </div>
+                                                        <div className="mt-4">
+                                                            <h2 className="text-3xl font-bold">Type Food</h2>
+                                                            <p className="text-lg mt-2">{menu.MenuType.Name}</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="space-y-10 justify-end p-4">
+                                                        <button
+                                                            onClick={hangleOnCloseModalMenu}
+                                                            className="h-10 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                                                        >
+                                                            Close
+                                                        </button>
+                                                        <button>
+                                                            Add to cart
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                    </div>
+                                ))}</div>
+                        </div>
+
+                    ))
+                }
+
+            </div>
+
+
+        </>
     );
 }
