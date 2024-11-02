@@ -2,7 +2,7 @@ import { Menu} from "../../interfaces/index";
 
 const apiUrl = "http://localhost:8080";
 //
-const GetAllMenu = async () => {
+const GetAllMenu = async (id:number) => {
   const requestOptions :RequestInit= {
     method: "GET",
     headers: {
@@ -12,7 +12,7 @@ const GetAllMenu = async () => {
 
   };
 
-  let res = await fetch(`${apiUrl}/menu`, requestOptions)
+  let res = await fetch(`${apiUrl}/menu/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
