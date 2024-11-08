@@ -30,8 +30,8 @@ export function Home() {
   // };
 
   const handleGetAllMenu = async () => {
-    let res = await GetAllMenu();
-
+    let res = await GetAllMenu(1);
+    console.log(res);
     if (res) {
       const r = groupBy<Menu>(res, "MenuTypeID");
       setTemp([]);

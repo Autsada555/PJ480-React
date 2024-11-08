@@ -8,17 +8,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetAllMenu(c *gin.Context) {
+func GetMenu(c *gin.Context) {
 	var menus []entity.Menu
+	id := c.Param("id")
 
 	if err := entity.DB().
-    Preload("DiseaseType").InnerJoins("MenuType").
+    Preload("DiseaseType").InnerJoins("MenuType").Joins("JOIN menu_disease_types ON menu_disease_types.menu_id = menus.id").
+	Where("menu_disease_types.disease_type_id = ?", id).
     Find(&menus).Error; err != nil {
     c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
     return
 }
 	c.JSON(http.StatusOK, gin.H{"data": menus})
 }
+
 
 func CreateMenu(c *gin.Context) {
 	var menu entity.Menu
