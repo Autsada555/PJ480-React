@@ -26,7 +26,7 @@ type MenuType struct {
 
 type DiseaseType struct {
 	BaseModel
-	Name  string  `gorm:"unique"`
+	Name string `gorm:"unique"`
 	// Menus []*Menu `gorm:"many2many:menu_disease_types;"`
 }
 
@@ -65,7 +65,7 @@ type User struct {
 
 type Payment struct {
 	BaseModel
-	Time time.Time  `gorm:"unique"`
+	Time time.Time `gorm:"unique"`
 
 	UserID uint
 	User   *User `gorm:"foreignKey:UserID"`
@@ -130,8 +130,8 @@ type Menu struct {
 	Name        string
 	Cost        float32
 	Description string
-	Component   map[string]interface{} `gorm:"serializer:json"`
-	MenuImage   string                 `gorm:"type:longtext"`
+	Component   []string `gorm:"serializer:json"`
+	MenuImage   string   `gorm:"type:longtext"`
 
 	// DiseaseTypeID uint
 	DiseaseType []DiseaseType `gorm:"many2many:menu_disease_types"`
