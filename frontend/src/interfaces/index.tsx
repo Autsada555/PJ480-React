@@ -120,10 +120,10 @@ export interface Menu {
   Name: string;
   Cost: number;
   Description: string;
-  Component: string;
+  Component: string[];
   MenuImage: string;
   DiseaseTypeID: number;
-  DiseaseType: DiseaseType;
+  DiseaseType: DiseaseType[];
   MenuTypeID: number;
   MenuType: MenuType;
 }
