@@ -1,12 +1,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CartContext } from "@/components/ui/cartContext";
-import { Menu } from "@/interfaces";
+import { Plus, Minus } from "@phosphor-icons/react";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 function Navbar() {
   const [showLogout, setShowLogout] = useState(false);
-  const { getMenus, getAmount, removeMenu, getTotal } = useContext(CartContext);
+  const { getMenus, getQuantity, removeMenu, getTotal, addQuantity } =
+    useContext(CartContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleMouseEnter = () => {
@@ -88,9 +89,9 @@ function Navbar() {
             <a onClick={handleCartClick} className="relative cursor-pointer">
               <i className="fa-solid fa-cart-shopping fa-3x text-white hover:text-gray-500 transition-all duration-300"></i>
 
-              {getAmount() > 0 && (
+              {getQuantity() > 0 && (
                 <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
-                  {getAmount()}
+                  {getQuantity()}
                 </span>
               )}
             </a>
@@ -117,28 +118,41 @@ function Navbar() {
                   <h2 className="text-lg font-normal my-4">Shopping Cart</h2>
                 </div>
 
-                <div className="overflow-y-auto flex-grow p-5 custom-scrollbar h-full">
+                <div className="overflow-y-auto flex-grow p-5 custom-scrollbar h-full space-y-4">
                   {getMenus().length > 0 ? (
-                    getMenus().map((menu: Menu, index) => (
-                      <div key={menu.ID} className="flex items-center mb-4">
+                    getMenus().map((menu, index) => (
+                      <div key={menu.Menu.ID} className="flex items-center ">
                         <img
-                          src={menu.MenuImage}
-                          alt={`Product ${menu.ID}`}
+                          src={menu.Menu.MenuImage}
+                          alt={`Product ${menu.Menu.Name}`}
                           className="mr-6 border-black border aspect-square h-40"
                         />
-                        <div className="flex justify-between items-center w-full">
+                        <div className="flex justify-around  items-center w-full">
                           <div>
-                            <p className="font-medium text-black">{menu.Name}</p>
-                            <p className="text-black">Quantity (1)</p>
-                            <p className="font-medium text-black">{menu.Cost}</p>
+                            <p className="font-medium text-black">{menu.Menu.Name}</p>
+                            <p className="font-medium text-black">{menu.Menu.Cost} บาท</p>
                           </div>
-                          <button
-                            className="text-gray-500 hover:text-red-500"
-                            onClick={() => removeMenu(index)}
-                          >
-                            Remove
-                          </button>
+                          <div className=" flex space-x-2 items-center">
+                            <div onClick={() => addQuantity(menu.Menu.ID, -1)}>
+                              <Minus size={20} />
+                            </div>
+                            <p className=" border rounded-sm w-7 aspect-square text-center">
+                              {menu.Quantity}
+                            </p>
+                            <div onClick={() => addQuantity(menu.Menu.ID, 1)}>
+                              <Plus size={20} />
+                            </div>
+                          </div>
+                          <div>
+                            <p>{menu.Quantity * menu.Menu.Cost} บาท</p>
+                          </div>
                         </div>
+                        <button
+                          className="text-gray-500 hover:text-red-500  "
+                          onClick={() => removeMenu(index)}
+                        >
+                          ลบ
+                        </button>
                       </div>
                     ))
                   ) : (
@@ -154,17 +168,10 @@ function Navbar() {
                     </p>
                   </div>
 
-                  <div className="px-3 py-4 text-sm text-black text-center  border-black">
-                    <p>Shipping & taxes calculated at checkout</p>
-                    <p className="text-sm text-black">
-                      Free standard shipping within Kyiv
-                    </p>
-                  </div>
-
                   <div className="mt-4 flex justify-center border">
-                    <Link to="/checkout">
+                    <Link to="/Payment">
                       <button className="bg-white text-green-600 font-bold py-2 px-4 rounded hover:bg-gray-300 w-full">
-                        Go to Checkout
+                        Go to Payment
                       </button>
                     </Link>
                   </div>
