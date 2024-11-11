@@ -1,13 +1,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { cartContext } from "@/components/ui/cartContext";
+import { CartContext } from "@/components/ui/cartContext";
+import { Menu } from "@/interfaces";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 function Navbar() {
   const [showLogout, setShowLogout] = useState(false);
-  const { menuID, addToCart, cartCount, removeFromCart } = useContext(cartContext);
+  const { getMenus, getAmount, removeMenu, getTotal } = useContext(CartContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
 
   const handleMouseEnter = () => {
     setShowLogout(true);
@@ -16,8 +16,6 @@ function Navbar() {
   const handleMouseLeave = () => {
     setShowLogout(false);
   };
-
-
 
   const handleCartClick = () => {
     setIsModalOpen(!isModalOpen);
@@ -30,8 +28,13 @@ function Navbar() {
     <nav className="bg-green-600 p-4 fixed w-screen top-0 z-20">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
-          <div >
-            <a href="/home"><img className=" w-36" src="src\assets\Brown Simple Icon Food Logo-depositphotos-bgremover.png" /></a>
+          <div>
+            <a href="/home">
+              <img
+                className=" w-36"
+                src="src\assets\Brown Simple Icon Food Logo-depositphotos-bgremover.png"
+              />
+            </a>
           </div>
 
           <form className="flex items-center">
@@ -67,27 +70,27 @@ function Navbar() {
                 Contact
               </a>
             </div>
-            <div className="ml-4" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <div
+              className="ml-4"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
               <Link to="/customer">
                 <Avatar>
-                  <AvatarImage
-                    src="https://github.com/shadcn.png"
-                    alt="Profile Image"
-                  />
+                  <AvatarImage src="https://github.com/shadcn.png" alt="Profile Image" />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
               </Link>
             </div>
-
           </div>
 
           <div className="fixed top-6 right-10 z-20">
             <a onClick={handleCartClick} className="relative cursor-pointer">
               <i className="fa-solid fa-cart-shopping fa-3x text-white hover:text-gray-500 transition-all duration-300"></i>
 
-              {cartCount > 0 && (
+              {getAmount() > 0 && (
                 <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
-                  {cartCount}
+                  {getAmount()}
                 </span>
               )}
             </a>
@@ -115,23 +118,23 @@ function Navbar() {
                 </div>
 
                 <div className="overflow-y-auto flex-grow p-5 custom-scrollbar h-full">
-                  {menuID.length > 0 ? (
-                    menuID.map((id, index) => (
-                      <div key={index} className="flex items-center mb-4">
+                  {getMenus().length > 0 ? (
+                    getMenus().map((menu: Menu, index) => (
+                      <div key={menu.ID} className="flex items-center mb-4">
                         <img
-                          src={`https://placehold.co/120x120`}
-                          alt={`Product ${id}`}
-                          className="mr-6 border-black border aspect-square"
+                          src={menu.MenuImage}
+                          alt={`Product ${menu.ID}`}
+                          className="mr-6 border-black border aspect-square h-40"
                         />
                         <div className="flex justify-between items-center w-full">
                           <div>
-                            <p className="font-medium text-black">Product {id}</p>
+                            <p className="font-medium text-black">{menu.Name}</p>
                             <p className="text-black">Quantity (1)</p>
-                            <p className="font-medium text-black">$10.00</p>
+                            <p className="font-medium text-black">{menu.Cost}</p>
                           </div>
                           <button
                             className="text-gray-500 hover:text-red-500"
-                            onClick={() => removeFromCart(id)}
+                            onClick={() => removeMenu(index)}
                           >
                             Remove
                           </button>
@@ -143,13 +146,11 @@ function Navbar() {
                   )}
                 </div>
 
-
-
                 <div className="mt-auto">
                   <div className="px-3 py-6 text-xl text-black text-center border-y border-black font-normal">
                     <p className="flex justify-between">
                       <span>Subtotal</span>
-                      <span>${menuID.length * 10}.00</span>
+                      <span>${getTotal()}</span>
                     </p>
                   </div>
 
@@ -171,7 +172,6 @@ function Navbar() {
               </div>
             </div>
           )}
-
         </div>
       </div>
     </nav>
