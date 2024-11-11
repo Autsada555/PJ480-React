@@ -43,16 +43,16 @@ type UserType struct {
 type User struct {
 	BaseModel
 
-	FirstName string `gorm:"default:UserFirstName"`
-	LastName  string `gorm:"default:UserLastName"`
+	FirstName string `gorm:"default:ชื่อ"`
+	LastName  string `gorm:"default:นามสกุล"`
 	Email     string `valid:"required~Email is required,email~Invalid email address" gorm:"unique"`
 	Password  string `valid:"required~Password is required,minstringlength(8)~Password must be at least 8 characters"`
 	Phone     string `valid:"required~Phone number is required,stringlength(10|10)~Phone must be at 10 characters"`
-	UserName  string `gorm:"default:UserName"`
-	Address   string `valid:"required~Address is required,minstringlength(2)~Address must be at least 2 characters"`
-	District  string `valid:"required~District is required,minstringlength(2)~District must be at least 2 characters"`
-	Province  string `valid:"required~Province is required,minstringlength(2)~Province must be at least 2 characters"`
-	Postcode  string `valid:"required~Postcode is required,stringlength(5|5)~Postcode must be at 5 characters"`
+	UserName  string `valid:"required~UserName is required,minstringlength(5)~UserName must be at 5 characters" gorm:"unique"`
+	Address   string `gorm:"default:ที่อยู่"`
+	District  string `gorm:"default:อำเภอ"`
+	Province  string `gorm:"default:จังหวัด"`
+	Postcode  string `gorm:"default:รหัสไปษณีย์"`
 
 	GenderID uint
 	Gender   *Gender `gorm:"foreignKey:GenderID"`

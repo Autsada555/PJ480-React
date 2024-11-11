@@ -35,7 +35,8 @@ export function Payment(): JSX.Element {
   useEffect(() => {
     async function fetchCustomer() {
       try {
-        const res = await GetCustomerByID(4); // Fetch customer with ID 3
+        const userid = localStorage.getItem('userid');
+        const res = await GetCustomerByID(Number(userid)); // Fetch customer with ID 3
         if (res) {
           setCustomer(res);
           reset({
