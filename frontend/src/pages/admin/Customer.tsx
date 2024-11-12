@@ -37,52 +37,49 @@ import {
 
 import { userUpdateFormSchema, UserUpdateFormData } from "@/validator";
 import { Form } from "@/components/ui/form";
+import { log } from "console";
 
 export function Customer(): JSX.Element {
   const [gender, setGender] = useState<Gender[]>([]);
   const [customers, setCustomer] = useState<UserID>();
   const [open, setOpen] = useState(false);
+  const [userid, setUserid] = useState(Number(localStorage.getItem("userid")));
 
-  const form = useForm<UserUpdateFormData>({
-    resolver: zodResolver(userUpdateFormSchema),
-    defaultValues: {
-      FirstName: customers?.FirstName,
-      LastName: customers?.LastName,
-      GenderID: customers?.Gender.ID,
-      Phone: customers?.Phone,
-      Email: customers?.Email,
-      Address: customers?.Address,
-      District: customers?.District,
-      Province: customers?.Province,
-      Postcode: customers?.Postcode,
-    },
-  });
+  // const form = useForm<UserUpdateFormData>({
+  //   resolver: zodResolver(userUpdateFormSchema),
+  //   defaultValues: {
+  //     FirstName: customers?.FirstName,
+  //     LastName: customers?.LastName,
+  //     GenderID: customers?.Gender.ID,
+  //     Phone: customers?.Phone,
+  //     Email: customers?.Email,
+  //     Address: customers?.Address,
+  //     District: customers?.District,
+  //     Province: customers?.Province,
+  //     Postcode: customers?.Postcode,
+  //   },
+  // });
 
-  const { register, setValue, reset } =
-    useForm<UserUpdateFormData>({
-      resolver: zodResolver(userUpdateFormSchema),
-      defaultValues: {
-        FirstName: customers?.FirstName,
-        LastName: customers?.LastName,
-        GenderID: customers?.Gender.ID,
-        Phone: customers?.Phone,
-        Email: customers?.Email,
-        Address: customers?.Address,
-        District: customers?.District,
-        Province: customers?.Province,
-        Postcode: customers?.Postcode,
-      },
-    });
+  // const { register, setValue, reset } = useForm<UserUpdateFormData>({
+  //   resolver: zodResolver(userUpdateFormSchema),
+  //   defaultValues: {
+  //     FirstName: customers?.FirstName,
+  //     LastName: customers?.LastName,
+  //     GenderID: customers?.Gender.ID,
+  //     Phone: customers?.Phone,
+  //     Email: customers?.Email,
+  //     Address: customers?.Address,
+  //     District: customers?.District,
+  //     Province: customers?.Province,
+  //     Postcode: customers?.Postcode,
+  //   },
+  // });
 
   useEffect(() => {
     async function fetchGender() {
       try {
         const res = await GetAllGender();
-        if (res) {
-          setGender(res);
-        } else {
-          console.error("Failed to fetch gender options:", res.message);
-        }
+        setGender(res);
       } catch (error) {
         console.error("Error fetching gender options:", error);
       }
@@ -90,23 +87,8 @@ export function Customer(): JSX.Element {
 
     async function fetchCustomer() {
       try {
-        const res = await GetCustomerByID(3); // Fetch customer with ID 2
-        if (res) {
-          setCustomer(res);
-          reset({
-            FirstName: res.FirstName,
-            LastName: res.LastName,
-            GenderID: res.Gender.ID,
-            Phone: res.Phone,
-            Email: res.Email,
-            Address: res.Address,
-            District: res.District,
-            Province: res.Province,
-            Postcode: res.Postcode,
-          }); // Reset form with fetched data
-        } else {
-          console.error("Failed to fetch customer options:", res.message);
-        }
+        const res = await GetCustomerByID(userid); // Fetch customer with ID 2
+        setCustomer(res);
       } catch (error) {
         console.error("Error fetching customer options:", error);
       }
@@ -114,35 +96,36 @@ export function Customer(): JSX.Element {
 
     fetchCustomer();
     fetchGender();
-  }, [reset]);
+  }, []);
 
-  const onValid: SubmitHandler<UserUpdateFormData> = async (
-    formData: UserUpdateFormData
-  ) => {
-    console.log(formData);
+  // หาก customers เปลี่ยนแปลง ให้รีเซ็ตค่าในฟอร์ม
+  useEffect(() => {
+    if (customers) {
+      console.log(customers);
+      resetForm1(customers); // ใช้ customers ทั้งหมดในการรีเซ็ตฟอร์ม
+    }
+  }, [customers]);
+
+  const {
+    register: registerForm1,
+    handleSubmit: handleSubmitForm1,
+    // formState: { errors: errorsForm1 },
+    reset: resetForm1,
+    setValue,
+  } = useForm({
+    defaultValues: customers ?? {}, // ใช้ค่า customers ถ้ามี
+  });
+
+  const onSubmit = async (data: any) => {
+    // console.log(data);
+    if (!data) alert("No data!");
     try {
-      const res = await UpdateCustomer(formData, customers?.ID);
-      if (res.status) {
-        // Trigger success toast notification
-        toast.success("Update Successful", {
-          position: "bottom-right", // Show toast at the bottom right
-          autoClose: 1500, // Automatically close after 1.5 seconds
-        });
-        setOpen(false); // Close the pop-up if it's open
-      } else {
-        console.log(res);
-        // Trigger error toast notification if update fails
-        toast.error(`Update Failed: ${res.message}`, {
-          position: "bottom-right",
-          autoClose: 1500,
-        });
-      }
+      const res = await UpdateCustomer(data, userid);
+      console.log(res);
+
+      alert("อัพเดตแล้ว");
     } catch (error) {
-      console.log(error); // Correctly log the error
-      toast.error("Error: Something went wrong.", {
-        position: "bottom-right",
-        autoClose: 1500,
-      });
+      console.log("Error", error);
     }
   };
 
@@ -206,84 +189,85 @@ export function Customer(): JSX.Element {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <form onSubmit={form.handleSubmit(onValid)}>
-                    <Form {...form}>
-                      <div className="flex items-center space-y-3">
-                        <Label htmlFor="firstname" className="w-1/4 mt-2">
-                          First Name
-                        </Label>
-                        <Input
-                          id="firstname"
-                          placeholder="FirstName"
-                          {...register("FirstName")}
-                          className="text-[16px] mt-2 w-full"
-                        />
-                      </div>
+                  <form
+                    onSubmit={handleSubmitForm1(onSubmit)}
+                    // className="space-y-6 max-w-md mx-auto p-6 bg-white shadow-md rounded-lg"
+                  >
+                    <div className="flex items-center space-y-3">
+                      <Label htmlFor="firstname" className="w-1/4 mt-2">
+                        First Name
+                      </Label>
+                      <Input
+                        id="firstname"
+                        placeholder="FirstName"
+                        {...registerForm1("FirstName")}
+                        className="text-[16px] mt-2 w-full"
+                      />
+                    </div>
 
-                      <div className="flex items-center space-y-4">
-                        <Label htmlFor="lastname" className="w-1/4 mt-2">
-                          Last Name
-                        </Label>
-                        <Input
-                          id="lastname"
-                          placeholder="LastName"
-                          {...register("LastName")}
-                          className="text-[16px] mt-2 w-full"
-                        />
-                      </div>
-                      <div className="space-y-4 flex items-center">
-                        <Label htmlFor="gender" className="w-1/4 mt-2">
-                          Gender
-                        </Label>
-                        <Select
-                          value={String(customers?.Gender.ID)}
-                          onValueChange={(value) =>
-                            setValue("GenderID", parseInt(value))
-                          }
-                        >
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select Gender" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectLabel>Gender</SelectLabel>
-                              {gender.map((g) => (
-                                <SelectItem key={g.ID} value={String(g.ID)}>
-                                  {g.Name}
-                                </SelectItem>
-                              ))}
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-4 flex items-center">
-                        <Label htmlFor="phone" className="w-1/4 mt-2">
-                          Phone
-                        </Label>
-                        <Input
-                          id="phone"
-                          placeholder="Phone"
-                          {...register("Phone")}
-                          className="text-[16px] mt-2 w-full"
-                        />
-                      </div>
-                      <div className="space-y-4 flex items-center">
-                        <Label htmlFor="email" className="w-1/4 mt-2">
-                          Email
-                        </Label>
-                        <Input
-                          id="email"
-                          placeholder="Email"
-                          {...register("Email")}
-                          className="text-[16px] mt-2 w-full"
-                        />
-                      </div>
-                      <CardFooter className="justify-center mt-6">
-                        <Button className="bg-green-600" type="submit">
-                          Update Account
-                        </Button>
-                      </CardFooter>
-                    </Form>
+                    <div className="flex items-center space-y-4">
+                      <Label htmlFor="lastname" className="w-1/4 mt-2">
+                        Last Name
+                      </Label>
+                      <Input
+                        id="lastname"
+                        placeholder="LastName"
+                        {...registerForm1("LastName")}
+                        className="text-[16px] mt-2 w-full"
+                      />
+                    </div>
+                    <div className="space-y-4 flex items-center">
+                      <Label htmlFor="gender" className="w-1/4 mt-2">
+                        Gender
+                      </Label>
+                      <Select
+                        value={String(customers?.Gender.ID)}
+                        onValueChange={(value) =>
+                          setValue("GenderID", parseInt(value))
+                        }
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select Gender" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Gender</SelectLabel>
+                            {gender.map((g) => (
+                              <SelectItem key={g.ID} value={String(g.ID)}>
+                                {g.Name}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-4 flex items-center">
+                      <Label htmlFor="phone" className="w-1/4 mt-2">
+                        Phone
+                      </Label>
+                      <Input
+                        id="phone"
+                        placeholder="Phone"
+                        {...registerForm1("Phone")}
+                        className="text-[16px] mt-2 w-full"
+                      />
+                    </div>
+                    <div className="space-y-4 flex items-center">
+                      <Label htmlFor="email" className="w-1/4 mt-2">
+                        Email
+                      </Label>
+                      <Input
+                        id="email"
+                        placeholder="Email"
+                        {...registerForm1("Email")}
+                        className="text-[16px] mt-2 w-full"
+                      />
+                    </div>
+                    <CardFooter className="justify-center mt-6">
+                      <Button type="submit" className="bg-green-600 mt-6">
+                        Update Profile
+                      </Button>
+                    </CardFooter>
                   </form>
                 </CardContent>
               </Card>
@@ -299,58 +283,59 @@ export function Customer(): JSX.Element {
                 </CardHeader>
                 <CardContent className="space-y-4 ">
                   {/* Address Form */}
-                  <form onSubmit={form.handleSubmit(onValid)}>
-                    <Form {...form}>
-                      <div className="space-y-2 flex items-center">
-                        <Label htmlFor="address" className="w-1/4 mt-2">
-                          Address
-                        </Label>
-                        <Input
-                          id="address"
-                          placeholder="Address"
-                          {...register("Address")}
-                          className="text-[16px] mt-2 w-full"
-                        />
-                      </div>
-                      <div className="space-y-4 flex items-center">
-                        <Label htmlFor="district" className="w-1/4 mt-2">
-                          District
-                        </Label>
-                        <Input
-                          id="district"
-                          placeholder="District"
-                          {...register("District")}
-                          className="text-[16px] mt-2 w-full"
-                        />
-                      </div>
-                      <div className="space-y-4 flex items-center">
-                        <Label htmlFor="province" className="w-1/4 mt-2">
-                          Province
-                        </Label>
-                        <Input
-                          id="province"
-                          placeholder="Province"
-                          {...register("Province")}
-                          className="text-[16px] mt-2 w-full"
-                        />
-                      </div>
-                      <div className="space-y-4 flex items-center">
-                        <Label htmlFor="postcode" className="w-1/4 mt-2">
-                          Postcode
-                        </Label>
-                        <Input
-                          id="postcode"
-                          placeholder="Postcode"
-                          {...register("Postcode")}
-                          className="text-[16px] mt-2 w-full"
-                        />
-                      </div>
-                      <CardFooter className="justify-center">
-                        <Button className="bg-green-600 mt-6" type="submit">
-                          Update Address
-                        </Button>
-                      </CardFooter>
-                    </Form>
+                  <form
+                    onSubmit={handleSubmitForm1(onSubmit)}
+                    // className="space-y-6 max-w-md mx-auto p-6 bg-white shadow-md rounded-lg"
+                  >
+                    <div className="space-y-2 flex items-center">
+                      <Label htmlFor="address" className="w-1/4 mt-2">
+                        Address
+                      </Label>
+                      <Input
+                        id="address"
+                        placeholder="Address"
+                        {...registerForm1("Address")}
+                        className="text-[16px] mt-2 w-full"
+                      />
+                    </div>
+                    <div className="space-y-4 flex items-center">
+                      <Label htmlFor="district" className="w-1/4 mt-2">
+                        District
+                      </Label>
+                      <Input
+                        id="district"
+                        placeholder="District"
+                        {...registerForm1("District")}
+                        className="text-[16px] mt-2 w-full"
+                      />
+                    </div>
+                    <div className="space-y-4 flex items-center">
+                      <Label htmlFor="province" className="w-1/4 mt-2">
+                        Province
+                      </Label>
+                      <Input
+                        id="province"
+                        placeholder="Province"
+                        {...registerForm1("Province")}
+                        className="text-[16px] mt-2 w-full"
+                      />
+                    </div>
+                    <div className="space-y-4 flex items-center">
+                      <Label htmlFor="postcode" className="w-1/4 mt-2">
+                        Postcode
+                      </Label>
+                      <Input
+                        id="postcode"
+                        placeholder="Postcode"
+                        {...registerForm1("Postcode")}
+                        className="text-[16px] mt-2 w-full"
+                      />
+                    </div>
+                    <CardFooter className="justify-center">
+                      <Button className="bg-green-600 mt-6" type="submit">
+                        Update Address
+                      </Button>
+                    </CardFooter>
                   </form>
                 </CardContent>
               </Card>
