@@ -90,7 +90,7 @@ export function Customer(): JSX.Element {
 
     async function fetchCustomer() {
       try {
-        const res = await GetCustomerByID(2); // Fetch customer with ID 2
+        const res = await GetCustomerByID(3); // Fetch customer with ID 2
         if (res) {
           setCustomer(res);
           reset({
@@ -157,14 +157,14 @@ export function Customer(): JSX.Element {
           User Profile
         </div>
         <div>
-          <div className="w-[348px] h-[380px] bg-slate-100 mt-[122px] ml-[220px] rounded-3xl border-[1px]"></div>
+          <div className="w-[348px] h-[380px] bg-slate-100 mt-[180px] ml-[220px] rounded-3xl border-[1px]"></div>
           <div className="">
             <Avatar className=" left-[320px] top-[-350px] w-[140px] h-[140px]">
               <AvatarImage src="https://github.com/shadcn.png" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </div>
-          <div className="absolute top-[390px] left-[300px] flex">
+          <div className="absolute top-[390px] left-[330px] flex">
             <p className="text-[19px] text-gray-700 space-x-4">
               <span className="font-semibold">{customers?.FirstName}</span>
               <span className="font-semibold">{customers?.LastName}</span>
