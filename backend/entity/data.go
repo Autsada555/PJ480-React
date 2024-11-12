@@ -223,10 +223,11 @@ func SetupData(db *gorm.DB) {
 			Name:        "ข้าวหมูสับ",
 			Cost:        45,
 			Description: "อร่อย",
-			Component:   map[string]interface{}{"Component": []string{"หมูสับ", "กระเทียม", "น้ำปลา"}},
-			MenuImage:   "/src/assets/kawkookkapi.webp",
+			Component:   []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
+
+			MenuImage: "/src/assets/kawkookkapi.webp",
 			DiseaseType: []DiseaseType{
-				diseasetypes[0], diseasetypes[1],diseasetypes[2], diseasetypes[3], diseasetypes[4],
+				diseasetypes[0], diseasetypes[1], diseasetypes[2], diseasetypes[3], diseasetypes[4],
 			},
 			MenuTypeID: 1,
 		},
@@ -235,76 +236,83 @@ func SetupData(db *gorm.DB) {
 			Name:        "เค้กกล้วยหอม",
 			Cost:        30,
 			Description: "หวานนิดๆ",
-			Component:   map[string]interface{}{"Component": []string{"แป้ง", "น้ำตาล 1 %", "กล้วยหอม"}},
-			MenuImage:   "/src/assets/kawkookkapi.webp",
+			Component:   []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
+
+			MenuImage: "/src/assets/kawkookkapi.webp",
 			DiseaseType: []DiseaseType{
 				diseasetypes[1], diseasetypes[2],
 			},
 			MenuTypeID: 2,
-		},{
+		}, {
 			BaseModel:   BaseModel{ID: 3},
 			Name:        "ซุปเห็ดทัปเฟิล",
 			Cost:        40,
 			Description: "อร่อย",
-			Component:   map[string]interface{}{"Component": []string{"เห็ดทัปเฟิล", "เห็ดทัปเฟิล", "เห็ดทัปเฟิล"}},
-			MenuImage:   "/src/assets/kawkookkapi.webp",
+			Component:   []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
+
+			MenuImage: "/src/assets/kawkookkapi.webp",
 			DiseaseType: []DiseaseType{
 				diseasetypes[3], diseasetypes[4],
 			},
 			MenuTypeID: 3,
-		},{
+		}, {
 			BaseModel:   BaseModel{ID: 4},
 			Name:        "น้ำเปล่า",
 			Cost:        10,
 			Description: "ทำได้ทุกอย่าง",
-			Component:   map[string]interface{}{"Component": []string{}},
-			MenuImage:   "/src/assets/kawkookkapi.webp",
+			Component:   []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
+
+			MenuImage: "/src/assets/kawkookkapi.webp",
 			DiseaseType: []DiseaseType{
-				diseasetypes[0], diseasetypes[1],diseasetypes[4],
+				diseasetypes[0], diseasetypes[1], diseasetypes[4],
 			},
 			MenuTypeID: 4,
-		},{
+		}, {
 			BaseModel:   BaseModel{ID: 5},
 			Name:        "กะเพราหมู",
 			Cost:        50,
 			Description: "delicius",
-			Component:   map[string]interface{}{"Component": []string{"หมูชิ้น", "กะเพรา", "กะเทียม"}},
-			MenuImage:   "/src/assets/kawkookkapi.webp",
+			Component:   []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
+
+			MenuImage: "/src/assets/kawkookkapi.webp",
 			DiseaseType: []DiseaseType{
-				diseasetypes[0], diseasetypes[1],diseasetypes[3],
+				diseasetypes[0], diseasetypes[1], diseasetypes[3],
 			},
 			MenuTypeID: 1,
-		},{
+		}, {
 			BaseModel:   BaseModel{ID: 6},
 			Name:        "กะเพราไก่",
 			Cost:        50,
 			Description: "ไม่ใช้น้ำมัน",
-			Component:   map[string]interface{}{"Component": []string{"ไก่ชิ้น", "กะเพรา", "กะเทียม"}},
-			MenuImage:   "/src/assets/kawkookkapi.webp",
+			// Component:   map[string]interface{}{"Component": []string{"ไก่ชิ้น", "กะเพรา", "กะเทียม"}},
+			Component: []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
+			MenuImage: "/src/assets/kawkookkapi.webp",
 			DiseaseType: []DiseaseType{
-				diseasetypes[0], diseasetypes[1],diseasetypes[3],
+				diseasetypes[0], diseasetypes[1], diseasetypes[3],
 			},
 			MenuTypeID: 1,
-		},{
+		}, {
 			BaseModel:   BaseModel{ID: 7},
 			Name:        "สลัดอกไก่",
 			Cost:        50,
 			Description: "ไม่ใช้น้ำมัน",
-			Component:   map[string]interface{}{"Component": []string{"สลัด", "ผลไม้", "อกไก่"}},
-			MenuImage:   "/src/assets/kawkookkapi.webp",
+			Component:   []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
+
+			MenuImage: "/src/assets/kawkookkapi.webp",
 			DiseaseType: []DiseaseType{
-				diseasetypes[0], diseasetypes[1],diseasetypes[3],
+				diseasetypes[0], diseasetypes[1], diseasetypes[3],
 			},
 			MenuTypeID: 1,
-		},{
+		}, {
 			BaseModel:   BaseModel{ID: 8},
 			Name:        "สลัดไข่",
 			Cost:        50,
 			Description: "ไม่ใช้น้ำมัน",
-			Component:   map[string]interface{}{"Component": []string{"สลัด", "ผลไม้", "ไข่"}},
-			MenuImage:   "/src/assets/kawkookkapi.webp",
+			Component:   []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
+
+			MenuImage: "/src/assets/kawkookkapi.webp",
 			DiseaseType: []DiseaseType{
-				diseasetypes[0], diseasetypes[1],diseasetypes[3],
+				diseasetypes[0], diseasetypes[1], diseasetypes[3],
 			},
 			MenuTypeID: 1,
 		},

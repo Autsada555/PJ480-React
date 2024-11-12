@@ -76,12 +76,10 @@ func Login(c *gin.Context) {
 
 	base_query := entity.DB().Table("users").Where("email = ? or user_name = ? ", payload.EmailOrUsername, payload.EmailOrUsername)
 
-	// เลือกเฉพาะ email และ password จากตารางมาตรวจสอบ
 	if err := entity.DB().Table("users").Where("email = ? or user_name = ? ", payload.EmailOrUsername, payload.EmailOrUsername).Select("password").First(&temp).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	// ตรวจสอบว่า password ตรงกันหรือไม่
 	if err := utils.VerifyPassword(payload.Password, temp.Password); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "password not match"})
 		return
@@ -106,5 +104,5 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"token": generateJWT, "id": value.UserTypeID})
+	c.JSON(http.StatusOK, gin.H{"token": generateJWT, "usertypeid": value.UserTypeID, "userid": value.ID})
 }

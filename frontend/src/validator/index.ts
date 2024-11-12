@@ -2,19 +2,19 @@
 import { z } from "zod";
 
 export const userFormSchema = z.object({
-    FirstName: z.string().min(2, "FirstName must be at least 2 characters"),
-    LastName: z.string().min(2, "LastName must be at least 2 characters"),
+    FirstName: z.string(),
+    LastName: z.string(),
     Email: z.string().email({ message: "Invalid email address" }),
     Password: z.string().min(8, "Password must be at least 8 characters"),
     Phone: z.string().length(10, "Phone number must be 10 characters"),
-    UserName: z.string().min(2, "UserName must be at least 2 characters"),
-    Address: z.string().min(2, "Address must be at least 2 characters"),
-    District: z.string().min(2, "District must be at least 2 characters"),
-    Province: z.string().min(2, "Province must be at least 2 characters"),
-    Postcode: z.string().length(5, "Postcode must be 5 characters"),
+    UserName: z.string(),
+    Address: z.string(),
+    District: z.string(),
+    Province: z.string(),
+    Postcode: z.string(),
 
-    GenderID: z.number({ required_error: "Please select gender" }),
-    UserTypeID: z.number({ required_error: "Please select user type" }),
+    GenderID: z.number(),
+    UserTypeID: z.number(),
 
   });
   

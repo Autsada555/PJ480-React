@@ -1,6 +1,6 @@
 // export interface User {
 //   [x: string]: any;
-  
+
 //   ID: number;
 //   FirstName: string;
 //   LastName: string;
@@ -56,7 +56,6 @@ export interface UserID {
   Gender: Gender;
 }
 
-
 export interface Gender {
   ID: number;
   Name: string;
@@ -88,7 +87,7 @@ export interface Payment {
   UserID: number;
   PaymentTypeID: number;
   DeliveryTypeID: number;
-  
+
   User: User;
   PaymentType: PaymentType;
   DeliveryType: DeliveryType;
@@ -97,13 +96,11 @@ export interface Payment {
 export interface PaymentType {
   ID: number;
   Name: string;
-
 }
 
 export interface DeliveryType {
   ID: number;
   Name: string;
-
 }
 
 export interface Order {
@@ -113,16 +110,20 @@ export interface Order {
   User: User;
   Menu: Menu;
 }
-
+export interface MenuOrder {
+  Quantity: number;
+  Menu: Menu;
+  details: string;
+}
 export interface Menu {
   ID: number;
   Name: string;
   Cost: number;
   Description: string;
-  Component: string;
+  Component: string[];
   MenuImage: string;
   DiseaseTypeID: number;
-  DiseaseType : DiseaseType;
+  DiseaseType: DiseaseType[];
   MenuTypeID: number;
   MenuType: MenuType;
 }

@@ -17,6 +17,7 @@ import { z } from "zod"
 import { LoginUser } from "../../services/https/login";
 import { Toaster } from "@/components/ui/toaster";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 
 const formSchema = z.object({
@@ -36,31 +37,32 @@ export function Login() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     loginUser(values)
   }
-  function onSignUp() {
+  function onRegister() {
     navigate("/register", { replace: true });
   }
 
   const { toast } = useToast()
   const loginUser = async (values: z.infer<typeof formSchema>) => {
     let res = await LoginUser({ ...values });
+    console.log(res);
     if (res.status) {
       toast({
         description: "Login successful",
       })
-      console.log(res.message1, res.message2);
-      localStorage.setItem("token", res.message1);
-      localStorage.setItem("id", res.message2);
+      localStorage.setItem("token", res.token);
+      localStorage.setItem("id", res.usertypeid);
+      localStorage.setItem("userid", res.userid);
       setTimeout(() => {
-        if (res.message2 === 100) {
+        if (res.usertypeid === 100) {
           navigate("/home", { replace: true });
         }
-        else if (res.message2 === 200) {
+        else if (res.usertypeid === 200) {
           navigate("/addmenu", { replace: true });
         }
-        else if (res.message2 === 202) {
+        else if (res.usertypeid === 202) {
           navigate("/delivery", { replace: true });
         }
-        else if (res.message2 === 201) {
+        else if (res.usertypeid === 201) {
           navigate("/cash", { replace: true });
         }
         else {
@@ -75,6 +77,12 @@ export function Login() {
 
     }
   };
+
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(prevState => !prevState);
+  };
   return (
     <div>
       <Toaster />
@@ -83,7 +91,8 @@ export function Login() {
         <div className="bg-[#01BD63] h-14"></div>
         <div className="absolute transform -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2  h-fit w-96  ">
           <div className=" text-black text-xl font-bold font-['Inter'] left-[705px] top-[130px]">
-            Welcome to ...
+            <p>ยินดีต้อนรับสู่</p> 
+            <p>DISEASE SPACIFIC DELIGHT FOODS</p>
           </div>
           <div className=" flex justify-center h-24 my-2">
             <img src={DSLOGO} alt="dslogo" className="" />
@@ -98,9 +107,9 @@ export function Login() {
                   name="EmailOrUsername"
                   render={({ field }) => (
                     <FormItem className="">
-                      <FormLabel>Username or Email</FormLabel>
+                      <FormLabel>ชื่อผู้ใช้งานหรืออีเมล</FormLabel>
                       <FormControl>
-                        <Input placeholder="username or email" {...field} />
+                        <Input placeholder="ชื่อผู้ใช้งานหรืออีเมล" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -110,18 +119,32 @@ export function Login() {
                   control={form.control}
                   name="password"
                   render={({ field }) => (
-                    <FormItem >
-                      <FormLabel>Password</FormLabel>
+                    <FormItem>
+                      <FormLabel>รหัสผ่าน</FormLabel>
                       <FormControl>
-                        <Input type= "password" placeholder="password" {...field} />
+                        <div className="relative">
+                          <Input
+                            type={isPasswordVisible ? "text" : "password"}
+                            placeholder="รหัสผ่าน"
+                            {...field}
+                            className="w-full pr-10" 
+                          />
+                          <button
+                            type="button"
+                            onClick={togglePasswordVisibility}
+                            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-sm text-gray-600"
+                          >
+                            {isPasswordVisible ? "ซ่อน" : "แสดง"}
+                          </button>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <Button className="h-8  w-full  mt-4 bg-[#01BD63] hover:bg-[#01BD63] " type="submit">Login</Button>
+                <Button className="h-8  w-full  mt-4 bg-[#01BD63] hover:bg-[#47e699] " type="submit">ล็อกอิน</Button>
               </form>
-              <Button className="h-8  w-full  mt-4 bg-[#00301E] hover:bg-[#00301E] " onClick={onSignUp}>Sign up</Button>
+              <Button className="h-8  w-full  mt-4 bg-[#00301E] hover:bg-[#174937]" onClick={onRegister}>สมัครสมาชิก</Button>
 
             </Form>
           </div>

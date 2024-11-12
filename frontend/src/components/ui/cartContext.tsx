@@ -1,4 +1,5 @@
-import { Menu } from "@/interfaces";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Menu, MenuOrder } from "@/interfaces";
 import { createContext, useState } from "react";
 
 // export const cartContext = createContext({
@@ -28,41 +29,65 @@ import { createContext, useState } from "react";
 //   );
 // };
 type CartType = {
-  getMenus: () => Menu[];
+  getMenus: () => MenuOrder[];
   addMenu: (Menu: Menu) => void;
   removeMenu: (id: number) => void;
-  getAmount: () => number;
+  getQuantity: () => number;
   getTotal: () => number;
+  addQuantity: (menuId: number, amount: number) => void;
 };
 const CartContext = createContext<CartType>(null);
 
 const CartProvider = ({ children }: { children: JSX.Element }) => {
-  const [menu, setMenu] = useState<Menu[]>([]);
-  const getMenus = (): Menu[] => {
-    return menu;
+  const [menuOrder, setMenuOrder] = useState<MenuOrder[]>([]);
+  const getMenus = (): MenuOrder[] => {
+    return menuOrder!;
   };
   const addMenu = (menu: Menu) => {
-    setMenu((prevMenuID) => [...prevMenuID, menu]);
+    setMenuOrder((prevMenuOrder) => {
+      if (prevMenuOrder!.find((_menu) => _menu.Menu.ID === menu.ID)) {
+        const menuIndex = prevMenuOrder.findIndex((_menu) => _menu.Menu.ID === menu.ID);
+        const _menuOrder = prevMenuOrder;
+        _menuOrder[menuIndex].Quantity += 1;
+        return [..._menuOrder];
+      } else {
+        return [...prevMenuOrder, { Menu: menu, Quantity: 1, details: "123" }];
+      }
+    });
   };
   const removeMenu = (index: number) => {
-    setMenu(removeAt(menu, index));
+    setMenuOrder(removeAt(menuOrder, index));
   };
-  const getAmount = () => {
-    return menu.length;
+  const getQuantity = () => {
+    return menuOrder!.reduce((accumulator, menu) => accumulator + menu.Quantity, 0);
   };
   const getTotal = () => {
     return parseFloat(
-      menu.reduce((accumulator, menu) => accumulator + menu.Cost, 0).toFixed(2)
+      menuOrder!
+        .reduce((accumulator, menu) => accumulator + menu.Menu.Cost * menu.Quantity, 0)
+        .toFixed(2)
     );
   };
+  function addQuantity(menuId: number, amount: number) {
+    const _menuOrder = menuOrder;
+    const menuIndex = menuOrder.findIndex((_menu) => _menu.Menu.ID === menuId);
+    _menuOrder[menuIndex].Quantity += amount;
+    if (_menuOrder[menuIndex].Quantity <= 1) {
+      _menuOrder[menuIndex].Quantity = 1;
+    }
+    setMenuOrder([..._menuOrder]);
+  }
   return (
-    <CartContext.Provider value={{ getMenus, addMenu, removeMenu, getAmount, getTotal }}>
+    <CartContext.Provider
+      value={{ getMenus, addMenu, removeMenu, getQuantity, addQuantity, getTotal }}
+    >
       {children}
     </CartContext.Provider>
   );
 };
 
-const removeAt = (arr: Menu[], index: number) => {
+const removeAt = (arr: MenuOrder[], index: number) => {
   return [...arr.slice(0, index), ...arr.slice(index + 1, arr.length)];
 };
+
 export { CartProvider, CartContext };
