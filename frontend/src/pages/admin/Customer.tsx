@@ -90,23 +90,8 @@ export function Customer(): JSX.Element {
 
     async function fetchCustomer() {
       try {
-        const res = await GetCustomerByID(2); // Fetch customer with ID 2
-        if (res) {
-          setCustomer(res);
-          reset({
-            FirstName: res.FirstName,
-            LastName: res.LastName,
-            GenderID: res.Gender.ID,
-            Phone: res.Phone,
-            Email: res.Email,
-            Address: res.Address,
-            District: res.District,
-            Province: res.Province,
-            Postcode: res.Postcode,
-          }); // Reset form with fetched data
-        } else {
-          console.error("Failed to fetch customer options:", res.message);
-        }
+        const res = await GetCustomerByID(userid); // Fetch customer with ID 2
+        setCustomer(res);
       } catch (error) {
         console.error("Error fetching customer options:", error);
       }
