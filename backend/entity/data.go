@@ -4,6 +4,8 @@ import (
 	// "time"
 
 	// "github.com/Autsada555/PJ480-React/backend/utils"
+	"time"
+
 	"gorm.io/gorm"
 )
 
@@ -60,10 +62,7 @@ func SetupData(db *gorm.DB) {
 			GenderID:   1,
 			Phone:      "0988888888",
 			UserName:   "Somchai",
-			Address:    "555 Suranari",
-			District:   "Meaung",
-			Province:   "Nakhon Ratcasima",
-			Postcode:   "30000",
+			Address:    "555 Suranari Meaung Nakhon Ratcasima 30000",
 		},
 		{
 			BaseModel:  BaseModel{ID: 2},
@@ -75,10 +74,7 @@ func SetupData(db *gorm.DB) {
 			GenderID:   1,
 			Phone:      "0988888888",
 			UserName:   "Peter",
-			Address:    "666 Suranari",
-			District:   "Meaung",
-			Province:   "Nakhon Ratcasima",
-			Postcode:   "30000",
+			Address:    "666 Suranari Meaung Nakhon Ratcasima 30000",
 		},
 		{
 			BaseModel:  BaseModel{ID: 3},
@@ -90,10 +86,7 @@ func SetupData(db *gorm.DB) {
 			GenderID:   1,
 			Phone:      "0988888888",
 			UserName:   "veter",
-			Address:    "777 Suranari",
-			District:   "Meaung",
-			Province:   "Nakhon Ratcasima",
-			Postcode:   "30000",
+			Address:    "777 Suranari Meaung Nakhon Ratcasima 30000",
 		},
 		{
 			BaseModel:  BaseModel{ID: 4},
@@ -105,10 +98,7 @@ func SetupData(db *gorm.DB) {
 			GenderID:   2,
 			Phone:      "0999999999",
 			UserName:   "Pinky",
-			Address:    "888 Suranari",
-			District:   "Meaung",
-			Province:   "Nakhon Ratcasima",
-			Postcode:   "30000",
+			Address:    "888 Suranari Meaung Nakhon Ratcasima 30000",
 		},
 		{
 			BaseModel:  BaseModel{ID: 5},
@@ -120,10 +110,7 @@ func SetupData(db *gorm.DB) {
 			GenderID:   2,
 			Phone:      "0999999999",
 			UserName:   "Jezzy",
-			Address:    "999 Suranari",
-			District:   "Meaung",
-			Province:   "Nakhon Ratcasima",
-			Postcode:   "30000",
+			Address:    "999 Suranari Meaung Nakhon Ratcasima 30000",
 		},
 	}
 	db.Create(&users)
@@ -190,32 +177,6 @@ func SetupData(db *gorm.DB) {
 		},
 	}
 	db.Create(&statustypes)
-
-	// payment data
-	paymenttype := []PaymentType{
-		{
-			BaseModel: BaseModel{ID: 1},
-			Name:      "ชำระด้วยเงินสด",
-		},
-		{
-			BaseModel: BaseModel{ID: 2},
-			Name:      "ชำระด้วยการโอน",
-		},
-	}
-	db.Create(&paymenttype)
-
-	// delivery data
-	deliverytype := []DeliveryType{
-		{
-			BaseModel: BaseModel{ID: 1},
-			Name:      "รับเองที่หน้าร้าน",
-		},
-		{
-			BaseModel: BaseModel{ID: 2},
-			Name:      "จัดส่งตามที่อยู่",
-		},
-	}
-	db.Create(&deliverytype)
 
 	menu := []Menu{
 		{
@@ -284,9 +245,8 @@ func SetupData(db *gorm.DB) {
 			Name:        "กะเพราไก่",
 			Cost:        50,
 			Description: "ไม่ใช้น้ำมัน",
-			// Component:   map[string]interface{}{"Component": []string{"ไก่ชิ้น", "กะเพรา", "กะเทียม"}},
-			Component: []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
-			MenuImage: "/src/assets/kawkookkapi.webp",
+			Component:   []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
+			MenuImage:   "/src/assets/kawkookkapi.webp",
 			DiseaseType: []DiseaseType{
 				diseasetypes[0], diseasetypes[1], diseasetypes[3],
 			},
@@ -318,5 +278,23 @@ func SetupData(db *gorm.DB) {
 		},
 	}
 	db.Create(&menu)
+
+	orders := []Order{
+		{
+			BaseModel:    BaseModel{ID: 1},
+			Quantity:     2,
+			TotalAmount:  200,
+			DateDelivery: <-time.After(5),
+			Eslip:        "sdjfklsdfjksdjfsd;f",
+			Delivery:     "รับสินค้าที่หน้าร้าน",
+			Menu: []Menu{
+				menu[1], menu[2],
+			},
+			StatusTypeID: 1,
+			UserID: 1,
+
+		},
+	}
+	db.Create(&orders)
 
 }

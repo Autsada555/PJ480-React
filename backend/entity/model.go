@@ -14,33 +14,32 @@ type BaseModel struct {
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
-type Gender struct {
+type Gender struct { //
 	BaseModel
 	Name string `gorm:"unique"`
 }
 
-type MenuType struct {
+type MenuType struct { //
 	BaseModel
 	Name string `gorm:"unique"`
 }
 
-type DiseaseType struct {
-	BaseModel
-	Name string `gorm:"unique"`
-	// Menus []*Menu `gorm:"many2many:menu_disease_types;"`
-}
-
-type StatusType struct {
+type DiseaseType struct { //
 	BaseModel
 	Name string `gorm:"unique"`
 }
 
-type UserType struct {
+type StatusType struct { //
 	BaseModel
 	Name string `gorm:"unique"`
 }
 
-type User struct {
+type UserType struct { //
+	BaseModel
+	Name string `gorm:"unique"`
+}
+
+type User struct { //
 	BaseModel
 
 	FirstName string `gorm:"default:ชื่อ"`
@@ -50,79 +49,29 @@ type User struct {
 	Phone     string `valid:"required~Phone number is required,stringlength(10|10)~Phone must be at 10 characters"`
 	UserName  string `valid:"required~UserName is required,minstringlength(5)~UserName must be at 5 characters" gorm:"unique"`
 	Address   string `gorm:"default:ที่อยู่"`
-	District  string `gorm:"default:อำเภอ"`
-	Province  string `gorm:"default:จังหวัด"`
-	Postcode  string `gorm:"default:รหัสไปษณีย์"`
 
 	GenderID uint
 	Gender   *Gender `gorm:"foreignKey:GenderID"`
 
 	UserTypeID uint
 	UserType   *UserType `gorm:"foreignKey:UserTypeID"`
-
-	Payments []Payment `gorm:"foreignKey:UserID"` //ส่ง FK ไปที่ payment
 }
 
-type Payment struct {
+type Order struct { //
 	BaseModel
-	Time time.Time `gorm:"unique"`
+	Quantity     int     `gorm:"unique"`
+	TotalAmount  float32 `gorm:"unique"`
+	DateDelivery time.Time
+	Eslip	string `gorm:"type:longtext"`
+	Delivery   string 
+
+	Menu []Menu `gorm:"many2many:order_menu"`
 
 	UserID uint
 	User   *User `gorm:"foreignKey:UserID"`
-
-	PaymentTypeID uint
-	PaymentType   *PaymentType `gorm:"foreignKey:PaymentTypeID"`
-
-	DeliveryTypeID uint
-	DeliveryType   *DeliveryType `gorm:"foreignKey:DeliveryTypeID"`
-}
-
-type PaymentType struct {
-	BaseModel
-	Name string `gorm:"unique"`
-}
-
-type DeliveryType struct {
-	BaseModel
-	Name string `gorm:"unique"`
-}
-
-type Order struct {
-	BaseModel
-	Quantity int     `gorm:"unique"`
-	Total    float32 `gorm:"unique"`
-
-	UserID uint
-	User   *User `gorm:"foreignKey:UserID"`
-
-	MenuID uint
-	Menu   *Menu `gorm:"foreignKey:MenuID"`
-}
-
-type HistoryOrder struct {
-	BaseModel
-	Date time.Time `valid:"required~Date is required,future~Date must be in the future"`
-
-	OrderID uint
-	Order   *Order `gorm:"foreignKey:OrderID"`
 
 	StatusTypeID uint
 	StatusType   *StatusType `gorm:"foreignKey:StatusTypeID"`
-}
-
-type Checkpayment struct {
-	BaseModel
-	DateE     time.Time `valid:"required~Date is required,future~Date must be in the future"`
-	SlipImage string    `gorm:"type:longtext"`
-
-	OrderID uint
-	Order   *Order `gorm:"foreignKey:OrderID"`
-
-	StatusTypeID uint
-	StatusType   *StatusType `gorm:"foreignKey:StatusTypeID"`
-
-	UserID uint
-	User   *User `gorm:"foreignKey:UserID"`
 }
 
 type Menu struct {
@@ -133,7 +82,6 @@ type Menu struct {
 	Component   []string `gorm:"serializer:json"`
 	MenuImage   string   `gorm:"type:longtext"`
 
-	// DiseaseTypeID uint
 	DiseaseType []DiseaseType `gorm:"many2many:menu_disease_types"`
 
 	MenuTypeID uint

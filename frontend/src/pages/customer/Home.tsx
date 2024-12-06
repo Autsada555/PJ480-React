@@ -2,6 +2,7 @@ import Navbar from "./navbar";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Healthimg from "@/assets/imgforhome/Healthimg.jpg";
+import WarningBanner from "@/components/ui/warning";
 import {
   Dialog,
   DialogContent,
@@ -24,13 +25,13 @@ import { Menu } from "@/interfaces";
 import { GetAllMenu } from "@/services/https/Menu";
 import { CreateOrder } from "@/services/https/Order";
 import { CartContext } from "@/components/ui/cartContext";
-import { log } from "console";
+// import { log } from "console";
 import { Button } from "@/components/ui/button";
 
 export function Home() {
-  const [showModalMenu, setShowModalMenu] = useState(false);
+  // const [showModalMenu, setShowModalMenu] = useState(false);
   const [temp, setTemp] = useState<Menu[][] | undefined>();
-  const { toast } = useToast();
+  // const { toast } = useToast();
   const { addMenu } = useContext(CartContext);
 
   // const [cartCount, setCartCount] = useState(0);
@@ -67,11 +68,6 @@ export function Home() {
     return groupedResult;
   }
 
-  // const hangleOnCloseModalMenu = (e: any) => {
-  //   if (e.target.id == "BG") {
-  //     setShowModalMenu(false);
-  //   }
-  // };
 
   return (
     <>
@@ -121,6 +117,9 @@ export function Home() {
           </NavigationMenu>
         </div>
         <div>
+        <div>
+            <WarningBanner message={"กรุณาสั่งอาหารก่อน 1 วัน เนื่องจากทางร้านจะต้องเตรียมวัตถุดิบ"}/>
+        </div>
           <div className="flex ml-[100px] text-black text-2xl font-bold font-['Inter']">
             อาหารเพื่อสุขภาพ (Healthy Foods)
           </div>
@@ -154,7 +153,7 @@ export function Home() {
                           className="h-[125px] w-[230px] cursor-pointer rounded-[20px]"
                           src={menu.MenuImage}
                           alt="image"
-                          // onClick={() => setShowModalMenu(true)}
+                        // onClick={() => setShowModalMenu(true)}
                         />
                       </DialogTrigger>
                       <div className="w-full flex flex-row justify-between p-2  ">

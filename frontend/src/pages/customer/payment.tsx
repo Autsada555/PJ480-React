@@ -1,6 +1,6 @@
 import Navbar from "./navbar";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import Qrcode from "@/assets/Qrcode.jpg";
@@ -135,7 +135,7 @@ export function Payment(): JSX.Element {
             </label>
           </div>
 
-          <div>
+          {/* <div> */}
             <div className="w-full max-w-sm flex-col gap-1 left-[350px] top-[245px] absolute">
               <Label
                 htmlFor="address"
@@ -143,14 +143,13 @@ export function Payment(): JSX.Element {
               >
                 Address (ที่อยู่)
               </Label>
-              <Input
-                type="text"
+              <Textarea 
                 id="address"
                 {...register("Address")}
                 className="text-[16px] mt-2 w-full h-9"
               />
             </div>
-            <div className="w-full max-w-sm flex-col gap-1 left-[850px] top-[245px] absolute">
+            {/* <div className="w-full max-w-sm flex-col gap-1 left-[850px] top-[245px] absolute">
               <Label
                 htmlFor="district"
                 className="text-[16px] left-[3px] top-[-16px] absolute"
@@ -206,7 +205,7 @@ export function Payment(): JSX.Element {
                 className="text-[16px] mt-2 w-full h-9"
               />
             </div>
-          </div>
+          </div> */}
 
           {/* Payment Type Checkboxes */}
           <div className="flex items-center space-x-2 left-[270px] top-[510px] absolute">

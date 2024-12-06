@@ -35,19 +35,7 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	customer := middlewares.Authorization(100)
 	// User customer management
 	route.GET("/customer", controllers.GetAllCustomer)
-
-
-
-	//history
-	route.GET("/history/:id", controllers.GetAllHistory)
-
-
-
-	//payment
-	route.POST("/payment/create", controllers.CreatePayment)
-	route.GET("/payment/deliverytype", controllers.GetDeliveryType)
-	route.GET("/payment/paymenttype", controllers.GetPaymentType)
-
+	
 	//menu
 	route.GET("/menu/:id", controllers.GetMenu)
 	route.POST("/menu/create",customer, controllers.CreateMenu)
