@@ -1,6 +1,5 @@
 import { Label } from "@radix-ui/react-label"
-import Navbar from "./navbar"
-// import { Footer } from "./footer"
+import Navbar from "../customer/navbar";
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -55,12 +54,12 @@ export function AddMenu() {
     return (
         <div>
             <Navbar />
-            <div className="flex space-x-[260px]">
-                <div className="bg-slate-400 h-[800px] w-[250px]">
-                    <button className="bg-slate-300 h-[80px] w-[250px]"><a href="addmenu">Add Menu</a></button>
-                    <button className="bg-slate-300 h-[80px] w-[250px]"><a href="management">Managment Menu</a></button>
-                    <button className="bg-slate-300 h-[80px] w-[250px]"><a href="checkpayment">Check Payment</a></button>
-                    <button className="bg-slate-300 h-[80px] w-[250px]"><a href="listuser">List User</a></button>
+            <div className="flex space-x-[260px] mt-[90px]">
+            <div className="bg-slate-400 h-[800px] w-[250px]">
+                    <button className="bg-slate-300 h-[80px] w-[250px]"><a href="management">จัดการเมนู</a></button>
+                    <button className="bg-slate-300 h-[80px] w-[250px]"><a href="checkpayment">เช็คการจ่ายเงิน</a></button>
+                    <button className="bg-slate-300 h-[80px] w-[250px]"><a href="listuser">รายชื่อผู้ใช้งาน</a></button>
+
                 </div>
 
                 <div className="mt-6">

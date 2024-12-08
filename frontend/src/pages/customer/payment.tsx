@@ -36,15 +36,12 @@ export function Payment(): JSX.Element {
     async function fetchCustomer() {
       try {
         const userid = localStorage.getItem('userid');
-        const res = await GetCustomerByID(Number(userid)); // Fetch customer with ID 3
+        const res = await GetCustomerByID(Number(userid)); 
         if (res) {
           setCustomer(res);
           reset({
             Phone: res.Phone,
             Address: res.Address,
-            District: res.District,
-            Province: res.Province,
-            Postcode: res.Postcode,
           });
         } else {
           console.error("Failed to fetch customer:", res.message);
@@ -57,7 +54,6 @@ export function Payment(): JSX.Element {
     fetchCustomer();
   }, [reset]);
 
-  // Handle form submission
   const onSubmit: SubmitHandler<PaymentFormData> = async (formData) => {
     const PaymentFormData = {
       ...formData,
@@ -65,22 +61,15 @@ export function Payment(): JSX.Element {
       DeliveryType: deliveryType,
     };
 
-    // Check delivery type and set address accordingly
     if (deliveryType === "Store Pickup") {
-      // Handle store pickup logic
       console.log("Store Pickup selected");
-      // Here you might want to set a specific store address if needed
-      PaymentFormData.Address = "Store Address"; // Replace with actual store address
+      PaymentFormData.Address = "Store Address"; 
     } else if (deliveryType === "Home Delivery") {
-      // Use the filled address from the form
       console.log("Home Delivery selected");
     }
 
-    // Check payment type
     if (paymentType === "Bank Transfer") {
-      // Add additional logic for bank transfer if needed
       console.log("Payment by Bank Transfer");
-      // You can handle the QR code or any other logic here
     }
 
     try {
@@ -101,9 +90,7 @@ export function Payment(): JSX.Element {
         <div className="left-[226px] top-[460px] absolute text-black text-xl font-bold font-['Inter']">
           Payment
         </div>
-        {/* User Data Form */}
         <form onSubmit={handleSubmit(onSubmit)}>
-        {/* Delivery Type Checkboxes */}
           <div className="flex items-center space-x-2 left-[270px] top-[165px] absolute">
             <Checkbox
               id="store-pickup"
@@ -135,7 +122,6 @@ export function Payment(): JSX.Element {
             </label>
           </div>
 
-          {/* <div> */}
             <div className="w-full max-w-sm flex-col gap-1 left-[350px] top-[245px] absolute">
               <Label
                 htmlFor="address"
@@ -149,65 +135,7 @@ export function Payment(): JSX.Element {
                 className="text-[16px] mt-2 w-full h-9"
               />
             </div>
-            {/* <div className="w-full max-w-sm flex-col gap-1 left-[850px] top-[245px] absolute">
-              <Label
-                htmlFor="district"
-                className="text-[16px] left-[3px] top-[-16px] absolute"
-              >
-                District (อำเภอ)
-              </Label>
-              <Input
-                type="text"
-                id="district"
-                {...register("District")}
-                className="text-[16px] mt-2 w-full h-9"
-              />
-            </div>
-            <div className="w-full max-w-sm flex-col gap-1 left-[350px] top-[320px] absolute">
-              <Label
-                htmlFor="province"
-                className="text-[16px] left-[3px] top-[-16px] absolute"
-              >
-                Province (จังหวัด)
-              </Label>
-              <Input
-                type="text"
-                id="province"
-                {...register("Province")}
-                className="text-[16px] mt-2 w-full h-9"
-              />
-            </div>
-            <div className="w-full max-w-sm flex-col gap-1 left-[850px] top-[320px] absolute">
-              <Label
-                htmlFor="postcode"
-                className="text-[16px] left-[3px] top-[-16px] absolute"
-              >
-                Postcode (รหัสไปรษณีย์)
-              </Label>
-              <Input
-                type="text"
-                id="postcode"
-                {...register("Postcode")}
-                className="text-[16px] mt-2 w-full h-9"
-              />
-            </div>
-            <div className="w-full max-w-sm flex-col gap-1 left-[350px] top-[395px] absolute">
-              <Label
-                htmlFor="phone"
-                className="text-[16px] left-[3px] top-[-16px] absolute"
-              >
-                Phone (เบอร์โทร)
-              </Label>
-              <Input
-                type="text"
-                id="phone"
-                {...register("Phone")}
-                className="text-[16px] mt-2 w-full h-9"
-              />
-            </div>
-          </div> */}
-
-          {/* Payment Type Checkboxes */}
+           
           <div className="flex items-center space-x-2 left-[270px] top-[510px] absolute">
             <Checkbox
               id="cash-payment"
@@ -237,7 +165,7 @@ export function Payment(): JSX.Element {
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle>
-                    Do you want to pay by transfer?
+                    {/* Do you want to pay by transfer? */}
                   </AlertDialogTitle>
                   <AlertDialogDescription>
                     <div className="text-[17px] font-['Inter']">
@@ -246,8 +174,8 @@ export function Payment(): JSX.Element {
                   </AlertDialogDescription>
                   <img src={Qrcode} alt="QR code" className="w-full" />
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction>Confirm</AlertDialogAction>
+                    <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
+                    <AlertDialogAction>ตกลง</AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogHeader>
               </AlertDialogContent>
@@ -260,9 +188,8 @@ export function Payment(): JSX.Element {
             </label>
           </div>
 
-          {/* Submit Button */}
           <div className="w-full max-w-sm flex-col gap-1 left-[270px] top-[650px] absolute">
-          <Button type="submit">Save</Button>
+          <Button type="submit">บันทึกการสั่งซื้อ</Button>
           </div>
         </form>
       </div>

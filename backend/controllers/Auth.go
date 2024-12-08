@@ -51,15 +51,13 @@ type LoginPayload struct {
 	EmailOrUsername string `binding:"required"`
 	Password        string `binding:"required"`
 }
-type LoginResponse struct {
-	Token string `json:"token"`
-	ID    uint   `json:"id"`
-}
 
 func Logout(c *gin.Context) {
-	var value entity.User
-	data := role_data[value.UserType.Name]
-	c.SetCookie(data.TokenName, "", -1, "/", utils.GetConfig().ORIGIN, false, true)
+	// var value entity.User
+	// data := role_data[value.UserType.Name]
+	id := c.Param("id")
+	c.SetCookie(id, "", -1, "/", utils.GetConfig().ORIGIN, false, true)
+	c.SetCookie("token", "", -1, "/", utils.GetConfig().ORIGIN, false, true)
 	c.JSON(http.StatusOK, gin.H{"data": "you have been logged out"})
 }
 
@@ -104,5 +102,5 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"token": generateJWT, "usertypeid": value.UserTypeID, "userid": value.ID})
+	c.JSON(http.StatusOK, gin.H{"token": generateJWT, "usertypeid": value.UserTypeID, "userid": value.ID, "usertype": data.TokenName })
 }

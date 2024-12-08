@@ -14,7 +14,7 @@ func InitRouter(route *gin.Engine) {
 
 	route.Use(middlewares.CORS())
 
-	route.POST("/logout", controllers.Logout)
+	route.POST("/logout/:id", controllers.Logout)
 	route.POST("/login", controllers.Login)
 	route.POST("/customer/create", controllers.CreateCustomer)
 	route.GET("/customer/gender", controllers.GetAllGender)

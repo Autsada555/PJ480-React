@@ -62,9 +62,9 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
       Phone: customers.Phone,
       Email: customers.Email,
       Address: customers.Address,
-      District: customers.District,
-      Province: customers.Province,
-      Postcode: customers.Postcode,
+      // District: customers.District,
+      // Province: customers.Province,
+      // Postcode: customers.Postcode,
     },
   });
 
@@ -260,7 +260,7 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
                   </FormItem>
                 )}
               />
-
+{/* 
               <FormField
                 name="District"
                 control={form.control}
@@ -301,8 +301,8 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
-            </div>
+              />*/}
+                  </div> 
 
             <AlertDialogFooter>
               <AlertDialogAction asChild>

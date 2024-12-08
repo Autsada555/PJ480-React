@@ -1,23 +1,4 @@
-// export interface User {
-//   [x: string]: any;
 
-//   ID: number;
-//   FirstName: string;
-//   LastName: string;
-//   Email: string;
-//   Phone: string;
-//   Address: string;
-//   District: string;
-//   Province: string;
-//   Postcode: string;
-
-//   UserTypeID: number;
-//   GenderID: number;
-//   Gender: Gender;
-//   UserType: UserType;
-//   // Genderts: string;
-//   // UserTypets: string;
-// }
 export interface User {
   [x: string]: any;
 
@@ -29,9 +10,6 @@ export interface User {
   Phone: string;
   UserName?: string;
   Address: string;
-  District: string;
-  Province: string;
-  Postcode: string;
   GenderID: number;
   UserTypeID: number;
 
@@ -48,9 +26,6 @@ export interface UserID {
   Email: string;
   Phone: string;
   Address: string;
-  District: string;
-  Province: string;
-  Postcode: string;
   GenderID: number;
 
   Gender: Gender;
@@ -81,40 +56,18 @@ export interface DiseaseType {
   Name: string;
 }
 
-export interface Payment {
-  ID: number;
-
-  UserID: number;
-  PaymentTypeID: number;
-  DeliveryTypeID: number;
-
-  User: User;
-  PaymentType: PaymentType;
-  DeliveryType: DeliveryType;
-}
-
-export interface PaymentType {
-  ID: number;
-  Name: string;
-}
-
-export interface DeliveryType {
-  ID: number;
-  Name: string;
-}
-
 export interface Order {
   ID: number;
   Quantity: number;
   Total: number;
+  DateDelivery: Date;
+  Eslip: string;
+
+  Menu: Menu[];
   User: User;
-  Menu: Menu;
+  StatusType: StatusType;
 }
-export interface MenuOrder {
-  Quantity: number;
-  Menu: Menu;
-  details: string;
-}
+
 export interface Menu {
   ID: number;
   Name: string;
@@ -128,18 +81,3 @@ export interface Menu {
   MenuType: MenuType;
 }
 
-export interface Checkpayment {
-  ID: number;
-  Date: Date;
-  SlipImage: string;
-  StatusTypeID: number;
-  Order: Order;
-  User: User;
-}
-
-export interface HistoryOrder {
-  ID: number;
-  Date: Date;
-  StatusType: StatusType;
-  Order: Order;
-}

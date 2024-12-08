@@ -8,7 +8,7 @@ import { AddMenu } from './pages/admin/AddMenu';
 import { Management } from './pages/admin/Management';
 import { CheckPayment } from './pages/admin/CheckPayment';
 import { Payment } from './pages/customer/payment';
-import { Order } from './pages/customer/order';
+import { Order } from './pages/admin/order';
 import { Home } from './pages/customer/Home';
 import { Register } from './pages/customer/register';
 import { Login } from './pages/customer/login';
@@ -19,7 +19,7 @@ import { KidnyFood } from './pages/customer/KidnyFood';
 import { GastritistFood } from './pages/customer/Gastritist';
 import { ThyroidFood } from './pages/customer/Thyroid';
 import { ListUser } from './pages/admin/ListUser';
-import { Customer } from "./pages/admin/Customer";
+import { Customer } from "./pages/customer/Customer";
 
 function App() {
   
@@ -34,7 +34,6 @@ function App() {
             <Route path="/management" element={<Management />} />
             <Route path="/checkpayment" element={<CheckPayment />} />
             <Route path="/payment" element={<Payment />} />
-            <Route path="/order" element={<Order />} />
             <Route path="/register" element={<Register />} />
             <Route path="/" element={<Login />} />
             <Route path="/delivery" element={<Delivery />} />

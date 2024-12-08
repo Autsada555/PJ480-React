@@ -61,9 +61,9 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
       UserName: "",
       Password: "",
       Address: "",
-      District: "",
-      Province: "",
-      Postcode: "",
+      // District: "",
+      // Province: "",
+      // Postcode: "",
     },
   });
 
@@ -129,9 +129,9 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
         </AlertDialogTrigger>
         <AlertDialogContent className="sm:max-w-[480px] h-[80%] overflow-auto">
           <AlertDialogHeader>
-            <AlertDialogTitle>Create User Data</AlertDialogTitle>
+            <AlertDialogTitle>สร้างบัญชีผู้ใช้</AlertDialogTitle>
             <AlertDialogDescription>
-              Make changes to your Employee here. Click save when you're done.
+              {/* Make changes to your Employee here. Click save when you're done. */}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <form onSubmit={form.handleSubmit(onValid)}>
@@ -142,7 +142,7 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>First Name</FormLabel>
+                      <FormLabel>ชื่อ</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -156,7 +156,7 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Last Name</FormLabel>
+                      <FormLabel>นามสกุล</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -170,14 +170,14 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Gender</FormLabel>
+                      <FormLabel>เพศ</FormLabel>
                       <FormControl>
                         <Select
                           value={field.value !== undefined ? String(field.value) : ""}
                           onValueChange={(value) => field.onChange(Number(value))}
                         >
                           <SelectTrigger>
-                            <SelectValue placeholder="Pick Gender" />
+                            <SelectValue placeholder="เลือกเพศ" />
                           </SelectTrigger>
                           <SelectContent>
                             {gender.map((g) => (
@@ -197,7 +197,7 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>User Type</FormLabel>
+                      <FormLabel>ประเภทผู้ใช้งาน</FormLabel>
                       <FormControl>
                         <Select
                           value={field.value !== undefined ? String(field.value) : ""}
@@ -225,7 +225,7 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone</FormLabel>
+                      <FormLabel>เบอร์โทรศัพท์</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -239,7 +239,7 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>UserName</FormLabel>
+                      <FormLabel>ชื่อผู้ใช้งาน</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -253,7 +253,7 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>อีเมล</FormLabel>
                       <FormControl>
                         <Input {...field} type="email" />
                       </FormControl>
@@ -267,7 +267,7 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>รหัสผ่าน</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -281,7 +281,7 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Address</FormLabel>
+                      <FormLabel>ที่อยู่</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -289,7 +289,7 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
                     </FormItem>
                   )}
                 />
-
+{/* 
                 <FormField
                   name="District"
                   control={form.control}
@@ -329,17 +329,17 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
                       </FormControl>
                       <FormMessage />
                     </FormItem>
-                  )}
-                />
+                  )} 
+                 /> */}
               </div>
 
               <AlertDialogFooter>
                 <AlertDialogAction asChild>
                   <Button variant="secondary" onClick={() => setOpen(false)}>
-                    Close
+                    ปิด
                   </Button>
                 </AlertDialogAction>
-                <Button type="submit" onClick={() => setOpen(false)}>Save changes</Button>
+                <Button type="submit" onClick={() => setOpen(false)}>สร้าง</Button>
               </AlertDialogFooter>
             </Form>
           </form>

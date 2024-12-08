@@ -1,22 +1,28 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CartContext } from "@/components/ui/cartContext";
-import { Plus, Minus } from "@phosphor-icons/react";
+import { useToast } from "@/components/ui/use-toast";
+import { LogOutUser } from "@/services/https/login";
+import { Plus, Minus, SignOut } from "@phosphor-icons/react";
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  // AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 function Navbar() {
-  const [showLogout, setShowLogout] = useState(false);
   const { getMenus, getQuantity, removeMenu, getTotal, addQuantity } =
     useContext(CartContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleMouseEnter = () => {
-    setShowLogout(true);
-  };
-
-  const handleMouseLeave = () => {
-    setShowLogout(false);
-  };
+  const { toast } = useToast()
+  const navigate = useNavigate();
 
   const handleCartClick = () => {
     setIsModalOpen(!isModalOpen);
@@ -25,6 +31,29 @@ function Navbar() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const LogOut = async () => {
+    try {
+      const res = await LogOutUser(`${window.localStorage.getItem("usertype")}`);
+      if (res.status) {
+        toast({
+          description: "ออกจากระบบเสร็จสิ้น",
+        })
+
+        setTimeout(() => {
+        }, 1500)
+        navigate("/", { replace: true });
+      } else {
+        toast({
+          variant: "destructive",
+          description: "มีบางอย่างผิดปกติทำให้ออกจากระบบไม่ได้",
+        })
+      }
+      
+    } catch (error) {
+      console.log("Error", error);
+    }
+  }
   return (
     <nav className="bg-green-600 p-4 fixed w-screen top-0 z-20">
       <div className="container mx-auto">
@@ -56,25 +85,23 @@ function Navbar() {
           <div className="flex justify-between">
             <div className="flex space-x-4 mt-[6px]">
               <a href="/home" className="text-white hover:text-gray-300">
-                Home
+                หน้าหลัก
               </a>
 
               <a href="#" className="text-white hover:text-gray-300">
-                About
+                เกี่ยวกับ
               </a>
 
               <a href="#" className="text-white hover:text-gray-300">
-                Services
+                บริการ
               </a>
 
               <a href="#" className="text-white hover:text-gray-300">
-                Contact
+                ติดต่อ
               </a>
             </div>
             <div
               className="ml-4"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
             >
               <Link to="/customer">
                 <Avatar>
@@ -83,6 +110,24 @@ function Navbar() {
                 </Avatar>
               </Link>
             </div>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <SignOut className="text-white cursor-pointer" size={32} />
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>คุณต้องการออกจากระบบใช่หรือไม่?</AlertDialogTitle>
+                  {/* <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete your
+                    account and remove your data from our servers.
+                  </AlertDialogDescription> */}
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
+                  <AlertDialogAction className="bg-red-600" onClick={LogOut} >ยืนยัน</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
 
           <div className="fixed top-6 right-10 z-20">
@@ -114,8 +159,8 @@ function Navbar() {
                   X
                 </button>
 
-                <div className="px-3 py-2 text-sm text-black border-b border-black">
-                  <h2 className="text-lg font-normal my-4">Shopping Cart</h2>
+                <div className="px-3 py-2 text-sm text-black border-b border-green-600">
+                  <h2 className="text-lg font-normal my-4">รถเข็นชอปปิ้งของคุณ</h2>
                 </div>
 
                 <div className="overflow-y-auto flex-grow p-5 custom-scrollbar h-full space-y-4">
@@ -125,7 +170,7 @@ function Navbar() {
                         <img
                           src={menu.Menu.MenuImage}
                           alt={`Product ${menu.Menu.Name}`}
-                          className="mr-6 border-black border aspect-square h-40"
+                          className="mr-6 border-green-600 border aspect-square h-40"
                         />
                         <div className="flex justify-around  items-center w-full">
                           <div>
@@ -156,22 +201,22 @@ function Navbar() {
                       </div>
                     ))
                   ) : (
-                    <p className="text-black">Your cart is empty</p>
+                    <p className="text-black">รถเข็นของคุณว่าง</p>
                   )}
                 </div>
 
                 <div className="mt-auto">
-                  <div className="px-3 py-6 text-xl text-black text-center border-y border-black font-normal">
+                  <div className="px-3 py-6 text-xl text-black text-center border-y border-green-600 font-normal">
                     <p className="flex justify-between">
-                      <span>Subtotal</span>
-                      <span>${getTotal()}</span>
+                      <span>ราคารวม</span>
+                      <span>฿{getTotal()}</span>
                     </p>
                   </div>
 
                   <div className="mt-4 flex justify-center border">
                     <Link to="/Payment">
                       <button className="bg-white text-green-600 font-bold py-2 px-4 rounded hover:bg-gray-300 w-full">
-                        Go to Payment
+                        ไปจ่ายเงิน
                       </button>
                     </Link>
                   </div>

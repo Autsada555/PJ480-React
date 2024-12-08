@@ -28,9 +28,6 @@ export function Register() {
     password: '',
     phone: '',
     address: '',
-    district: '',
-    province: '',
-    postcode: '',
     genderid: 0,
     userTypeid: 0
   });
@@ -55,9 +52,6 @@ export function Register() {
         Phone: formData.phone,
         UserName: formData.userName,
         Address: formData.address,
-        District: formData.district,
-        Province: formData.province,
-        Postcode: formData.postcode,
         GenderID: 1,
         UserTypeID: 100
       };
@@ -66,20 +60,36 @@ export function Register() {
       console.log("Customer creation response:", res);
 
       if (res.status) {
-        toast.success("Customer created successfully", {
+        toast.success("สมัครบัญชีเรียบร้อย", {
           position: "bottom-right",
-          autoClose: 1500,
+          autoClose: 3000,
         });
-      } else {
-        toast.error(`Creation Failed: ${res.message}`, {
+        setTimeout(() => {
+          navigate("/", { replace: true });
+
+        }, 3000);
+      } else if (res.message == 'UNIQUE constraint failed: users.email') {
+        toast.error(`มีบางอย่างผิดพลาด: อีเมลนี้ถูกใช้งานแล้ว`, {
           position: "bottom-right",
-          autoClose: 1500,
+          autoClose: 3000,
+        });
+      }
+      else if (res.message == 'UNIQUE constraint failed: users.user_name') {
+        toast.error(`มีบางอย่างผิดพลาด: ชื่อผู้ใช้นี้ถูกใช้งานแล้ว`, {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+      }
+      else {
+        toast.error(`มีบางอย่างผิดพลาด: ${res.message}`, {
+          position: "bottom-right",
+          autoClose: 3000,
         });
       }
     } catch (error) {
       console.error("Error during customer creation:", error);
-      toast.error("An error occurred while creating the customer.", {
-        autoClose: 1500,
+      toast.error("มีบางอย่างผิดพลาด", {
+        autoClose: 3000,
       });
     }
   };
@@ -155,7 +165,7 @@ export function Register() {
             </div>
             <Button className="h-8  w-full  mt-4 bg-[#01BD63] hover:bg-[#47e699] " type="submit">สมัครสมาชิก</Button>
           </form>
-          <Button className="h-8  w-full  mt-4 bg-[#00301E] hover:bg-[#174937] " type="submit" onClick={onLogin}>ไปล็อกอิน</Button>
+          <Button className="h-8  w-full  mt-4 bg-[#00301E] hover:bg-[#174937] " type="submit" onClick={onLogin}>มีบัญชีเรียบร้อย</Button>
 
           <ToastContainer />
         </div>

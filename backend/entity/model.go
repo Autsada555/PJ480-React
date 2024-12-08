@@ -59,8 +59,8 @@ type User struct { //
 
 type Order struct { //
 	BaseModel
-	Quantity     int     `gorm:"unique"`
-	TotalAmount  float32 `gorm:"unique"`
+	Quantity     int     
+	TotalAmount  int
 	DateDelivery time.Time
 	Eslip	string `gorm:"type:longtext"`
 	Delivery   string 

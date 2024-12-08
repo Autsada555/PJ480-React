@@ -9,9 +9,6 @@ export const userFormSchema = z.object({
     Phone: z.string().length(10, "Phone number must be 10 characters"),
     UserName: z.string(),
     Address: z.string(),
-    District: z.string(),
-    Province: z.string(),
-    Postcode: z.string(),
 
     GenderID: z.number(),
     UserTypeID: z.number(),

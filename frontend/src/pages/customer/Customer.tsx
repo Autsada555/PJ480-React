@@ -1,4 +1,4 @@
-import Navbar from "../customer/navbar";
+import Navbar from "./navbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,15 +8,15 @@ import { Link } from "react-router-dom";
 import { Gender, UserID } from "../../interfaces";
 import { useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify"; // Import toast from react-toastify
+import { useToast } from "@/components/ui/use-toast"
+import { useNavigate } from "react-router-dom";
 
 import {
   GetAllGender,
   GetCustomerByID,
   UpdateCustomer,
 } from "../../services/https/Customer";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm} from "react-hook-form";
 import {
   Card,
   CardContent,
@@ -34,46 +34,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
-import { userUpdateFormSchema, UserUpdateFormData } from "@/validator";
-import { Form } from "@/components/ui/form";
-import { log } from "console";
+import { LogOutUser } from "@/services/https/login";
+import { Textarea } from "@/components/ui/textarea";
 
 export function Customer(): JSX.Element {
   const [gender, setGender] = useState<Gender[]>([]);
   const [customers, setCustomer] = useState<UserID>();
-  const [open, setOpen] = useState(false);
-  const [userid, setUserid] = useState(Number(localStorage.getItem("userid")));
+  const [userid] = useState(Number(localStorage.getItem("userid")));
+  const navigate = useNavigate();
+  const { toast } = useToast()
 
-  // const form = useForm<UserUpdateFormData>({
-  //   resolver: zodResolver(userUpdateFormSchema),
-  //   defaultValues: {
-  //     FirstName: customers?.FirstName,
-  //     LastName: customers?.LastName,
-  //     GenderID: customers?.Gender.ID,
-  //     Phone: customers?.Phone,
-  //     Email: customers?.Email,
-  //     Address: customers?.Address,
-  //     District: customers?.District,
-  //     Province: customers?.Province,
-  //     Postcode: customers?.Postcode,
-  //   },
-  // });
-
-  // const { register, setValue, reset } = useForm<UserUpdateFormData>({
-  //   resolver: zodResolver(userUpdateFormSchema),
-  //   defaultValues: {
-  //     FirstName: customers?.FirstName,
-  //     LastName: customers?.LastName,
-  //     GenderID: customers?.Gender.ID,
-  //     Phone: customers?.Phone,
-  //     Email: customers?.Email,
-  //     Address: customers?.Address,
-  //     District: customers?.District,
-  //     Province: customers?.Province,
-  //     Postcode: customers?.Postcode,
-  //   },
-  // });
 
   useEffect(() => {
     async function fetchGender() {
@@ -87,7 +68,7 @@ export function Customer(): JSX.Element {
 
     async function fetchCustomer() {
       try {
-        const res = await GetCustomerByID(userid); // Fetch customer with ID 2
+        const res = await GetCustomerByID(userid); 
         setCustomer(res);
       } catch (error) {
         console.error("Error fetching customer options:", error);
@@ -98,26 +79,23 @@ export function Customer(): JSX.Element {
     fetchGender();
   }, []);
 
-  // หาก customers เปลี่ยนแปลง ให้รีเซ็ตค่าในฟอร์ม
   useEffect(() => {
     if (customers) {
       console.log(customers);
-      resetForm1(customers); // ใช้ customers ทั้งหมดในการรีเซ็ตฟอร์ม
+      resetForm1(customers); 
     }
   }, [customers]);
 
   const {
     register: registerForm1,
     handleSubmit: handleSubmitForm1,
-    // formState: { errors: errorsForm1 },
     reset: resetForm1,
     setValue,
   } = useForm({
-    defaultValues: customers ?? {}, // ใช้ค่า customers ถ้ามี
+    defaultValues: customers ?? {}, 
   });
 
   const onSubmit = async (data: any) => {
-    // console.log(data);
     if (!data) alert("No data!");
     try {
       const res = await UpdateCustomer(data, userid);
@@ -128,6 +106,28 @@ export function Customer(): JSX.Element {
       console.log("Error", error);
     }
   };
+  const LogOut = async () => {
+    try {
+      const res = await LogOutUser(`${window.localStorage.getItem("usertype")}`);
+      if (res.status) {
+        toast({
+          description: "ออกจากระบบเสร็จสิ้น",
+        })
+
+        setTimeout(() => {
+        }, 1500)
+        navigate("/", { replace: true });
+      } else {
+        toast({
+          variant: "destructive",
+          description: "ออกจากระบบผิดพลาด",
+        })
+      }
+
+    } catch (error) {
+      console.log("Error", error);
+    }
+  }
 
   return (
     <>
@@ -137,7 +137,7 @@ export function Customer(): JSX.Element {
           Overview
         </div>
         <div className="left-[226px] top-[135px] absolute text-black text-3xl font-bold font-['Inter']">
-          User Profile
+         Your Profile
         </div>
         <div>
           <div className="w-[348px] h-[380px] bg-slate-100 mt-[180px] ml-[220px] rounded-3xl border-[1px]"></div>
@@ -158,17 +158,31 @@ export function Customer(): JSX.Element {
               className="flex w-[160px] text-[17px] text-white bg-slate-500"
               variant="outline"
             >
-              <Link to="/history">Order History</Link>
+              <Link to="/history">ประวัติคำสั่งซื้อ</Link>
             </Button>
           </div>
           <div className="absolute top-[500px] left-[310px] flex">
-            <Button
-              variant="outline"
-              className="flex w-[160px] text-[17px] text-white bg-red-700"
-            >
-              Log out
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="flex w-[160px] text-[17px] text-white bg-red-700"
+                >
+                  ออกจากระบบ
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>คุณต้องการออกจากระบบใช่หรือไม่?</AlertDialogTitle>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
+                  <AlertDialogAction className="bg-red-600" onClick={LogOut} >ยืนยัน</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
+
         </div>
         <div>
           <Tabs
@@ -176,30 +190,29 @@ export function Customer(): JSX.Element {
             className="absolute w-[500px] left-[740px] top-[132px]"
           >
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="account">Account</TabsTrigger>
-              <TabsTrigger value="address">Address</TabsTrigger>
+              <TabsTrigger value="account">บัญชีผู้ใช้</TabsTrigger>
+              <TabsTrigger value="address">ที่อยู่</TabsTrigger>
             </TabsList>
             <TabsContent value="account">
               <Card>
                 <CardHeader>
-                  <CardTitle>Account Details</CardTitle>
+                  <CardTitle>รายละเอียดบัญชีผู้ใช้</CardTitle>
                   <CardDescription>
-                    Make changes to your account here. Click update when you're
-                    done.
+                    สามารถเปลี่ยนข้อมูลของคุณได้ที่นี่
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2">
                   <form
                     onSubmit={handleSubmitForm1(onSubmit)}
-                    // className="space-y-6 max-w-md mx-auto p-6 bg-white shadow-md rounded-lg"
+                  // className="space-y-6 max-w-md mx-auto p-6 bg-white shadow-md rounded-lg"
                   >
                     <div className="flex items-center space-y-3">
                       <Label htmlFor="firstname" className="w-1/4 mt-2">
-                        First Name
+                        ชื่อ
                       </Label>
                       <Input
                         id="firstname"
-                        placeholder="FirstName"
+                        placeholder="ชื่อ"
                         {...registerForm1("FirstName")}
                         className="text-[16px] mt-2 w-full"
                       />
@@ -207,18 +220,18 @@ export function Customer(): JSX.Element {
 
                     <div className="flex items-center space-y-4">
                       <Label htmlFor="lastname" className="w-1/4 mt-2">
-                        Last Name
+                        นามสกุล
                       </Label>
                       <Input
                         id="lastname"
-                        placeholder="LastName"
+                        placeholder="นามสกุล"
                         {...registerForm1("LastName")}
                         className="text-[16px] mt-2 w-full"
                       />
                     </div>
                     <div className="space-y-4 flex items-center">
                       <Label htmlFor="gender" className="w-1/4 mt-2">
-                        Gender
+                        เพศ
                       </Label>
                       <Select
                         value={String(customers?.Gender.ID)}
@@ -227,11 +240,11 @@ export function Customer(): JSX.Element {
                         }
                       >
                         <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select Gender" />
+                          <SelectValue placeholder="เลือกเพศ" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectLabel>Gender</SelectLabel>
+                            <SelectLabel>เพศ</SelectLabel>
                             {gender.map((g) => (
                               <SelectItem key={g.ID} value={String(g.ID)}>
                                 {g.Name}
@@ -243,29 +256,29 @@ export function Customer(): JSX.Element {
                     </div>
                     <div className="space-y-4 flex items-center">
                       <Label htmlFor="phone" className="w-1/4 mt-2">
-                        Phone
+                        เบอร์โทรศัพท์
                       </Label>
                       <Input
                         id="phone"
-                        placeholder="Phone"
+                        placeholder="เบอร์โทรศัพท์"
                         {...registerForm1("Phone")}
                         className="text-[16px] mt-2 w-full"
                       />
                     </div>
                     <div className="space-y-4 flex items-center">
                       <Label htmlFor="email" className="w-1/4 mt-2">
-                        Email
+                        อีเมล
                       </Label>
                       <Input
                         id="email"
-                        placeholder="Email"
+                        placeholder="อีเมล"
                         {...registerForm1("Email")}
                         className="text-[16px] mt-2 w-full"
                       />
                     </div>
                     <CardFooter className="justify-center mt-6">
                       <Button type="submit" className="bg-green-600 mt-6">
-                        Update Profile
+                        อัพเดตข้อมูล
                       </Button>
                     </CardFooter>
                   </form>
@@ -275,30 +288,29 @@ export function Customer(): JSX.Element {
             <TabsContent value="address">
               <Card>
                 <CardHeader>
-                  <CardTitle>Address Details</CardTitle>
+                  <CardTitle>รายละเอียดที่อยู่</CardTitle>
                   <CardDescription>
-                    Make changes to your address here. Click update when you're
-                    done.
+                   สามารถเปลี่ยนข้อมูลที่อยู่ของคุณได้ที่นี่
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4 ">
                   {/* Address Form */}
                   <form
                     onSubmit={handleSubmitForm1(onSubmit)}
-                    // className="space-y-6 max-w-md mx-auto p-6 bg-white shadow-md rounded-lg"
+                  // className="space-y-6 max-w-md mx-auto p-6 bg-white shadow-md rounded-lg"
                   >
                     <div className="space-y-2 flex items-center">
                       <Label htmlFor="address" className="w-1/4 mt-2">
-                        Address
+                        ที่อยู่
                       </Label>
-                      <Input
+                      <Textarea
                         id="address"
-                        placeholder="Address"
+                        placeholder="ที่อยู่"
                         {...registerForm1("Address")}
                         className="text-[16px] mt-2 w-full"
                       />
                     </div>
-                    <div className="space-y-4 flex items-center">
+                    {/* <div className="space-y-4 flex items-center">
                       <Label htmlFor="district" className="w-1/4 mt-2">
                         District
                       </Label>
@@ -330,10 +342,10 @@ export function Customer(): JSX.Element {
                         {...registerForm1("Postcode")}
                         className="text-[16px] mt-2 w-full"
                       />
-                    </div>
+                    </div> */}
                     <CardFooter className="justify-center">
                       <Button className="bg-green-600 mt-6" type="submit">
-                        Update Address
+                        อัพเดตข้อมูลที่อยู่
                       </Button>
                     </CardFooter>
                   </form>
