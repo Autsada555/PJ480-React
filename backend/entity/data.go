@@ -15,15 +15,15 @@ func SetupData(db *gorm.DB) {
 	genders := []Gender{
 		{
 			BaseModel: BaseModel{ID: 1},
-			Name:      "Male",
+			Name:      "ชาย",
 		},
 		{
 			BaseModel: BaseModel{ID: 2},
-			Name:      "Female",
+			Name:      "หญิง",
 		},
 		{
 			BaseModel: BaseModel{ID: 3},
-			Name:      "Others",
+			Name:      "ไม่เปิดเผย",
 		},
 	}
 
@@ -165,15 +165,15 @@ func SetupData(db *gorm.DB) {
 	statustypes := []StatusType{
 		{
 			BaseModel: BaseModel{ID: 1},
-			Name:      "Success",
+			Name:      "เรียบร้อย",
 		},
 		{
 			BaseModel: BaseModel{ID: 2},
-			Name:      "Waiting",
+			Name:      "รอการเช็ค",
 		},
 		{
 			BaseModel: BaseModel{ID: 3},
-			Name:      "Fail",
+			Name:      "ผิดพลาด",
 		},
 	}
 	db.Create(&statustypes)
