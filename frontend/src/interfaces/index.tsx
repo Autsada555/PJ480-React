@@ -57,15 +57,15 @@ export interface DiseaseType {
 }
 
 export interface Order {
-  ID: number;
   Quantity: number;
-  Total: number;
+  TotalAmount: number;
   DateDelivery: Date;
   Eslip: string;
+  Delivery: string;
 
-  Menu: Menu[];
-  User: User;
-  StatusType: StatusType;
+  Menu: MenuOrder[];
+  UserID: number;
+  StatusTypeID: number;
 }
 
 export interface Menu {
@@ -79,5 +79,11 @@ export interface Menu {
   DiseaseType: DiseaseType[];
   MenuTypeID: number;
   MenuType: MenuType;
+}
+
+export interface MenuOrder {
+  Quantity: number;
+  Menu: Menu;
+  details: string;
 }
 

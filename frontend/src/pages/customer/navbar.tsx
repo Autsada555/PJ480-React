@@ -16,10 +16,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { MenuOrder } from "@/interfaces";
 
 function Navbar() {
-  const { getMenus, getQuantity, removeMenu, getTotal, addQuantity } =
-    useContext(CartContext);
+  const { getMenus, getQuantity, removeMenu, getTotal, addQuantity } = useContext(CartContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { toast } = useToast()
   const navigate = useNavigate();

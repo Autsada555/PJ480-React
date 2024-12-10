@@ -25,26 +25,26 @@ const GetAllMenu = async (id:number) => {
   return res;
 }
 
-const GetMenuByID = async (id: number) => {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
+// const GetMenuByID = async (id: number) => {
+//   const requestOptions = {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   };
 
-  let res = await fetch(`${apiUrl}/menu/${id}`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
-      }
-    });
+//   let res = await fetch(`${apiUrl}/menu/${id}`, requestOptions)
+//     .then((response) => response.json())
+//     .then((res) => {
+//       if (res.data) {
+//         return res.data;
+//       } else {
+//         return false;
+//       }
+//     });
 
-  return res;
-}
+//   return res;
+// }
 
 
 async function CreateMenu(data: Menu) {
@@ -105,4 +105,4 @@ async function DeleteMenu(id: number | undefined) {
 
   return res;
 }
-export { GetAllMenu, GetMenuByID, CreateMenu, UpdateMenu, DeleteMenu }
+export { GetAllMenu, CreateMenu, UpdateMenu, DeleteMenu }

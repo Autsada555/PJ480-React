@@ -1,50 +1,85 @@
+import { useState, useEffect, useContext } from "react";
 import Navbar from "./navbar";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Textarea } from "@/components/ui/textarea"
+import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
 import Qrcode from "@/assets/Qrcode.jpg";
-import { useEffect, useState } from "react";
-import { UserID } from "../../interfaces";
 import {
   AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
+  AlertDialogTrigger,
   AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
 } from "@/components/ui/alert-dialog";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { paymentFormSchema, PaymentFormData } from "@/validator";
 import { GetCustomerByID } from "../../services/https/Customer";
-import { CreatePayment } from "../../services/https/Payment";
+import { CartContext } from "@/components/ui/cartContext";
+import { toast, ToastContainer } from "react-toastify";
+import WarningBanner from "@/components/ui/warning";
+import { CreateOrder } from "@/services/https/Order";
+import { Menu, Order, UserID } from "@/interfaces";
+import { useNavigate } from "react-router-dom";
+import { ImageUpload } from "@/components/ui/uploadimage";
+import { string } from "zod";
 
 export function Payment(): JSX.Element {
   const [customer, setCustomer] = useState<UserID | null>(null);
-  const [paymentType, setPaymentType] = useState<string | null>(null);
-  const [deliveryType, setDeliveryType] = useState<string | null>(null);
+  const [userid] = useState(Number(localStorage.getItem("userid")));
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const navigate = useNavigate();
+  const [images, setImages] = useState<string>("");
+  const { getMenus, getQuantity, getTotal } = useContext(CartContext);
+  const [formData, setFormData] = useState({
+    quantity: 0,
+    totalamount: 0,
+    datedelivery: new Date(),
+    eslip: '',
+    delivery: '',
+    menu: [] as Menu[],
+    statustypeid: 2,
+    userid: 0,
+  });
 
-  const { register, handleSubmit, reset } = useForm<PaymentFormData>({
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    console.log(e.target)
+    setFormData((prevState) => {
+      let newValue: any = value;
+
+      if (type === "number") {
+        newValue = Number(value);
+      }
+
+      return {
+        ...prevState,
+        [name]: newValue,
+      };
+    });
+  };
+
+  const { register, reset } = useForm<PaymentFormData>({
     resolver: zodResolver(paymentFormSchema),
   });
 
   useEffect(() => {
     async function fetchCustomer() {
       try {
-        const userid = localStorage.getItem('userid');
-        const res = await GetCustomerByID(Number(userid)); 
+        const res = await GetCustomerByID(userid);
         if (res) {
           setCustomer(res);
-          reset({
-            Phone: res.Phone,
-            Address: res.Address,
-          });
-        } else {
-          console.error("Failed to fetch customer:", res.message);
+          reset({ Address: res.Address });
         }
       } catch (error) {
         console.error("Error fetching customer:", error);
@@ -54,142 +89,190 @@ export function Payment(): JSX.Element {
     fetchCustomer();
   }, [reset]);
 
-  const onSubmit: SubmitHandler<PaymentFormData> = async (formData) => {
-    const PaymentFormData = {
-      ...formData,
-      PaymentType: paymentType,
-      DeliveryType: deliveryType,
-    };
 
-    if (deliveryType === "Store Pickup") {
-      console.log("Store Pickup selected");
-      PaymentFormData.Address = "Store Address"; 
-    } else if (deliveryType === "Home Delivery") {
-      console.log("Home Delivery selected");
-    }
-
-    if (paymentType === "Bank Transfer") {
-      console.log("Payment by Bank Transfer");
-    }
-
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // console.log(images[0].data_url)
     try {
-      const result = await CreatePayment(PaymentFormData);
-      console.log("Data saved successfully:", result);
+      const customerData: Order = {
+        Quantity: getQuantity(),
+        TotalAmount: getTotal(),
+        DateDelivery: date!,
+        Eslip: images,
+        Delivery: formData.delivery,
+        Menu: getMenus(),
+        StatusTypeID: formData.statustypeid,
+        UserID: userid,
+      };
+      console.log("Submitted data:", customerData);
+
+      const res = await CreateOrder(customerData);
+      console.log("Customer creation response:", res);
+
+      if (res.status) {
+        toast.success("บันทึกเรียบร้อย", {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+        setTimeout(() => {
+          navigate("/history", { replace: true });
+
+        }, 3000);
+      }
+
+      else {
+        toast.error(`มีบางอย่างผิดพลาด: ${res.message}`, {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+      }
     } catch (error) {
-      console.error("Error saving data:", error);
+      console.error("Error during customer creation:", error);
+      toast.error("มีบางอย่างผิดพลาด", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
     }
   };
 
+  const [selectedOption, setSelectedOption] = useState<"store-pickup" | "home-delivery" | null>(null);
+  const [selectedOptionA, setSelectedOptionA] = useState<"cash-payment" | "bank-transfer" | null>(null);
+
+  const handleOptionChange = (option: "store-pickup" | "home-delivery") => {
+    setSelectedOption((prev) => (prev === option ? null : option)); // Toggle selection
+    console.log("123212");
+  };
+  const handleOptionChangeA = (option: "cash-payment" | "bank-transfer") => {
+    setSelectedOptionA((prev) => (prev === option ? null : option)); // Toggle selection
+    console.log("5645");
+  };
   return (
-    <div>
+    <div className=" w-svw">
       <Navbar />
-      <div>
-        <div className="left-[226px] top-[110px] absolute text-black text-xl font-bold font-['Inter']">
-          Delivery
+      <ToastContainer />
+      <div className="mt-[100px]">
+        <div>
+          <WarningBanner message={"กรุณาสั่งอาหารก่อน 1 วัน เนื่องจากทางร้านจะต้องเตรียมวัตถุดิบ"} />
         </div>
-        <div className="left-[226px] top-[460px] absolute text-black text-xl font-bold font-['Inter']">
-          Payment
-        </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex items-center space-x-2 left-[270px] top-[165px] absolute">
-            <Checkbox
-              id="store-pickup"
-              checked={deliveryType === "Store Pickup"}
-              onCheckedChange={(checked) =>
-                setDeliveryType(checked ? "Store Pickup" : null)
-              }
-            />
-            <label
-              htmlFor="store-pickup"
-              className="text-[17px] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-['Inter']"
-            >
-              รับสินค้าทีหน้าร้าน
-            </label>
-          </div>
-          <div className="flex items-center space-x-2 left-[270px] top-[195px] absolute">
-            <Checkbox
-              id="home-delivery"
-              checked={deliveryType === "Home Delivery"}
-              onCheckedChange={(checked) =>
-                setDeliveryType(checked ? "Home Delivery" : null)
-              }
-            />
-            <label
-              htmlFor="home-delivery"
-              className="text-[17px] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-['Inter']"
-            >
-              จัดส่งสินค้าตามที่อยู่
-            </label>
-          </div>
-
-            <div className="w-full max-w-sm flex-col gap-1 left-[350px] top-[245px] absolute">
-              <Label
-                htmlFor="address"
-                className="text-[16px] left-[3px] top-[-16px] absolute"
-              >
-                Address (ที่อยู่)
-              </Label>
-              <Textarea 
-                id="address"
-                {...register("Address")}
-                className="text-[16px] mt-2 w-full h-9"
-              />
-            </div>
-           
-          <div className="flex items-center space-x-2 left-[270px] top-[510px] absolute">
-            <Checkbox
-              id="cash-payment"
-              checked={paymentType === "Cash"}
-              onCheckedChange={(checked) =>
-                setPaymentType(checked ? "Cash" : null)
-              }
-            />
-            <label
-              htmlFor="cash-payment"
-              className="text-[17px] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-['Inter']"
-            >
-              ชำระด้วยเงินสด
-            </label>
-          </div>
-          <div className="flex items-center space-x-2 left-[270px] top-[540px] absolute">
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Checkbox
-                  id="bank-transfer"
-                  checked={paymentType === "Bank Transfer"}
-                  onCheckedChange={(checked) =>
-                    setPaymentType(checked ? "Bank Transfer" : null)
-                  }
+        <form className="flex flex-col items-center" onSubmit={onSubmit}>
+          <h2 className="ml-[-510px] text-xl font-semibold">Delivery</h2>
+          <div className="flex">
+            <div className="mt-5">
+              <div>
+                <div className="flex">
+                  <Checkbox
+                    id="store-pickup"
+                    checked={selectedOption === "store-pickup"}
+                    onCheckedChange={() => handleOptionChange("store-pickup")}
+                    name="delivery"
+                    onClick={() => setFormData((value) => {
+                      value.delivery = "รับสินค้าทีหน้าร้าน"
+                      return value
+                    })}
+                  />
+                  <Label htmlFor="store-pickup">รับสินค้าทีหน้าร้าน</Label>
+                </div>
+                <div className="flex mt-3">
+                  <Checkbox
+                    id="home-delivery"
+                    checked={selectedOption === "home-delivery"}
+                    onCheckedChange={() => handleOptionChange("home-delivery")}
+                    name="delivery"
+                    onClick={() =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        delivery: (document.getElementById("address") as HTMLTextAreaElement)?.value || "",
+                      }))
+                    }
+                  />
+                  <Label htmlFor="home-delivery">จัดส่งสินค้าตามที่อยู่</Label>
+                </div>
+              </div>
+              <div className="mt-5">
+                <Label htmlFor="address">Address (ที่อยู่)</Label>
+                <Textarea
+                  id="address"
+                  {...register("Address")}
+                  className="mt-1 w-[300px]"
                 />
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    {/* Do you want to pay by transfer? */}
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    <div className="text-[17px] font-['Inter']">
-                      คุณสามารถชำระเงินผ่านช่องทางนี้และทำการบันทึกสลีปการโอนเงินเพื่อใช้เป็นหลักฐานด้วยนะครับ
-                    </div>
-                  </AlertDialogDescription>
-                  <img src={Qrcode} alt="QR code" className="w-full" />
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
-                    <AlertDialogAction>ตกลง</AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogHeader>
-              </AlertDialogContent>
-            </AlertDialog>
-            <label
-              htmlFor="bank-transfer"
-              className="text-[17px] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-['Inter']"
-            >
-              โอนเงินผ่านธนาคาร
-            </label>
+              </div>
+            </div>
+            <div>
+              <Label>Date</Label>
+              <div className="mt-2">
+                <div
+                  className={cn(
+                    "w-[280px] md:w-auto justify-center font-normal  border rounded-2xl",
+                    !date && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className=" ml-[125px]" />
+                  {date ? format(date, "PPP") : "Pick a date"}
+                </div>
+                <Calendar
+                  mode="single"
+                  selected={date}
+                  onSelect={setDate}
+                  className="mt-2"
+                />
+              </div>
+            </div>
           </div>
 
-          <div className="w-full max-w-sm flex-col gap-1 left-[270px] top-[650px] absolute">
-          <Button type="submit">บันทึกการสั่งซื้อ</Button>
+          <h2 className="ml-[-510px] text-xl font-semibold">Payment</h2>
+          <div className="flex ">
+            <div className="justify-start items-start mt-4 ">
+              <div className="flex">
+                <Checkbox
+                  id="cash-payment"
+                  // checked={selectedOptionA === "cash-payment"}
+                  // onCheckedChange={() => handleOptionChangeA("cash-payment")}
+                  name="eslip"
+                  onClick={() => setFormData((value) => {
+                    value.eslip = "ชำระด้วยเงินสด"
+                    return value
+                  })}
+                />
+                <Label htmlFor="cash-payment">ชำระด้วยเงินสด</Label>
+              </div>
+              <div className="flex mt-2">
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Checkbox
+                      id="bank-transfer"
+                    // checked={selectedOptionA === "bank-transfer"}
+                    // onCheckedChange={() => handleOptionChangeA("bank-transfer")} 
+                    />
+                  </AlertDialogTrigger>
+                  <Label htmlFor="bank-transfer">โอนเงินผ่านธนาคาร</Label>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Bank Transfer</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        คุณสามารถชำระเงินผ่านช่องทางนี้และทำการบันทึกสลิปการโอนเงินเพื่อใช้เป็นหลักฐาน
+                      </AlertDialogDescription>
+                      <img src={Qrcode} alt="QR code" className="w-full mt-4" />
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
+                        <AlertDialogAction>ตกลง</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogHeader>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
+            </div>
+
+            <div className="ml-[200px]">
+              <Label htmlFor="upload-image">อัพโหลดใบเสร็จจ่ายเงิน</Label>
+              <ImageUpload setData={setImages}/>
+            </div>
+
+          </div>
+
+          <div>
+            <Button type="submit" className="w-full mt-5 md:w-auto">
+              บันทึกการสั่งซื้อ
+            </Button>
           </div>
         </form>
       </div>

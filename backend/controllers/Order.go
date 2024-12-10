@@ -2,18 +2,18 @@ package controllers
 
 import (
 	"net/http"
-	
+
+	"github.com/Autsada555/PJ480-React/backend/entity"
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
-	"github.com/Autsada555/PJ480-React/backend/entity"
 	"gorm.io/gorm/clause"
 )
 
 func CreateOrder(c *gin.Context) {
 	var order entity.Order
 
-	if err := c.ShouldBindJSON(&order); err != nil { 
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()}) 
+	if err := c.ShouldBindJSON(&order); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -47,7 +47,7 @@ func GetAllOrder(c *gin.Context) {
 	var customers []entity.Order
 
 	if err := entity.DB().
-		InnerJoins("Gender").InnerJoins("UserType").
+		Preload("Menu").Preload("StatusType").Preload("User").
 		Find(&customers).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -56,12 +56,13 @@ func GetAllOrder(c *gin.Context) {
 }
 
 func GetOrderByID(c *gin.Context) {
-	var order entity.Order
-	orderID := c.Param("id")  
+	var order []entity.Order
+	orderID := c.Param("id")
 
-	if err := entity.DB().Model(&entity.User{}).
-		Where("id = ?", orderID). 
-		First(&order).Error; err != nil {
+	if err := entity.DB().
+		Preload("Menu").Preload("StatusType").Preload("User").
+		Where("user_id = ?", orderID).
+		Find(&order).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

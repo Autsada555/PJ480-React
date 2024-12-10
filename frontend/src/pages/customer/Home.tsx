@@ -20,25 +20,14 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { useToast } from "@/components/ui/use-toast";
 import { Menu } from "@/interfaces";
 import { GetAllMenu } from "@/services/https/Menu";
-import { CreateOrder } from "@/services/https/Order";
 import { CartContext } from "@/components/ui/cartContext";
-// import { log } from "console";
 import { Button } from "@/components/ui/button";
 
 export function Home() {
-  // const [showModalMenu, setShowModalMenu] = useState(false);
   const [temp, setTemp] = useState<Menu[][] | undefined>();
-  // const { toast } = useToast();
   const { addMenu } = useContext(CartContext);
-
-  // const [cartCount, setCartCount] = useState(0);
-
-  // const addToCart = () => {
-  //     setCartCount(cartCount + 1);
-  // };
 
   const handleGetAllMenu = async () => {
     const res = await GetAllMenu(1);
@@ -64,7 +53,7 @@ export function Home() {
       }
       previous[current[key]].push(current);
       return previous;
-    }, {} as any); // tried to figure this out, help!!!!!
+    }, {} as any); 
     return groupedResult;
   }
 

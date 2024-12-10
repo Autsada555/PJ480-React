@@ -43,6 +43,8 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.DELETE("/menu/delete/:id",customer, controllers.DeleteMenu)
 
 	//order
+	route.GET("/order", controllers.GetAllOrder)
+	route.GET("/order/:id", controllers.GetOrderByID)
 	route.POST("/order/create", controllers.CreateOrder)
 	route.DELETE("/order/delete/:id", controllers.DeleteOrder)
 
