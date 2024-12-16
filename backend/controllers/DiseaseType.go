@@ -8,11 +8,11 @@ import (
 )
 
 // GET /DiseaseType
-func ListDiseasetypes(c *gin.Context) {
-	var diseasetypes []entity.DiseaseType
-	if err := entity.DB().Raw("SELECT * FROM disease_types").Scan(&diseasetypes).Error; err != nil {
+func GetDisease(c *gin.Context) {
+	var disease []entity.Disease
+	if err := entity.DB().Raw("SELECT * FROM disease").Scan(&disease).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": diseasetypes})
+	c.JSON(http.StatusOK, gin.H{"data": disease})
 }

@@ -24,10 +24,10 @@ type MenuType struct { //
 	Name string `gorm:"unique"`
 }
 
-type DiseaseType struct { //
-	BaseModel
-	Name string `gorm:"unique"`
-}
+// type DiseaseType struct { //
+// 	BaseModel
+// 	Name string `gorm:"unique"`
+// }
 
 type StatusType struct { //
 	BaseModel
@@ -82,8 +82,19 @@ type Menu struct {
 	Component   []string `gorm:"serializer:json"`
 	MenuImage   string   `gorm:"type:longtext"`
 
-	DiseaseType []DiseaseType `gorm:"many2many:menu_disease_types"`
+	Diseases []Disease `gorm:"many2many:menu_diseases;"` // ความสัมพันธ์ Many-to-Many
 
 	MenuTypeID uint
 	MenuType   *MenuType `gorm:"foreignKey:MenuTypeID"`
+}
+
+type Disease struct {
+	BaseModel
+	Name  string `json:"name" binding:"required"`
+	Menus []Menu `gorm:"many2many:menu_diseases;"` // ความสัมพันธ์ Many-to-Many
+}
+
+type MenuDisease struct {
+	MenuID    uint `gorm:"primaryKey"`
+	DiseaseID uint `gorm:"primaryKey"`
 }

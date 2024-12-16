@@ -39,7 +39,7 @@ func autoMigrate(database *gorm.DB) {
 		&UserType{}, //
 		&Order{},
 		&Gender{}, //
-		&DiseaseType{}, //
+		&Disease{}, //
 		&MenuType{}, //
 		&Menu{},
 		&StatusType{}, //		
