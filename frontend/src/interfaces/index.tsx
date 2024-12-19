@@ -51,7 +51,7 @@ export interface MenuType {
   Name: string;
 }
 
-export interface DiseaseType {
+export interface Disease {
   ID: number;
   Name: string;
 }
@@ -83,17 +83,18 @@ export interface OrderHistory {
 }
 
 export interface Menu {
-  ID: number;
+  ID?: number;
   Name: string;
   Cost: number;
   Description: string;
   Component: string[];
   MenuImage: string;
-  DiseaseTypeID: number;
-  DiseaseType: DiseaseType[];
+  DiseaseTypeID: number[];
+  Disease?: Disease[];
   MenuTypeID: number;
-  MenuType: MenuType;
+  MenuType?: MenuType;
 }
+
 
 export interface MenuOrder {
   Quantity: number;

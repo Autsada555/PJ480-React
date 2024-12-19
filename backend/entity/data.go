@@ -115,30 +115,30 @@ func SetupData(db *gorm.DB) {
 	}
 	db.Create(&users)
 
-	// diseasetypes data
-	diseasetypes := []DiseaseType{
+	// disease data
+	disease := []Disease{
 		{
 			BaseModel: BaseModel{ID: 1},
-			Name:      "Heathy Food",
+			Name:      "อาหารเพื่อสุขภาพ",
 		},
 		{
 			BaseModel: BaseModel{ID: 2},
-			Name:      "Diabetes Food",
+			Name:      "โรคเบาหวาน",
 		},
 		{
 			BaseModel: BaseModel{ID: 3},
-			Name:      "Gastritict Food",
+			Name:      "โรคกระเพาะอาหาร",
 		},
 		{
 			BaseModel: BaseModel{ID: 4},
-			Name:      "Thyroid Food",
+			Name:      "โรคไทรอยด์",
 		},
 		{
 			BaseModel: BaseModel{ID: 5},
-			Name:      "Kidny Food",
+			Name:      "โรคไต",
 		},
 	}
-	db.Create(&diseasetypes)
+	db.Create(&disease)
 
 	// diseasetypes data
 	menutypes := []MenuType{
@@ -187,9 +187,6 @@ func SetupData(db *gorm.DB) {
 			Component:   []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
 
 			MenuImage: "/src/assets/kawkookkapi.webp",
-			DiseaseType: []DiseaseType{
-				diseasetypes[0], diseasetypes[1], diseasetypes[2], diseasetypes[3], diseasetypes[4],
-			},
 			MenuTypeID: 1,
 		},
 		{
@@ -200,9 +197,6 @@ func SetupData(db *gorm.DB) {
 			Component:   []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
 
 			MenuImage: "/src/assets/kawkookkapi.webp",
-			DiseaseType: []DiseaseType{
-				diseasetypes[1], diseasetypes[2],
-			},
 			MenuTypeID: 2,
 		}, {
 			BaseModel:   BaseModel{ID: 3},
@@ -212,9 +206,6 @@ func SetupData(db *gorm.DB) {
 			Component:   []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
 
 			MenuImage: "/src/assets/kawkookkapi.webp",
-			DiseaseType: []DiseaseType{
-				diseasetypes[3], diseasetypes[4],
-			},
 			MenuTypeID: 3,
 		}, {
 			BaseModel:   BaseModel{ID: 4},
@@ -224,9 +215,6 @@ func SetupData(db *gorm.DB) {
 			Component:   []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
 
 			MenuImage: "/src/assets/kawkookkapi.webp",
-			DiseaseType: []DiseaseType{
-				diseasetypes[0], diseasetypes[1], diseasetypes[4],
-			},
 			MenuTypeID: 4,
 		}, {
 			BaseModel:   BaseModel{ID: 5},
@@ -236,9 +224,6 @@ func SetupData(db *gorm.DB) {
 			Component:   []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
 
 			MenuImage: "/src/assets/kawkookkapi.webp",
-			DiseaseType: []DiseaseType{
-				diseasetypes[0], diseasetypes[1], diseasetypes[3],
-			},
 			MenuTypeID: 1,
 		}, {
 			BaseModel:   BaseModel{ID: 6},
@@ -247,9 +232,6 @@ func SetupData(db *gorm.DB) {
 			Description: "ไม่ใช้น้ำมัน",
 			Component:   []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
 			MenuImage:   "/src/assets/kawkookkapi.webp",
-			DiseaseType: []DiseaseType{
-				diseasetypes[0], diseasetypes[1], diseasetypes[3],
-			},
 			MenuTypeID: 1,
 		}, {
 			BaseModel:   BaseModel{ID: 7},
@@ -259,9 +241,6 @@ func SetupData(db *gorm.DB) {
 			Component:   []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
 
 			MenuImage: "/src/assets/kawkookkapi.webp",
-			DiseaseType: []DiseaseType{
-				diseasetypes[0], diseasetypes[1], diseasetypes[3],
-			},
 			MenuTypeID: 1,
 		}, {
 			BaseModel:   BaseModel{ID: 8},
@@ -271,13 +250,33 @@ func SetupData(db *gorm.DB) {
 			Component:   []string{"หมูชิ้น", "กะเพรา", "กะเทียม"},
 
 			MenuImage: "/src/assets/kawkookkapi.webp",
-			DiseaseType: []DiseaseType{
-				diseasetypes[0], diseasetypes[1], diseasetypes[3],
-			},
 			MenuTypeID: 1,
 		},
 	}
 	db.Create(&menu)
+
+	// เพิ่มความสัมพันธ์ระหว่างเมนูกับโรค
+	menuDiseases := []MenuDisease{
+		// อาหารเพื่อสุขภาพ
+		{MenuID: 7, DiseaseID: 1}, // สลัดอกไก่
+		{MenuID: 8, DiseaseID: 1}, // สลัดไข่
+	
+		// โรคเบาหวาน
+		{MenuID: 2, DiseaseID: 2}, // เค้กกล้วยหอม (สำหรับกรณีที่เป็นสูตรน้ำตาลน้อย)
+	
+		// โรคกระเพาะอาหาร
+		{MenuID: 3, DiseaseID: 3}, // ซุปเห็ดทัปเฟิล
+	
+		// โรคไทรอยด์
+		{MenuID: 4, DiseaseID: 4}, // น้ำเปล่า
+	
+		// โรคไต
+		{MenuID: 1, DiseaseID: 5}, // ข้าวหมูสับ (ถ้าปรุงรสเค็มน้อย)
+		{MenuID: 6, DiseaseID: 5}, // กะเพราไก่ (ถ้าปรุงรสเค็มน้อย)
+	}
+	
+	db.Create(&menuDiseases)
+	
 
 	orders := []Order{
 		{

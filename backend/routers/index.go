@@ -37,7 +37,8 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.GET("/customer", controllers.GetAllCustomer)
 	
 	//menu
-	route.GET("/menu/:id", controllers.GetMenu)
+	route.GET("/menus", controllers.GetMenu)
+	route.GET("/menu/:id", controllers.GetMenuByDiseaseID)
 	route.POST("/menu/create",customer, controllers.CreateMenu)
 	route.PATCH("/menu/update/:id",customer, controllers.UpdateMenu)
 	route.DELETE("/menu/delete/:id",customer, controllers.DeleteMenu)
