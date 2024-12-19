@@ -9,19 +9,21 @@ import (
 )
 
 func GetMenuByDiseaseID(c *gin.Context) {
-	// รับ DiseaseID จากพารามิเตอร์ใน URL
 	diseaseID := c.Param("id")
 
 	var menus []entity.Menu
-	// ค้นหาเมนูที่มี DiseaseID ตรงกัน
-	entity.DB().
-		Preload("Diseases").
-		Joins("JOIN menu_diseases ON menus.id = menu_diseases.menu_id").
-		Where("menu_diseases.disease_id = ?", diseaseID).
-		Find(&menus)
+	if err := entity.DB().
+		Preload("Diseases").       
+		Preload("MenuType").       
+		Joins("JOIN menu_diseases ON menus.id = menu_diseases.menu_id"). 
+		Where("menu_diseases.disease_id = ?", diseaseID).               
+		Find(&menus).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	// ส่งผลลัพธ์กลับในรูปแบบ JSON
-	c.JSON(200, menus)
+	c.JSON(http.StatusOK, gin.H{"data": menus})
 }
 
 

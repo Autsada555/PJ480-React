@@ -178,13 +178,13 @@ function Navbar() {
                             <p className="font-medium text-black">{menu.Menu.Cost} บาท</p>
                           </div>
                           <div className=" flex space-x-2 items-center">
-                            <div onClick={() => addQuantity(menu.Menu.ID, -1)}>
+                            <div onClick={() => addQuantity(menu.Menu.ID!, -1)}>
                               <Minus size={20} />
                             </div>
                             <p className=" border rounded-sm w-7 aspect-square text-center">
                               {menu.Quantity}
                             </p>
-                            <div onClick={() => addQuantity(menu.Menu.ID, 1)}>
+                            <div onClick={() => addQuantity(menu.Menu.ID!, 1)}>
                               <Plus size={20} />
                             </div>
                           </div>
