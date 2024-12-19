@@ -41,6 +41,7 @@ export function Payment(): JSX.Element {
   const [images, setImages] = useState<string>("");
   const { getMenus, getQuantity, getTotal } = useContext(CartContext);
   const [formData, setFormData] = useState({
+    // id: NumberConstructor,
     quantity: 0,
     totalamount: 0,
     datedelivery: new Date(),
@@ -52,22 +53,22 @@ export function Payment(): JSX.Element {
   });
 
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = e.target;
-    console.log(e.target)
-    setFormData((prevState) => {
-      let newValue: any = value;
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  //   const { name, value, type } = e.target;
+  //   console.log(e.target)
+  //   setFormData((prevState) => {
+  //     let newValue: any = value;
 
-      if (type === "number") {
-        newValue = Number(value);
-      }
+  //     if (type === "number") {
+  //       newValue = Number(value);
+  //     }
 
-      return {
-        ...prevState,
-        [name]: newValue,
-      };
-    });
-  };
+  //     return {
+  //       ...prevState,
+  //       [name]: newValue,
+  //     };
+  //   });
+  // };
 
   const { register, reset } = useForm<PaymentFormData>({
     resolver: zodResolver(paymentFormSchema),
@@ -95,6 +96,7 @@ export function Payment(): JSX.Element {
     // console.log(images[0].data_url)
     try {
       const customerData: Order = {
+        // ID: formData.id,
         Quantity: getQuantity(),
         TotalAmount: getTotal(),
         DateDelivery: date!,
@@ -104,7 +106,7 @@ export function Payment(): JSX.Element {
         StatusTypeID: formData.statustypeid,
         UserID: userid,
       };
-      console.log("Submitted data:", customerData);
+      console.log("Submitted data:", JSON.stringify(customerData));
 
       const res = await CreateOrder(customerData);
       console.log("Customer creation response:", res);
@@ -115,7 +117,7 @@ export function Payment(): JSX.Element {
           autoClose: 3000,
         });
         setTimeout(() => {
-          navigate("/history", { replace: true });
+          navigate("/customer", { replace: true });
 
         }, 3000);
       }

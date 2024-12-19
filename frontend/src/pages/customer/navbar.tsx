@@ -213,7 +213,7 @@ function Navbar() {
                     </p>
                   </div>
 
-                  <div className="mt-4 flex justify-center border">
+                  <div className="mt-4 flex justify-center ">
                     <Link to="/Payment">
                       <button className="bg-white text-green-600 font-bold py-2 px-4 rounded hover:bg-gray-300 w-full">
                         ไปจ่ายเงิน

@@ -23,11 +23,14 @@ async function CreateOrder(data: Order) {
   return res;
 }
 
-async function DeleteOrder(id: number | undefined) {
-  const requestOptions : RequestInit =  {
-    method: "DELETE"
+async function CancelOrder(data: Order,id: number | undefined) {
+  const requestOptions: RequestInit = {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+    credentials: "include"
   };
-  let res = await fetch(`${apiUrl}/order/delete/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/order/cancel/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
 
@@ -87,4 +90,4 @@ const GetAllOrder = async () => {
   return res;
 }
 
-export { CreateOrder, DeleteOrder, GetOrderByID, GetAllOrder }
+export { CreateOrder, CancelOrder, GetOrderByID, GetAllOrder }

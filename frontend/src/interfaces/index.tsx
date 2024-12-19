@@ -68,6 +68,20 @@ export interface Order {
   StatusTypeID: number;
 }
 
+export interface OrderHistory {
+  ID : number;
+  Quantity: number;
+  TotalAmount: number;
+  DateDelivery: Date;
+  Eslip: string;
+  Delivery: string;
+
+  Menu: Menu[];
+  UserID: number;
+  StatusType: StatusType;
+  StatusTypeID: number;
+}
+
 export interface Menu {
   ID: number;
   Name: string;
