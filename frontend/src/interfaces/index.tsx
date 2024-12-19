@@ -82,6 +82,21 @@ export interface OrderHistory {
   StatusTypeID: number;
 }
 
+export interface OrderCheckPayment {
+  ID: number;
+  Quantity: number;
+  TotalAmount: number;
+  DateDelivery: Date;
+  Eslip: string;
+  Delivery: string;
+
+  Menu: MenuOrder[];
+  UserID: number;
+  User: User;
+  StatusTypeID: number;
+  StatusType: StatusType;
+}
+
 export interface Menu {
   ID?: number;
   Name: string;

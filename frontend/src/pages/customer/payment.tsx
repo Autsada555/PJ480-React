@@ -50,6 +50,7 @@ export function Payment(): JSX.Element {
     menu: [] as Menu[],
     statustypeid: 2,
     userid: 0,
+    user: ''
   });
 
 
