@@ -69,7 +69,7 @@ export interface Order {
 }
 
 export interface OrderHistory {
-  ID : number;
+  ID: number;
   Quantity: number;
   TotalAmount: number;
   DateDelivery: Date;
@@ -95,6 +95,11 @@ export interface OrderCheckPayment {
   User: User;
   StatusTypeID: number;
   StatusType: StatusType;
+}
+
+export interface CancelOrderData {
+  StatusTypeID: number;
+  id?: number;
 }
 
 export interface Menu {

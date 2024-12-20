@@ -1,5 +1,5 @@
 
-import { Order } from "../../interfaces/index";
+import { Order, CancelOrderData } from "../../interfaces/index";
 const apiUrl = "http://localhost:8080";
 
 async function CreateOrder(data: Order) {
@@ -23,7 +23,7 @@ async function CreateOrder(data: Order) {
   return res;
 }
 
-async function CancelOrder(data: Order,id: number | undefined) {
+async function CancelOrder(data: CancelOrderData,id: number | undefined) {
   const requestOptions: RequestInit = {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },

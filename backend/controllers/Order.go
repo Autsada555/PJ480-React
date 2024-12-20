@@ -86,26 +86,29 @@ func CreateOrder(c *gin.Context) {
 }
 
 func CancelOrder(c *gin.Context) {
-	var order entity.Order
+    id := c.Param("id")
 
-	id := c.Param("id")
-	if err := c.ShouldBindJSON(&order); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "ShouldBindJSON"})
-		return
-	}
+    type UpdateOrderStatus struct {
+        StatusTypeID uint `json:"status_type_id" binding:"required"`
+    }
 
-	if _, err := govalidator.ValidateStruct(order); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "govalidator"})
-		return
-	}
+    var input UpdateOrderStatus
+    if err := c.ShouldBindJSON(&input); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
 
-	if err := entity.DB().Table("users").Where("id = ?", id).Save(&order).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error":"map"})
-		return
-	}
+    if err := entity.DB().Model(&entity.Order{}).
+        Where("id = ?", id).
+        Updates(map[string]interface{}{"status_type_id": input.StatusTypeID}).
+        Error; err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+        return
+    }
 
-	c.JSON(http.StatusOK, gin.H{"data": "Update Order Successfully"})
+    c.JSON(http.StatusOK, gin.H{"data": "Order status updated successfully"})
 }
+
 
 func GetAllOrder(c *gin.Context) {
 	var customers []entity.Order

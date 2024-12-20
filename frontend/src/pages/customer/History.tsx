@@ -4,16 +4,30 @@ import dayjs from "dayjs";
 import {
   Table,
   TableBody,
-  TableCaption,
+  // TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { XSquare } from "lucide-react";
-import { GetOrderByID } from "@/services/https/Order";
+import { CancelOrder, GetOrderByID } from "@/services/https/Order";
 import { useEffect, useState } from "react";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 
 export function History() {
@@ -38,6 +52,46 @@ export function History() {
     fetchCustomer();
   }, []);
 
+  const formSchema = z.object({
+    StatusTypeID: z.number(),
+  })
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      StatusTypeID: 0,
+    },
+  })
+  const cancelOrder = async (
+    values: z.infer<typeof formSchema>,
+    id: number
+  ) => {
+    try {
+      const res = await CancelOrder({ ...values }, id);
+
+      if (res.status) {
+        toast.success("ยกเลิกสำเร็จ", {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+      } else {
+        toast.error(res.message || "เกิดข้อผิดพลาด", {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+      }
+    } catch (error) {
+      console.error("Error during order cancellation:", error);
+      toast.error("มีบางอย่างผิดพลาด", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+    }
+  };
+
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    const orderIds = 1;
+    cancelOrder(data, orderIds);
+  };
 
   return (
     <div>
@@ -116,7 +170,18 @@ export function History() {
                           </AlertDialogHeader>
                           <AlertDialogFooter>
                             <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
-                            <AlertDialogAction className="bg-red-600" >ยืนยัน</AlertDialogAction>
+                            <form onSubmit={(e) => {
+                              e.preventDefault();
+                              onSubmit({ StatusTypeID: 3 });
+                            }}
+                            >
+                              <AlertDialogAction
+                                className="bg-red-600"
+                                type="submit"
+                              >
+                                ยืนยัน
+                              </AlertDialogAction>
+                            </form>
                           </AlertDialogFooter>
                         </AlertDialogContent>
                       </AlertDialog>

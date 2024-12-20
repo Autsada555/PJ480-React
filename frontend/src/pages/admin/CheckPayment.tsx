@@ -15,6 +15,13 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { SquareCheck, XSquare } from "lucide-react";
 import dayjs from "dayjs";
 import { ImageViewer } from "@/components/ui/ImageViewer";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
 export function CheckPayment() {
     const [order, setOrder] = useState<OrderCheckPayment[]>([]);
@@ -95,24 +102,20 @@ export function CheckPayment() {
                                             <TableCell className="text-center hidden md:table-cell">
                                                 {order.StatusType.Name}
                                             </TableCell>
-                                            <TableCell className="h-full border-2 border-black">
-                                                <AlertDialog>
-                                                    <AlertDialogTrigger asChild>
-                                                        <SquareCheck className="text-green-500 hover:scale-110 cursor-pointer " />
-                                                    </AlertDialogTrigger>
-                                                    <AlertDialogContent>
-                                                        <AlertDialogHeader>
-                                                            <AlertDialogTitle>คุณต้องการยกเลิกการสั่งซื้อนี้ใช่หรือไม่?</AlertDialogTitle>
-                                                            <AlertDialogDescription>
-                                                                หากมีการยกเลิกการสั่งที่จ่ายเงินแล้ว ทางร้านจะโอนเงินกลับตามเลขบัญชีของลูกค้า
-                                                            </AlertDialogDescription>
-                                                        </AlertDialogHeader>
-                                                        <AlertDialogFooter>
-                                                            <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
-                                                            <AlertDialogAction className="bg-red-600" >ยืนยัน</AlertDialogAction>
-                                                        </AlertDialogFooter>
-                                                    </AlertDialogContent>
-                                                </AlertDialog>
+                                            <TableCell className=" justify-center flex ">
+                                                <Select>
+                                                    <SelectTrigger className="w-[180px] border-green-500">
+                                                        <SelectValue placeholder="สถานะ" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectItem value="light">จ่ายเงินเรียบร้อย</SelectItem>
+                                                        <SelectItem value="dark">รอการเช็ค</SelectItem>
+                                                        <SelectItem value="system">ยกเลิก</SelectItem>
+                                                        <SelectItem value="darkก">กำลังจัดส่ง</SelectItem>
+                                                        <SelectItem value="systemก">ส่งเรียบร้อย</SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+
                                             </TableCell>
                                         </TableRow>
                                     ))
