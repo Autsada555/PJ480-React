@@ -131,7 +131,7 @@ export function Home() {
           temp.map((temps, outerKey) => (
             <div key={outerKey}>
               <div className="flex ml-28 mt-[50px]">
-                <h1 className="text-2xl  font-['Inter'] font-bold">{`${temps[0].MenuType.Name} Foods`}</h1>
+                <h1 className="text-2xl  font-['Inter'] font-bold">{`${temps[0].MenuType?.Name} Foods`}</h1>
               </div>
               <div className="ml-28 px-7 flex gap-10 mt-3 flex-wrap ">
                 {temps.map((menu: Menu, innerKey: number) => (
@@ -149,7 +149,7 @@ export function Home() {
                         <h1>{menu.Name}</h1>
                         <h1>{`${menu.Cost} ฿`}</h1>
                       </div>
-                      <h2 className="flex pl-2">{temps[0].MenuType.Name}</h2>
+                      <h2 className="flex pl-2">{temps[0].MenuType?.Name}</h2>
                       <div className="flex space-x-[115px] ">
                         <div className="flex p-2">
                           <img
@@ -186,7 +186,7 @@ export function Home() {
                                     <p className="text-xl text-gray-700">{`${menu.Cost} บาท`}</p>
                                   </div>
                                   <p className="text-lg">
-                                    {temps[0].MenuType.Name} Foods
+                                    {temps[0].MenuType?.Name} Foods
                                   </p>
                                 </div>
                               </div>
@@ -203,7 +203,7 @@ export function Home() {
                               <div>
                                 <p className=" text-xl">ประเภทของอาหาร</p>
                                 <div>
-                                  {menu.DiseaseType.map((type, index) => (
+                                  {menu.Disease?.map((type, index) => (
                                     <p className=" text-base ml-4">
                                       {index + 1}. {type.Name}
                                     </p>
@@ -225,61 +225,6 @@ export function Home() {
                         </DialogFooter>
                       </DialogContent>
                     </Dialog>
-                    {/* {showModalMenu && (
-                      <div
-                        id="BG"
-                        onClick={hangleOnCloseModalMenu}
-                        className="fixed inset-0 bg-opacity-60 flex justify-center items-center z-30"
-                      >
-                        <div className="w-[600px] bg-white rounded-lg shadow-xl overflow-hidden flex ">
-                          <div className="bg-gray-100 p-4">
-                            <h1 className="w-24 text-3xl font-bold">Details Menu</h1>
-                          </div>
-                          <div className="p-6">
-                            <div className="flex space-x-6">
-                              <img
-                                className="h-[200px] w-[230px] rounded-lg object-cover"
-                                src={menu.MenuImage}
-                                alt="Product Image"
-                              />
-
-                              <div className="flex flex-col justify-between">
-                                <h1 className="text-2xl font-semibold">{menu.Name}</h1>
-                                <h1 className="text-xl text-gray-700">{`${menu.Cost}฿`}</h1>
-                              </div>
-                            </div>
-
-                            <div className="mt-6">
-                              <h2 className="text-3xl font-bold">Component Food</h2>
-                              {Array.isArray(menu.Component) && (
-                                <ul className="list-disc pl-6 text-lg mt-2">
-                                  {menu.Component.map(
-                                    (component: string, index: number) => (
-                                      <li key={index}>{component}</li>
-                                    )
-                                  )}
-                                </ul>
-                              )}
-                            </div>
-
-                            <div className="mt-4">
-                              <h2 className="text-3xl font-bold">Type Food</h2>
-                              <p className="text-lg mt-2">{temps[0].MenuType.Name}</p>
-                            </div>
-                          </div>
-
-                          <div className="space-y-10 justify-end p-4">
-                            <button
-                              onClick={hangleOnCloseModalMenu}
-                              className="h-10 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-                            >
-                              Close
-                            </button>
-                            <button>Add to cart</button>
-                          </div>
-                        </div>
-                      </div>
-                    )} */}
                   </div>
                 ))}
               </div>

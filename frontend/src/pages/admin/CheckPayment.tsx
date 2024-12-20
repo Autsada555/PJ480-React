@@ -1,14 +1,48 @@
+import { useEffect, useState } from "react";
 import Navbar from "../customer/navbar";
 import {
     Table,
     TableBody,
     TableCaption,
+    TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import { OrderCheckPayment } from "@/interfaces";
+import { GetAllOrder } from "@/services/https/Order";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { SquareCheck, XSquare } from "lucide-react";
+import dayjs from "dayjs";
+import { ImageViewer } from "@/components/ui/ImageViewer";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
 export function CheckPayment() {
+    const [order, setOrder] = useState<OrderCheckPayment[]>([]);
+
+    async function fetchOrder() {
+        try {
+            const res = await GetAllOrder();
+            if (res) {
+                setOrder(res);
+                console.log(res);
+            } else {
+                console.error('Failed to fetch customers');
+            }
+        } catch (error) {
+            console.error('Error fetching customer data:', error);
+        }
+    }
+    useEffect(() => {
+        fetchOrder();
+    }, []);
+
     return (
         <div>
             <Navbar />
@@ -26,23 +60,72 @@ export function CheckPayment() {
                 </div>
 
                 <div className="flex-1 p-5">
-                    <div className="text-black text-2xl mb-5">
+                    <div className="flex justify-between items-center mb-5">
                         <h1 className="text-2xl font-bold">
-                            Check Payment
+                            เช็คการจ่ายเงิน
                         </h1>
                     </div>
 
                     <div className="overflow-x-auto">
                         <Table className="border border-gray-300 w-full bg-gray-200">
-                            <TableCaption>A list of your payment.</TableCaption>
+                            {/* <TableCaption>A list of your payment.</TableCaption> */}
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead className="text-center text-black">รายการ</TableHead>
-                                    <TableHead className="text-center text-black">สลิปจ่ายเงิน</TableHead>
-                                    <TableHead className="text-center text-black">เช็คการจ่ายเงิน</TableHead>
+                                    <TableHead className="w-[10%] text-center text-black">รายการ</TableHead>
+                                    <TableHead className="w-[10%] text-center text-black">วันที่จัดส่ง</TableHead>
+                                    <TableHead className="w-[10%] text-center text-black">ชื่อผู้สั่งซื้อ</TableHead>
+                                    <TableHead className="w-[20%] text-center text-black">สถานที่รับสินค้า</TableHead>
+                                    <TableHead className="w-[10%] text-center text-black">สลิปจ่ายเงิน</TableHead>
+                                    <TableHead className="w-[10%] text-center text-black">การจ่ายเงิน</TableHead>
+                                    <TableHead className="w-[10%] text-center text-black">เช็คการจ่ายเงิน</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
+                                {Array.isArray(order) && order.length > 0 ? (
+                                    order.map((order) => (
+                                        <TableRow key={order.ID}>
+                                            <TableCell className=" text-center">
+                                                {order.ID || `customer ${order.ID}`}
+                                            </TableCell>
+                                            <TableCell className=" text-center">
+                                                {order.DateDelivery ? dayjs(order.DateDelivery).format("DD/MM/YYYY") : "N/A"}
+                                            </TableCell>
+                                            <TableCell className="text-center">
+                                                {order.User.UserName}
+                                            </TableCell>
+                                            <TableCell className="text-center whitespace-pre">
+                                                {order.Delivery}
+                                            </TableCell>
+                                            <TableCell className="text-center">
+                                                <ImageViewer imageSrc={order.Eslip} />
+                                            </TableCell>
+                                            <TableCell className="text-center hidden md:table-cell">
+                                                {order.StatusType.Name}
+                                            </TableCell>
+                                            <TableCell className=" justify-center flex ">
+                                                <Select>
+                                                    <SelectTrigger className="w-[180px] border-green-500">
+                                                        <SelectValue placeholder="สถานะ" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectItem value="light">จ่ายเงินเรียบร้อย</SelectItem>
+                                                        <SelectItem value="dark">รอการเช็ค</SelectItem>
+                                                        <SelectItem value="system">ยกเลิก</SelectItem>
+                                                        <SelectItem value="darkก">กำลังจัดส่ง</SelectItem>
+                                                        <SelectItem value="systemก">ส่งเรียบร้อย</SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                ) : (
+                                    <TableRow>
+                                        <TableCell colSpan={12} className="text-center">
+                                            ไม่มีรายการที่สั่งซื้อ
+                                        </TableCell>
+                                    </TableRow>
+                                )}
                             </TableBody>
                         </Table>
                     </div>
