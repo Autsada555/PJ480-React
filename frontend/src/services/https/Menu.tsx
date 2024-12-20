@@ -1,3 +1,4 @@
+import { MenuFormData } from "@/validator";
 import { Menu} from "../../interfaces/index";
 
 const apiUrl = "http://localhost:8080";
@@ -47,7 +48,7 @@ const GetAllMenu = async (id:number) => {
 // }
 
 
-async function CreateMenu(data: Menu) {
+async function CreateMenu(data: MenuFormData) {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -105,4 +106,37 @@ async function DeleteMenu(id: number | undefined) {
 
   return res;
 }
-export { GetAllMenu, CreateMenu, UpdateMenu, DeleteMenu }
+
+const GetDiseases = async () => {
+  const requestOptions: RequestInit = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include", // เพื่อส่ง cookie ไปกับ request
+  };
+
+  try {
+    // เรียก API สำหรับดึงข้อมูลทั้งหมด
+    let response = await fetch(`${apiUrl}/disease`, requestOptions);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    let res = await response.json();
+
+    // ตรวจสอบข้อมูลที่ได้กลับมา
+    if (res) {
+      return res; // ส่งข้อมูลกลับเมื่อสำเร็จ
+    } else {
+      return []; // ส่ง array ว่างหากไม่มีข้อมูล
+    }
+  } catch (error) {
+    console.error("Error fetching all disease data:", error);
+    return []; // Return array ว่างเมื่อเกิด error
+  }
+};
+
+
+export { GetAllMenu, CreateMenu, UpdateMenu, DeleteMenu, GetDiseases }

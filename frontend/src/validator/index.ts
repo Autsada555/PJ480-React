@@ -34,29 +34,41 @@ export const userFormSchema = z.object({
 
   
   export const menuFormSchema = z.object({
-    Name: z.string().min(1, "Name is required"),
+    Name: z.string().min(1, "Name is required"), // ชื่อเมนู
     Cost: z
-    .number({ required_error: "Cost is required" })
-    .nonnegative(),
-    Description: z.string().min(1, "Description is required"),
-    Image: z.string(),
-    Component: z.string().min(1, "Component is required"),
-    DiseaseTypeID: z.number({ required_error: "Please select a Disease Type" }),
-    MenuTypeID: z.number({ required_error: "Please select a Menu Type" }),
+      .number({ required_error: "Cost is required" }) // ราคาต้องเป็นตัวเลข
+      .nonnegative("Cost must be non-negative"), // ห้ามติดลบ
+    Description: z.string().min(1, "Description is required"), // รายละเอียด
+    Image: z.string().min(1, "Image path is required"), // รูปภาพ
+    Component: z
+      .array(z.string())
+      .min(1, "At least one component is required"), // รายการส่วนผสม
+    DiseaseID: z
+      .array(z.number({ required_error: "Please select a Disease Type" }))
+      .min(1, "At least one disease type must be selected"), // ต้องเลือกอย่างน้อยหนึ่ง
+    MenuTypeID: z
+      .number({ required_error: "Please select a Menu Type" }) // ประเภทเมนู
+      .positive("Menu Type ID must be positive"), // ห้ามเป็น 0 หรือติดลบ
   });
   
   export type MenuFormData = z.infer<typeof menuFormSchema>;
 
   export const menuUpdateSchema = z.object({
-    Name: z.string().min(1, "Name is required"),
+    Name: z.string().min(1, "Name is required"), // ชื่อเมนู
     Cost: z
-    .number({ required_error: "Cost is required" })
-    .nonnegative(),
-    Description: z.string().min(1, "Description is required"),
-    Image: z.string(),
-    Component: z.string().min(1, "Component is required"),
-    DiseaseTypeID: z.number({ required_error: "Please select a Disease Type" }),
-    MenuTypeID: z.number({ required_error: "Please select a Menu Type" }),
+      .number({ required_error: "Cost is required" })
+      .nonnegative("Cost must be non-negative"), // ห้ามติดลบ
+    Description: z.string().min(1, "Description is required"), // รายละเอียด
+    Image: z.string().optional(), // รูปภาพ (optional ในกรณีไม่เปลี่ยนรูปภาพ)
+    Component: z
+      .array(z.string())
+      .min(1, "At least one component is required"), // รายการส่วนผสม (array ของ string)
+    DiseaseTypeID: z
+      .array(z.number({ required_error: "Please select at least one Disease Type" }))
+      .min(1, "At least one disease type must be selected"), // โรคที่เกี่ยวข้อง (array ของ number)
+    MenuTypeID: z
+      .number({ required_error: "Please select a Menu Type" })
+      .positive("Menu Type ID must be positive"), // ประเภทเมนู
   });
   
   export type MenuUpdateData = z.infer<typeof menuUpdateSchema>;

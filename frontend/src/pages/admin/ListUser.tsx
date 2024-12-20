@@ -74,7 +74,7 @@ export function ListUser() {
                   <TableHead className="w-[10%] text-center">ชื่อ</TableHead>
                   <TableHead className="w-[10%] text-center">นามสกุล</TableHead>
                   <TableHead className="w-[10%] text-center">เพศ</TableHead>
-                  <TableHead className="w-[10%] text-center">ประเภทของอาหาร</TableHead>
+                  <TableHead className="w-[10%] text-center">ประเภทของผู้ใช้งาน</TableHead>
                   <TableHead className="w-[10%] text-center">อีเมล</TableHead>
                   <TableHead className="w-[10%] text-center">เบอร์โทรศัพท์</TableHead>
                   <TableHead className="w-[10%] text-center">ที่อยู่</TableHead>

@@ -51,9 +51,10 @@ export interface MenuType {
   Name: string;
 }
 
-export interface Disease {
+export interface DiseaseInterface {
   ID: number;
   Name: string;
+  Menus: Menu[];
 }
 
 export interface Order {
@@ -76,7 +77,7 @@ export interface Menu {
   Component: string[];
   MenuImage: string;
   DiseaseTypeID: number[];
-  Disease?: Disease[];
+  Disease?: DiseaseInterface[];
   MenuTypeID: number;
   MenuType?: MenuType;
 }

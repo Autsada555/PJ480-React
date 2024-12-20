@@ -90,7 +90,7 @@ type Menu struct {
 
 type Disease struct {
 	BaseModel
-	Name  string `json:"name" binding:"required"`
+	Name  string `binding:"required"`
 	Menus []Menu `gorm:"many2many:menu_diseases;"` // ความสัมพันธ์ Many-to-Many
 }
 
