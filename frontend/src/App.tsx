@@ -4,11 +4,10 @@ import { BrowserRouter } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
 
 import './App.css';
-import { AddMenu } from './pages/admin/AddMenu';
+
 import { Management } from './pages/admin/Management';
 import { CheckPayment } from './pages/admin/CheckPayment';
 import { Payment } from './pages/customer/payment';
-import { Order } from './pages/admin/order';
 import { Home } from './pages/customer/Home';
 import { Register } from './pages/customer/register';
 import { Login } from './pages/customer/login';
@@ -30,7 +29,6 @@ function App() {
           <Routes>
             <Route path="/home" element={<Home />} />
             <Route path="/customer" element={<Customer />} />
-            <Route path="/addmenu" element={<AddMenu />} />
             <Route path="/management" element={<Management />} />
             <Route path="/checkpayment" element={<CheckPayment />} />
             <Route path="/payment" element={<Payment />} />
