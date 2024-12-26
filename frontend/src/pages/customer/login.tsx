@@ -58,7 +58,7 @@ export function Login() {
           navigate("/home", { replace: true });
         }
         else if (res.usertypeid === 200) {
-          navigate("/addmenu", { replace: true });
+          navigate("/management", { replace: true });
         }
         else if (res.usertypeid === 202) {
           navigate("/delivery", { replace: true });
