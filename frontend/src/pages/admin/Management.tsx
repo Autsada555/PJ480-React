@@ -2,7 +2,6 @@ import {
   Table,
   TableBody,
   TableCaption,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -17,163 +16,122 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Label } from "@radix-ui/react-label";
-import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
-import { CreateMenu, GetDiseases } from "../../services/https/Menu";
-import { DiseaseInterface } from "../../interfaces";
-import { Menu } from "@/interfaces";
-import { menuFormSchema, MenuFormData } from "@/validator";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import the styles
+import { ChangeEvent, useEffect, useState } from "react";
+import { GetDiseases, GetMenus } from "@/services/https/Menu";
+import { Menu as MenuInterface } from "@/interfaces";
+
+// interface Ingredient {
+//   id: number;
+//   name: string;
+// }
+
+interface Disease {
+  ID: number;
+  Name: string;
+  Menus: unknown; // ถ้าคุณมีข้อมูลที่เกี่ยวข้องกับ Menus สามารถกำหนดได้ตรงนี้
+}
+
+interface FormData {
+  menuName: string;
+  price: string;
+  description: string;
+  ingredients: string[]; // เพิ่ม array ของวัตถุดิบ
+  image?: string; // เพิ่มฟิลด์สำหรับรูปภาพ (Base64 หรือ URL)
+  selectedDiseases: number[]; // เก็บอาร์เรย์ของ ID โรคที่ถูกเลือก
+}
 
 export function Management() {
-  const [formData, setFormData] = useState<Menu>({
-    Name: "",
-    Cost: 0,
-    Description: "",
-    Component: [],
-    MenuImage: "",
-    MenuTypeID: 0,
-    DiseaseTypeID: [],
+
+  const [formData, setFormData] = useState<FormData>({
+    menuName: "",
+    price: "",
+    description: "",
+    ingredients: [],
+    image: undefined, // ค่าเริ่มต้นเป็นว่าง
+    selectedDiseases: [], // เริ่มต้นด้วยอาร์เรย์ว่าง
   });
 
-  const form = useForm<MenuFormData>({
-    resolver: zodResolver(menuFormSchema),
-    defaultValues: {
-      Name: "",
-      Cost: 0, // ค่าเริ่มต้นเป็น 0 สำหรับราคาที่ไม่ติดลบ
-      Description: "",
-      Image: "",
-      Component: [],
-      DiseaseID: [], // ค่าเริ่มต้นเป็น array ว่าง
-      MenuTypeID: undefined, // undefined สำหรับ dropdown หรือ select
-    },
-  });
-
-  const [open, setOpen] = useState(false);
-  const [diseases, setDiseases] = useState<DiseaseInterface[]>([]);
-  const [selectedDiseases, setSelectedDiseases] = useState<number[]>([]);
-  const [image, setImage] = useState<File | null>(null);
-
-  const handleDiseaseChange = (disease: number) => {
-    setSelectedDiseases(
-      (prev: number[]) =>
-        prev.includes(disease)
-          ? prev.filter((d: number) => d !== disease) // เอาออกถ้าเลือกแล้ว
-          : [...prev, disease] // เพิ่มถ้ายังไม่ได้เลือก
-    );
-  };
+  const [diseases, setDiseases] = useState<Disease[]>([]);
+  const [menus, setMenus] = useState<MenuInterface[]>([])
 
   useEffect(() => {
-    const getDiseases = async () => {
+    const fetchDiseases = async () => {
       try {
-        const res = await GetDiseases();
-        setDiseases(res);
+        const response = await GetDiseases();
+        setDiseases(response);
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching diseases:", error);
       }
     };
-    getDiseases();
+    const fetchMenus = async () => {
+      try {
+        const response = await GetMenus();
+        setMenus(response);
+      } catch (error) {
+        console.error("Error fetching menus:", error)
+      }
+    }
+    fetchDiseases();
+    fetchMenus();
   }, []);
 
   useEffect(() => {
-    console.log(diseases);
-  }, [diseases]);
+    console.log(menus)
+  }, [menus])
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = e.target;
+    if (name === "price") {
+      if (/^\d*\.?\d*$/.test(value)) {
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
+      }
+    }
+    else if (name === "menuName" || name === "description") {
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
+    }
+    else if (name.startsWith("ingredient-")) {
+      // ตรวจจับฟิลด์วัตถุดิบจาก name เช่น "ingredient-0"
+      const ingredientIndex = parseInt(name.split("-")[1], 10);
+      setFormData((prevData) => {
+        const newIngredients = [...prevData.ingredients];
+        newIngredients[ingredientIndex] = value;
+        return { ...prevData, ingredients: newIngredients };
+      });
+    }
+  };
+  const addIngredient = () => {
+    setFormData((prev) => ({
+      ...prev,
+      ingredients: [...prev.ingredients, ""], // เพิ่ม string ว่างในอาร์เรย์
+    }));
+  };
+
+  const removeIngredient = (index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      ingredients: prev.ingredients.filter((_, i) => i !== index), // ลบวัตถุดิบตาม index
+    }));
+  };
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const file = e.target.files?.[0];
     if (file) {
-      setImage(file);
-    }
-  };
-  // const handleSave = () => {
-  //   // Add logic to save the form data
-  //   console.log("Saved data:", {
-  //     selectedDiseases,
-  //     image,
-  //   });
-  // };
-
-  const handleComponentChange = (index: number, value: string) => {
-    const newComponents = [...formData.Component];
-    newComponents[index] = value;
-    setFormData((prev) => ({
-      ...prev,
-      Component: newComponents,
-    }));
-  };
-
-  const addComponent = () => {
-    setFormData((prev) => ({
-      ...prev,
-      Component: [...prev.Component, ""], // เพิ่มค่าใหม่ที่ว่างเปล่า
-    }));
-  };
-
-  const removeComponent = (index: number) => {
-    const newComponents = formData.Component.filter((_, i) => i !== index);
-    setFormData((prev) => ({
-      ...prev,
-      Component: newComponents,
-    }));
-  };
-
-  const convertImageToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
+      reader.onload = (event) => {
+        setFormData((prevData) => ({
+          ...prevData,
+          image: event.target?.result as string, // เก็บรูปภาพในรูปแบบ Base64
+        }));
+      };
       reader.readAsDataURL(file);
-    });
+    }
   };
 
-  const onSubmit: SubmitHandler<MenuFormData> = async (data: MenuFormData) => {
-  console.log("Form submitted:", data);
 
-  try {
-    // แปลงไฟล์เป็น Base64 (หากมีรูปภาพ)
-    let imageBase64 = "";
-    if (image) {
-      imageBase64 = await convertImageToBase64(image);
-    }
-
-    // เตรียมข้อมูลที่จะส่งไปยัง API
-    const payload = {
-      ...data, // ข้อมูลที่ได้จากฟอร์ม
-      Image: imageBase64, // รูปภาพในรูปแบบ Base64
-      DiseaseID: selectedDiseases, // ส่ง DiseaseID ที่เลือก
-    };
-    console.log("Payload to be sent:", payload);
-
-    const res = await CreateMenu(payload);
-
-    if (res.status) {
-      toast.success("Menu created successfully", {
-        position: "bottom-right",
-        autoClose: 1500,
-      });
-      setOpen(false); // ปิด pop-up หลังจากสร้างเสร็จ
-    } else {
-      toast.error(`Creation Failed: ${res.message}`, { // ใช้ backticks
-        position: "bottom-right",
-        autoClose: 1500,
-      });
-    }
-  } catch (error) {
-    console.error("Error during menu creation:", error); // Log ข้อผิดพลาด
-    toast.error("An error occurred while creating the menu.", {
-      position: "bottom-right",
-      autoClose: 1500,
-    });
-  }
-};
-
-  // const onSubmit = (data: MenuFormData) => {
-  //   console.log("Form submitted:", { ...data, Image: image });
-  // };
+  const handleSubmit = (): void => {
+    alert(`ค่าที่กรอก: ${JSON.stringify(formData)}`);
+  };
 
   return (
     <div>
@@ -215,143 +173,223 @@ export function Management() {
                       เพิ่มรายละเอียดของเมนูอาหาร
                     </DialogDescription>
                   </DialogHeader>
-                  <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-4"
-                  >
+
+                  <div>
+
                     <div>
-                      <label htmlFor="name" className="left-[27px]">
+                      <label htmlFor="menuName" className="block text-sm font-medium text-gray-900">
                         ชื่อเมนู
                       </label>
-                      <input
-                        id="name"
-                        placeholder="ชื่อเมนู"
-                        className="text-[16px] w-full"
-                        {...form.register("Name")} // เชื่อมโยงกับฟอร์ม
-                      />
-                      {form.formState.errors.Name && (
-                        <span className="text-red-500">
-                          {form.formState.errors.Name.message}
-                        </span>
-                      )}
+                      <div className="mt-2">
+                        <div className="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                          <input
+                            id="menuName"
+                            name="menuName"
+                            type="text"
+                            placeholder="ชื่อเมนู"
+                            value={formData.menuName}
+                            className="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm"
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
                     </div>
 
                     <div>
-                      <label htmlFor="cost" className="left-[27px]">
+                      <label htmlFor="price" className="block text-sm font-medium text-gray-900">
                         ราคา
                       </label>
-                      <input
-                        id="cost"
-                        placeholder="ราคา"
-                        className="text-[16px] w-full"
-                        // type="number"
-                        {...form.register("Cost", { valueAsNumber: true })} // เชื่อมโยงกับฟอร์ม
-                      />
-                      {form.formState.errors.Cost && (
-                        <span className="text-red-500">
-                          {form.formState.errors.Cost.message}
-                        </span>
-                      )}
-                    </div>
-
-                    <div>
-                      <label htmlFor="description" className="left-[27px]">
-                        คำอธิบายอาหาร
-                      </label>
-                      <input
-                        id="description"
-                        placeholder="คำอธิบายอาหาร"
-                        className="text-[16px] w-full"
-                        {...form.register("Description")} // เชื่อมโยงกับฟอร์ม
-                      />
-                      {form.formState.errors.Description && (
-                        <span className="text-red-500">
-                          {form.formState.errors.Description.message}
-                        </span>
-                      )}
-                    </div>
-
-                    <div>
-                      <label>วัตถุดิบ:</label>
-                      {formData.Component.map((component, index) => (
-                        <div key={index} className="flex items-center mb-2">
+                      <div className="mt-2">
+                        <div className="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                          <div className="shrink-0 select-none text-base text-gray-500 sm:text-sm">฿</div>
                           <input
+                            id="price"
+                            name="price"
                             type="text"
-                            placeholder={`Component ${index + 1}`}
-                            value={component}
-                            onChange={(e) =>
-                              handleComponentChange(index, e.target.value)
-                            }
-                            className="text-[16px] flex-1 mr-2 mt-3"
+                            placeholder="0"
+                            value={formData.price}
+                            className="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm"
+                            onChange={handleChange}
                           />
-                          <button
-                            type="button"
-                            onClick={() => removeComponent(index)}
-                            className="text-red-500"
-                          >
-                            ลบ
-                          </button>
                         </div>
-                      ))}
-                      <button
-                        type="button"
-                        onClick={addComponent}
-                        className="text-blue-500 mt-2"
-                      >
-                        เพิ่มวัตถุดิบ
-                      </button>
+                      </div>
+                    </div>
+
+                    <div className="mt-4">
+                      <label htmlFor="description" className="block text-sm font-medium text-gray-900">
+                        คําอธิบายอาหาร
+                      </label>
+                      <div className="mt-2">
+                        <div className="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                          <input
+                            id="description"
+                            name="description"
+                            type="text"
+                            placeholder="คำอธิบายอาหาร"
+                            value={formData.description}
+                            className="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm"
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
                     </div>
 
                     <div>
-                      <label htmlFor="image" className="left-[27px]">
+                      <label
+                        htmlFor="ingredients"
+                        className="block text-sm font-medium text-gray-900"
+                      >
+                        วัตถุดิบ
+                      </label>
+                      <div className="mt-2">
+                        {formData.ingredients.map((ingredient, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center mb-2 rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600"
+                          >
+                            <input
+                              type="text"
+                              id={`ingredient-${index}`}
+                              name={`ingredient-${index}`}
+                              value={ingredient}
+                              onChange={handleChange}
+                              placeholder="ชื่อวัตถุดิบ"
+                              className="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removeIngredient(index)}
+                              className="ml-2 text-red-500 hover:text-red-700"
+                            >
+                              ลบ
+                            </button>
+                          </div>
+                        ))}
+                        <button
+                          type="button"
+                          onClick={addIngredient}
+                          className="mt-2 text-sm text-blue-500 hover:text-blue-700"
+                        >
+                          เพิ่มวัตถุดิบ
+                        </button>
+                      </div>
+                    </div>
+
+
+                    <div>
+                      <label htmlFor="menuImage" className="block text-sm font-medium text-gray-900">
                         รูปภาพเมนู
                       </label>
-                      <input
-                        id="image"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        className="mt-2"
-                      />
-                    </div>
-
-                    <div className="flex flex-wrap items-center space-x-4 justify-center">
-                      {diseases.map((disease) => (
-                        <div
-                          key={disease.ID}
-                          className="flex items-center space-x-2"
-                        >
-                          <input
-                            type="checkbox"
-                            id={disease.ID.toString()}
-                            className="cursor-pointer"
-                            checked={selectedDiseases.includes(disease.ID)}
-                            onChange={() => handleDiseaseChange(disease.ID)}
+                      <div className="mt-2">
+                        <input
+                          id="menuImage"
+                          name="menuImage"
+                          type="file"
+                          accept="image/*"
+                          className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
+                          onChange={handleImageChange}
+                        />
+                      </div>
+                      {formData.image && (
+                        <div className="mt-3">
+                          <img
+                            src={formData.image}
+                            alt="Preview"
+                            className="w-32 h-32 object-cover rounded-md border border-gray-300"
                           />
-                          <label
-                            htmlFor={disease.ID.toString()}
-                            className="text-[17px] font-medium cursor-pointer"
-                          >
-                            {disease.Name}
-                          </label>
                         </div>
-                      ))}
+                      )}
                     </div>
 
-                    <button
-                      type="submit"
-                      className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
-                    >
-                      บันทึกเมนู
-                    </button>
-                  </form>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-900">โรคที่เกี่ยวข้อง</label>
+                      <div className="mt-2">
+                        {diseases.map((disease) => (
+                          <div key={disease.ID} className="flex items-center">
+                            <input
+                              type="checkbox"
+                              id={`disease-${disease.ID}`}
+                              name="selectedDiseases"
+                              value={disease.ID}
+                              checked={formData.selectedDiseases.includes(disease.ID)}
+                              onChange={(e) => {
+                                const newSelectedDiseases = e.target.checked
+                                  ? [...formData.selectedDiseases, disease.ID]
+                                  : formData.selectedDiseases.filter(id => id !== disease.ID);
+                                setFormData((prevData) => ({
+                                  ...prevData,
+                                  selectedDiseases: newSelectedDiseases,
+                                }));
+                              }}
+                              className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                            />
+                            <label htmlFor={`disease-${disease.ID}`} className="ml-2 text-sm text-gray-900">
+                              {disease.Name}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+
+
+                    <div className="mt-6">
+                      <button
+                        type="button"
+                        className="px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1"
+                        onClick={handleSubmit}
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+
                 </DialogContent>
               </Dialog>
             </div>
           </div>
 
           <div className="overflow-x-auto">
-            <Table className="border border-gray-300 w-full bg-gray-100">
+          <Table className="border border-gray-300 w-full bg-gray-100">
+  <TableCaption>รายการเมนูอาหารทั้งหมด</TableCaption>
+  <TableHeader>
+    <TableRow>
+      <TableHead className="text-center text-black">เมนูที่</TableHead>
+      <TableHead className="text-center text-black">รูปภาพอาหาร</TableHead>
+      <TableHead className="text-center text-black">ชื่อเมนู</TableHead>
+      <TableHead className="text-center text-black">ราคา</TableHead>
+      <TableHead className="text-center text-black">คำอธิบายอาหาร</TableHead>
+      <TableHead className="text-center hidden md:table-cell text-black">วัตถุดิบ</TableHead>
+      <TableHead className="text-center hidden md:table-cell text-black">ประเภทของอาหาร</TableHead>
+      <TableHead className="text-center text-black">แก้ไขหรือลบ</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    {menus.map((menu, index) => (
+      <TableRow key={menu.ID} className="hover:bg-gray-200">
+        <td className="text-center border px-4 py-2">{index + 1}</td>
+        <td className="text-center border px-4 py-2">
+          <img src={menu.MenuImage} alt={menu.Name} className="w-20 h-20 object-cover mx-auto" />
+        </td>
+        <td className="text-center border px-4 py-2">{menu.Name}</td>
+        <td className="text-center border px-4 py-2">{menu.Cost} บาท</td>
+        <td className="text-center border px-4 py-2">{menu.Description}</td>
+        <td className="text-center border px-4 py-2 hidden md:table-cell">
+          {menu.Component.join(", ")}
+        </td>
+        <td className="text-center border px-4 py-2 hidden md:table-cell">
+          {menu.Diseases?.map((disease:Disease) => disease.Name).join(", ")}
+        </td>
+        <td className="text-center border px-4 py-2">
+          <button className="px-3 py-1 text-white bg-blue-500 rounded">แก้ไข</button>
+          <button className="ml-2 px-3 py-1 text-white bg-red-500 rounded">ลบ</button>
+        </td>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>
+
+            {/* <Table className="border border-gray-300 w-full bg-gray-100">
               <TableCaption>รายการเมนูอาหารทั้งหมด</TableCaption>
               <TableHeader>
                 <TableRow>
@@ -380,7 +418,7 @@ export function Management() {
                 </TableRow>
               </TableHeader>
               <TableBody></TableBody>
-            </Table>
+            </Table> */}
           </div>
         </div>
       </div>

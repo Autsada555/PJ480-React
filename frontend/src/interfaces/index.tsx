@@ -111,7 +111,7 @@ export interface Menu {
   Component: string[];
   MenuImage: string;
   DiseaseTypeID: number[];
-  Disease?: DiseaseInterface[];
+  Diseases?: DiseaseInterface[];
   MenuTypeID: number;
   MenuType?: MenuType;
 }
