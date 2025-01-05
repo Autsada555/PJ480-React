@@ -30,7 +30,7 @@ func GetMenuByDiseaseID(c *gin.Context) {
 func GetMenu(c *gin.Context) {
 	var menus []entity.Menu
 	entity.DB().Preload("Diseases").Find(&menus)
-	c.JSON(200, menus)
+	c.JSON(http.StatusOK, gin.H{"data": menus})
 }
 
 

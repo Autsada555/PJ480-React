@@ -1,10 +1,10 @@
 import { MenuFormData } from "@/validator";
-import { Menu} from "../../interfaces/index";
+import { Menu } from "../../interfaces/index";
 
 const apiUrl = "http://localhost:8080";
 //
-const GetAllMenu = async (id:number) => {
-  const requestOptions :RequestInit= {
+const GetAllMenu = async (id: number) => {
+  const requestOptions: RequestInit = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -14,6 +14,29 @@ const GetAllMenu = async (id:number) => {
   };
 
   let res = await fetch(`${apiUrl}/menu/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+const GetMenus = async () => {
+  const requestOptions: RequestInit = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include"
+
+  };
+
+  const res = await fetch(`${apiUrl}/menus`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -118,13 +141,13 @@ const GetDiseases = async () => {
 
   try {
     // เรียก API สำหรับดึงข้อมูลทั้งหมด
-    let response = await fetch(`${apiUrl}/disease`, requestOptions);
+    const response = await fetch(`${apiUrl}/disease`, requestOptions);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    let res = await response.json();
+    const res = await response.json();
 
     // ตรวจสอบข้อมูลที่ได้กลับมา
     if (res) {
@@ -139,4 +162,4 @@ const GetDiseases = async () => {
 };
 
 
-export { GetAllMenu, CreateMenu, UpdateMenu, DeleteMenu, GetDiseases }
+export { GetAllMenu, GetMenus, CreateMenu, UpdateMenu, DeleteMenu, GetDiseases }
