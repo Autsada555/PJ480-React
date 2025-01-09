@@ -36,7 +36,12 @@ export interface Gender {
   Name: string;
 }
 
-export interface StatusType {
+export interface StatusOrderType {
+  ID: number;
+  Name: string;
+}
+
+export interface StatusPaymentType {
   ID: number;
   Name: string;
 }
@@ -66,7 +71,8 @@ export interface Order {
 
   Menu: MenuOrder[];
   UserID: number;
-  StatusTypeID: number;
+  StatusOrderTypeID: number;
+  StatusPaymentTypeID: number;
 }
 
 export interface OrderHistory {
@@ -79,8 +85,10 @@ export interface OrderHistory {
 
   Menu: Menu[];
   UserID: number;
-  StatusType: StatusType;
-  StatusTypeID: number;
+  StatusOrderType: StatusOrderType;
+  StatusOrderTypeID: number;
+  StatusPaymentType: StatusPaymentType;
+  StatusPaymentTypeID: number;
 }
 
 export interface OrderCheckPayment {
@@ -94,12 +102,14 @@ export interface OrderCheckPayment {
   Menu: MenuOrder[];
   UserID: number;
   User: User;
-  StatusTypeID: number;
-  StatusType: StatusType;
+  StatusOrderType: StatusOrderType;
+  StatusOrderTypeID: number;
+  StatusPaymentType: StatusPaymentType;
+  StatusPaymentTypeID: number;
 }
 
 export interface CancelOrderData {
-  StatusTypeID: number;
+  StatusOrderTypeID: number;
   id?: number;
 }
 

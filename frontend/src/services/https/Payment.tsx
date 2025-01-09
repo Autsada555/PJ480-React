@@ -46,7 +46,7 @@ async function CreatePayment(formData: PaymentFormData) {
     return res;
   }
 
-  const GetPaymentType = async () => {
+  const GetStatusPayment = async () => {
     const requestOptions :RequestInit= {
       method: "GET",
       headers: {
@@ -56,7 +56,7 @@ async function CreatePayment(formData: PaymentFormData) {
   
     };
   
-    let res = await fetch(`${apiUrl}/payment/paymenttype`, requestOptions)
+    let res = await fetch(`${apiUrl}/statuspayment`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
         if (res.data) {
@@ -105,6 +105,26 @@ async function CreatePayment(formData: PaymentFormData) {
       return false;
     }
   };
+
+  async function CheckPaymentTypeID(id: number,status_payment_type_id:number) {
+    const requestOptions: RequestInit = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include"
+    };
+    let res = await fetch(`${apiUrl}/order/statuspayment/${id}/${status_payment_type_id}`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res.data);
+        if (res.data) {
+          return { status: true, message: res.data };
+        } else {
+          return { status: false, message: res.error };
+        }
+      });
+  
+    return res;
+  }
   
 
-  export { CreatePayment , GetDeliveryType, GetPaymentType, GetAddressByUserId}
+  export { CreatePayment , GetDeliveryType, GetStatusPayment, GetAddressByUserId, CheckPaymentTypeID}

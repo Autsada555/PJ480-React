@@ -29,7 +29,12 @@ type MenuType struct { //
 // 	Name string `gorm:"unique"`
 // }
 
-type StatusType struct { //
+type StatusOrderType struct { //
+	BaseModel
+	Name string `gorm:"unique"`
+}
+
+type StatusPaymentType struct { //
 	BaseModel
 	Name string `gorm:"unique"`
 }
@@ -49,6 +54,7 @@ type User struct { //
 	Phone     string `valid:"required~Phone number is required,stringlength(10|10)~Phone must be at 10 characters"`
 	UserName  string `valid:"required~UserName is required,minstringlength(5)~UserName must be at 5 characters" gorm:"unique"`
 	Address   string `gorm:"default:ที่อยู่"`
+	CreditCardNumber string `valid:"required~CreditCardNumber number is required,stringlength(16|16)~Phone must be at 16 characters" gorm:"unique"`
 
 	GenderID uint
 	Gender   *Gender `gorm:"foreignKey:GenderID"`
@@ -59,19 +65,22 @@ type User struct { //
 
 type Order struct { //
 	BaseModel
-	Quantity     int     
+	Quantity     int
 	TotalAmount  int
 	DateDelivery time.Time
-	Eslip	string `gorm:"type:longtext"`
-	Delivery   string 
+	Eslip        string `gorm:"type:longtext"`
+	Delivery     string
 
 	Menu []Menu `gorm:"many2many:order_menu"`
 
 	UserID uint
 	User   *User `gorm:"foreignKey:UserID"`
 
-	StatusTypeID uint
-	StatusType   *StatusType `gorm:"foreignKey:StatusTypeID"`
+	StatusOrderTypeID uint
+	StatusOrderType   *StatusOrderType `gorm:"foreignKey:StatusOrderTypeID"`
+
+	StatusPaymentTypeID uint
+	StatusPaymentType   *StatusPaymentType `gorm:"foreignKey:StatusPaymentTypeID"`
 }
 
 type Menu struct {

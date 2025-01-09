@@ -63,6 +63,7 @@ func SetupData(db *gorm.DB) {
 			Phone:      "0988888888",
 			UserName:   "Somchai",
 			Address:    "555 Suranari Meaung Nakhon Ratcasima 30000",
+			CreditCardNumber: "6666-6666-6666-4444",
 		},
 		{
 			BaseModel:  BaseModel{ID: 2},
@@ -75,6 +76,7 @@ func SetupData(db *gorm.DB) {
 			Phone:      "0988888888",
 			UserName:   "Peter",
 			Address:    "666 Suranari Meaung Nakhon Ratcasima 30000",
+			CreditCardNumber: "6666-6666-6666-3333",
 		},
 		{
 			BaseModel:  BaseModel{ID: 3},
@@ -87,6 +89,7 @@ func SetupData(db *gorm.DB) {
 			Phone:      "0988888888",
 			UserName:   "veter",
 			Address:    "777 Suranari Meaung Nakhon Ratcasima 30000",
+			CreditCardNumber: "6666-6666-6666-2222",
 		},
 		{
 			BaseModel:  BaseModel{ID: 4},
@@ -99,6 +102,7 @@ func SetupData(db *gorm.DB) {
 			Phone:      "0999999999",
 			UserName:   "Pinky",
 			Address:    "888 Suranari Meaung Nakhon Ratcasima 30000",
+			CreditCardNumber: "6666-6666-6666-1111",
 		},
 		{
 			BaseModel:  BaseModel{ID: 5},
@@ -111,6 +115,7 @@ func SetupData(db *gorm.DB) {
 			Phone:      "0999999999",
 			UserName:   "Jezzy",
 			Address:    "999 Suranari Meaung Nakhon Ratcasima 30000",
+			CreditCardNumber: "6666-6666-6666-6666",
 		},
 	}
 	db.Create(&users)
@@ -162,21 +167,37 @@ func SetupData(db *gorm.DB) {
 	db.Create(&menutypes)
 
 	// statustypes data
-	statustypes := []StatusType{
+	statusordertypes := []StatusOrderType{
 		{
 			BaseModel: BaseModel{ID: 1},
-			Name:      "เรียบร้อย",
+			Name:      "รอการรับออเดอร์",
 		},
 		{
 			BaseModel: BaseModel{ID: 2},
-			Name:      "รอการเช็ค",
+			Name:      "รับออเดอร์เรียบร้อย",
+		},
+		{
+			BaseModel: BaseModel{ID: 3},
+			Name:      "ยกเลิกออเดอร์",
+		},
+	}
+	db.Create(&statusordertypes)
+
+	statuspaymenttypes := []StatusPaymentType{
+		{
+			BaseModel: BaseModel{ID: 1},
+			Name:      "รอการเช็คชำระ",
+		},
+		{
+			BaseModel: BaseModel{ID: 2},
+			Name:      "ชำระเงินเรียบร้อย",
 		},
 		{
 			BaseModel: BaseModel{ID: 3},
 			Name:      "ผิดพลาด",
 		},
 	}
-	db.Create(&statustypes)
+	db.Create(&statuspaymenttypes)
 
 	menu := []Menu{
 		{
@@ -284,12 +305,58 @@ func SetupData(db *gorm.DB) {
 			Quantity:     2,
 			TotalAmount:  200,
 			DateDelivery: <-time.After(5),
+			Eslip:        "",
+			Delivery:     "รับสินค้าที่หน้าร้าน",
+			Menu: []Menu{
+				menu[1], menu[2],
+			},
+			StatusOrderTypeID: 1,
+			StatusPaymentTypeID: 1,
+			UserID: 1,
+
+		},
+		{
+			BaseModel:    BaseModel{ID: 2},
+			Quantity:     2,
+			TotalAmount:  200,
+			DateDelivery: <-time.After(5),
+			Eslip:        "",
+			Delivery:     "รับสินค้าที่หน้าร้าน",
+			Menu: []Menu{
+				menu[1], menu[2],
+			},
+			StatusOrderTypeID: 2,
+			StatusPaymentTypeID: 1,
+			UserID: 1,
+
+		},
+		{
+			BaseModel:    BaseModel{ID: 3},
+			Quantity:     2,
+			TotalAmount:  200,
+			DateDelivery: <-time.After(5),
+			Eslip:        "",
+			Delivery:     "รับสินค้าที่หน้าร้าน",
+			Menu: []Menu{
+				menu[1], menu[2],
+			},
+			StatusOrderTypeID: 3,
+			StatusPaymentTypeID: 1,
+			UserID: 1,
+
+		},
+		{
+			BaseModel:    BaseModel{ID: 4},
+			Quantity:     2,
+			TotalAmount:  200,
+			DateDelivery: <-time.After(5),
 			Eslip:        "sdjfklsdfjksdjfsd;f",
 			Delivery:     "รับสินค้าที่หน้าร้าน",
 			Menu: []Menu{
 				menu[1], menu[2],
 			},
-			StatusTypeID: 1,
+			StatusOrderTypeID: 3,
+			StatusPaymentTypeID: 3,
 			UserID: 1,
 
 		},

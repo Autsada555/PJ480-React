@@ -42,6 +42,8 @@ func autoMigrate(database *gorm.DB) {
 		&Disease{}, //
 		&MenuType{}, //
 		&Menu{},
-		&StatusType{}, //		
+		&StatusOrderType{}, //	
+		&StatusPaymentType{}, //		
+
 	)
 }
