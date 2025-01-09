@@ -8,7 +8,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { OrderCheckPayment, StatusPaymentType } from "@/interfaces";
+import { OrderCheckPayment } from "@/interfaces";
 import { GetAllOrder } from "@/services/https/Order";
 import dayjs from "dayjs";
 import { ImageViewer } from "@/components/ui/ImageViewer";
@@ -19,12 +19,9 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { CheckPaymentTypeID, GetStatusPayment } from "@/services/https/Payment";
-import { toast, ToastContainer } from "react-toastify";
 
-export function CheckPayment() {
+export function ReceiveOrder() {
     const [order, setOrder] = useState<OrderCheckPayment[]>([]);
-    const [statuspayment, setStatuspayment] = useState<StatusPaymentType[]>([]);
 
     async function fetchOrder() {
         try {
@@ -39,54 +36,13 @@ export function CheckPayment() {
             console.error('Error fetching customer data:', error);
         }
     }
-
-    async function fetchStatusPay() {
-        try {
-            const res = await GetStatusPayment();
-            if (res) {
-                setStatuspayment(res);
-                console.log(res);
-            } else {
-                console.error('Failed to fetch customers');
-            }
-        } catch (error) {
-            console.error('Error fetching customer data:', error);
-        }
-    }
     useEffect(() => {
         fetchOrder();
-        fetchStatusPay();
     }, []);
 
-    const checkPayment = async (id: number,status_payment_type_id: number ) => {
-        try {
-          const res = await CheckPaymentTypeID(id, status_payment_type_id);
-          if (res.status) {
-            toast.success("เปลี่ยนสถานะสำเร็จ", {
-              position: "bottom-right",
-              autoClose: 3000,
-            });
-            setTimeout(() => {
-              window.location.reload();
-            }, 1500);
-          } else {
-            toast.error(res.message || "เกิดข้อผิดพลาด", {
-              position: "bottom-right",
-              autoClose: 3000,
-            });
-          }
-        } catch (error) {
-          console.error("Error during order cancellation:", error);
-          toast.error("มีบางอย่างผิดพลาด", {
-            position: "bottom-right",
-            autoClose: 3000,
-          });
-        }
-      };
     return (
         <div>
             <Navbar />
-            <ToastContainer />
             <div className="flex flex-col md:flex-row mt-[90px] space-y-5 md:space-y-0 md:space-x-4">
                 <div className="bg-gray-300 w-full md:w-[250px] h-fit md:h-[800px] p-4 space-y-4">
                     <button className="w-full bg-gray-200 py-4 rounded hover:bg-gray-400">
@@ -99,14 +55,14 @@ export function CheckPayment() {
                         <a href="listuser" className="block text-center">รายชื่อผู้ใช้งาน</a>
                     </button>
                     <button className="w-full bg-gray-200 py-4 rounded hover:bg-gray-400">
-                        <a href="receiveorders" className="block text-center">รับรายการสั่งสินค้า</a>
+                        <a href="receiveorder" className="block text-center">รับรายการสั่งสินค้า</a>
                     </button>
                 </div>
 
                 <div className="flex-1 p-5">
                     <div className="flex justify-between items-center mb-5">
                         <h1 className="text-2xl font-bold">
-                            เช็คการจ่ายเงิน
+                            รับรายการสั่งสินค้า
                         </h1>
                     </div>
 
@@ -144,20 +100,17 @@ export function CheckPayment() {
                                                 <ImageViewer imageSrc={order.Eslip} />
                                             </TableCell>
                                             <TableCell className="text-center hidden md:table-cell border border-black">
-                                                {order.StatusPaymentType.ID === 1 ? <p className="text-yellow-500">{order.StatusPaymentType.Name}</p> :
-                                                    order.StatusPaymentType.ID === 2 ? <p className="text-green-500">{order.StatusPaymentType.Name}</p> :
-                                                        <p className="text-red-500">{order.StatusPaymentType.Name}</p>}
+                                                {order.StatusOrderType.Name}
                                             </TableCell>
                                             <TableCell className="justify-center flex">
-
-                                                <Select onValueChange = {(c)=> checkPayment(order.ID, Number(c))}>
+                                                <Select>
                                                     <SelectTrigger className="w-[180px] border-green-500">
                                                         <SelectValue placeholder="สถานะ" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        {statuspayment.map((statuspayment) => (
-                                                            <SelectItem value={statuspayment.ID + ""}>{statuspayment.Name}</SelectItem>
-                                                        ))}
+                                                        <SelectItem value="light">จ่ายเงินเรียบร้อย</SelectItem>
+                                                        <SelectItem value="dark">รอการเช็ค</SelectItem>
+                                                        <SelectItem value="system">ยกเลิก</SelectItem>
                                                     </SelectContent>
                                                 </Select>
 

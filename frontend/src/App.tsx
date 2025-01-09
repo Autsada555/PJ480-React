@@ -19,6 +19,8 @@ import { GastritistFood } from './pages/customer/Gastritist';
 import { ThyroidFood } from './pages/customer/Thyroid';
 import { ListUser } from './pages/admin/ListUser';
 import { Customer } from "./pages/customer/Customer";
+import { ReceiveOrder } from './pages/admin/ReceiveOrder';
+
 
 function App() {
   
@@ -41,6 +43,8 @@ function App() {
             <Route path="/gastritistfood" element={<GastritistFood />} />
             <Route path="/thyroidfood" element={<ThyroidFood />} />
             <Route path="/listuser" element={<ListUser />} />
+            <Route path="/receiveorder" element={<ReceiveOrder />} />
+
 
           </Routes>
         </div>

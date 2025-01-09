@@ -48,7 +48,8 @@ export function Payment(): JSX.Element {
     eslip: '',
     delivery: '',
     menu: [] as Menu[],
-    statustypeid: 2,
+    statusordertypeid: 1,
+    statuspaymenttypeid: 1,
     userid: 0,
     user: ''
   });
@@ -104,7 +105,8 @@ export function Payment(): JSX.Element {
         Eslip: images,
         Delivery: formData.delivery,
         Menu: getMenus(),
-        StatusTypeID: formData.statustypeid,
+        StatusOrderTypeID: formData.statusordertypeid,
+        StatusPaymentTypeID: formData.statuspaymenttypeid,
         UserID: userid,
       };
       console.log("Submitted data:", JSON.stringify(customerData));
@@ -217,6 +219,7 @@ export function Payment(): JSX.Element {
                   selected={date}
                   onSelect={setDate}
                   className="mt-2"
+                  disabled={(day) => day < new Date()} 
                 />
               </div>
             </div>

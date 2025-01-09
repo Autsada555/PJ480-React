@@ -21,15 +21,16 @@ export function Register() {
   }
 
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    userName: '',
+    firstname: '',
+    lastname: '',
+    username: '',
     email: '',
     password: '',
     phone: '',
     address: '',
     genderid: 0,
-    userTypeid: 0
+    usertypeid: 0,
+    creditcardnumber: '',
   });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -45,13 +46,14 @@ export function Register() {
     e.preventDefault();
     try {
       const customerData = {
-        FirstName: formData.firstName,
-        LastName: formData.lastName,
+        FirstName: formData.firstname,
+        LastName: formData.lastname,
         Email: formData.email,
         Password: formData.password,
         Phone: formData.phone,
-        UserName: formData.userName,
+        UserName: formData.username,
         Address: formData.address,
+        CreditCardNumber: formData.creditcardnumber,
         GenderID: 1,
         UserTypeID: 100
       };
@@ -115,7 +117,7 @@ export function Register() {
                 type="text"
                 id="userName"
                 name="userName"
-                value={formData.userName}
+                value={formData.username}
                 onChange={handleChange}
                 required
                 className="w-full border px-2 py-1 rounded mt-2"

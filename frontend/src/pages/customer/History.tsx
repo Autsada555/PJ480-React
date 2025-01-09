@@ -4,13 +4,11 @@ import dayjs from "dayjs";
 import {
   Table,
   TableBody,
-  // TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { XSquare } from "lucide-react";
 import { CancelOrder, GetOrderByID } from "@/services/https/Order";
 import { useEffect, useState } from "react";
 import {
@@ -24,16 +22,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
-import { toast } from "react-toastify";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { toast, ToastContainer } from "react-toastify";
 
 
 export function History() {
   const [order, setOrder] = useState<OrderHistory[]>([]);
   const [userid] = useState(Number(localStorage.getItem("userid")));
-
 
   async function fetchCustomer() {
     try {
@@ -52,27 +46,17 @@ export function History() {
     fetchCustomer();
   }, []);
 
-  const formSchema = z.object({
-    StatusTypeID: z.number(),
-  })
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      StatusTypeID: 0,
-    },
-  })
-  const cancelOrder = async (
-    values: z.infer<typeof formSchema>,
-    id: number
-  ) => {
+  const cancelOrder = async (id: number) => {
     try {
-      const res = await CancelOrder({ ...values }, id);
-
+      const res = await CancelOrder(id);
       if (res.status) {
         toast.success("ยกเลิกสำเร็จ", {
           position: "bottom-right",
           autoClose: 3000,
         });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       } else {
         toast.error(res.message || "เกิดข้อผิดพลาด", {
           position: "bottom-right",
@@ -88,21 +72,17 @@ export function History() {
     }
   };
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    const orderIds = 1;
-    cancelOrder(data, orderIds);
-  };
 
   return (
     <div>
       <Navbar />
+      <ToastContainer />
       <div className="mt-[90px]">
         <div className="left-[176px] top-[125px] absolute text-black text-2xl font-bold font-['Inter']">
           ประวัติการสั่งซื้อ
         </div>
         <div>
           <Table className=" border-double border-4 border-gray-300 mt-[100px] w-[1200px] ml-[175px] bg-gray-200">
-            {/* <TableCaption>A list of your order history.</TableCaption> */}
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[10%] text-center text-black">
@@ -114,17 +94,20 @@ export function History() {
                 <TableHead className="w-[10%] text-center text-black">
                   จำนวนทั้งหมด
                 </TableHead>
-                <TableHead className="w-[18%] text-center text-black">
+                <TableHead className="w-[14%] text-center text-black">
                   เมนู
                 </TableHead>
-                <TableHead className="w-[14%] text-center text-black">
+                <TableHead className="w-[12%] text-center text-black">
                   ราคาที่ต้องจ่าย
                 </TableHead>
-                <TableHead className="w-[12%] text-center text-black">
+                <TableHead className="w-[14%] text-center text-black">
                   สถานที่รับสินค้า
                 </TableHead>
                 <TableHead className="w-[14%] text-center hidden md:table-cell text-black">
                   สถานะการสั่งซื้อ
+                </TableHead>
+                <TableHead className="w-[18%] text-center hidden md:table-cell text-black">
+                  สถานะการชำระเงิน
                 </TableHead>
                 <TableHead className="w-[15%] text-center text-black">
                   ยกเลิกการสั่งซื้อ
@@ -154,34 +137,37 @@ export function History() {
                       {order.Delivery}
                     </TableCell>
                     <TableCell className="text-center hidden md:table-cell">
-                      {order.StatusType.Name}
+                      {order.StatusOrderType.ID === 1 ? <p className="text-yellow-500">{order.StatusOrderType.Name}</p> :
+                        order.StatusOrderType.ID === 2 ? <p className="text-green-500">{order.StatusOrderType.Name}</p> :
+                          <p className="text-red-500">{order.StatusOrderType.Name}</p>}
+
+                    </TableCell>
+                    <TableCell className="text-center hidden md:table-cell">
+                      {order.StatusPaymentType.ID === 1 ? <p className="text-yellow-500">{order.StatusPaymentType.Name}</p> :
+                        order.StatusPaymentType.ID === 2 ? <p className="text-green-500">{order.StatusPaymentType.Name}</p> :
+                          <p className="text-red-500">{order.StatusPaymentType.Name}</p>}
                     </TableCell>
                     <TableCell className="justify-center flex">
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
-                          <XSquare className="text-red-500 hover:scale-110 cursor-pointer " />
+                          <button className="mt-1 ml-2 px-3 py-1 text-white bg-red-500 rounded hover:scale-110 cursor-pointer">ยกเลิก</button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
                             <AlertDialogTitle>คุณต้องการยกเลิกการสั่งซื้อนี้ใช่หรือไม่?</AlertDialogTitle>
                             <AlertDialogDescription>
-                              หากมีการยกเลิกการสั่งที่จ่ายเงินแล้ว ทางร้านจะโอนเงินกลับตามเลขบัญชีของลูกค้า
+                              หากมีการยกเลิกการสั่งที่ชำระเงินแล้ว ทางร้านจะโอนเงินกลับตามเลขบัญชีของลูกค้า
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
                             <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
-                            <form onSubmit={(e) => {
-                              e.preventDefault();
-                              onSubmit({ StatusTypeID: 3 });
-                            }}
+                            <AlertDialogAction
+                              className="bg-red-600"
+                              type="submit"
+                              onClick={() => cancelOrder(order.ID)}
                             >
-                              <AlertDialogAction
-                                className="bg-red-600"
-                                type="submit"
-                              >
-                                ยืนยัน
-                              </AlertDialogAction>
-                            </form>
+                              ยืนยัน
+                            </AlertDialogAction>
                           </AlertDialogFooter>
                         </AlertDialogContent>
                       </AlertDialog>

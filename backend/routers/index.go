@@ -50,8 +50,12 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.GET("/order", controllers.GetAllOrder)
 	route.GET("/order/:id", controllers.GetOrderByID)
 	route.POST("/order/create", controllers.CreateOrder)
-	route.DELETE("/order/cancel/:id", controllers.CancelOrder)
+	route.PATCH("/order/cancel/:id", controllers.CancelOrder)
+	route.PATCH("/order/statuspayment/:id/:status_payment_type_id", controllers.CheckPayment)
+	route.PATCH("/order/:id/:status_order_type_id", controllers.ReceiveOrder)
 
 	route.GET("/disease", controllers.GetDiseases)
 
+	//status
+	route.GET("/statuspayment", controllers.ListStatusPaymentTypes)
 }
