@@ -20,20 +20,20 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Menu } from "@/interfaces";
-import { GetAllMenu } from "@/services/https/Menu";
+import { MenuInterface } from "@/interfaces";
+import { GetMenuByDisease } from "@/services/https/Menu";
 import { CartContext } from "@/components/ui/cartContext";
 import { Button } from "@/components/ui/button";
 
 export function Home() {
-  const [temp, setTemp] = useState<Menu[][] | undefined>();
+  const [temp, setTemp] = useState<MenuInterface[][] | undefined>();
   const { addMenu } = useContext(CartContext);
 
   const handleGetAllMenu = async () => {
-    const res = await GetAllMenu(1);
+    const res = await GetMenuByDisease(1);
     console.log(res);
     if (res) {
-      const r = groupBy<Menu>(res, "MenuTypeID");
+      const r = groupBy<MenuInterface>(res, "MenuTypeID");
       setTemp([]);
       Object.keys(r).forEach((key) => {
         setTemp((prevTemp) => [...(prevTemp || []), r[key as keyof typeof r]]);
@@ -53,7 +53,7 @@ export function Home() {
       }
       previous[current[key]].push(current);
       return previous;
-    }, {} as any); 
+    }, {} as any);
     return groupedResult;
   }
 
@@ -106,9 +106,9 @@ export function Home() {
           </NavigationMenu>
         </div>
         <div>
-        <div>
-            <WarningBanner message={"กรุณาสั่งอาหารก่อน 1 วัน เนื่องจากทางร้านจะต้องเตรียมวัตถุดิบ"}/>
-        </div>
+          <div>
+            <WarningBanner message={"กรุณาสั่งอาหารก่อน 1 วัน เนื่องจากทางร้านจะต้องเตรียมวัตถุดิบ"} />
+          </div>
           <div className="flex ml-[100px] text-black text-2xl font-bold font-['Inter']">
             อาหารเพื่อสุขภาพ (Healthy Foods)
           </div>
@@ -134,7 +134,7 @@ export function Home() {
                 <h1 className="text-2xl  font-['Inter'] font-bold">{`${temps[0].MenuType?.Name} Foods`}</h1>
               </div>
               <div className="ml-28 px-7 flex gap-10 mt-3 flex-wrap ">
-                {temps.map((menu: Menu, innerKey: number) => (
+                {temps.map((menu: MenuInterface, innerKey: number) => (
                   <div key={`${outerKey}-${innerKey}`} className="border rounded-[20px]">
                     <Dialog>
                       <DialogTrigger>
@@ -203,7 +203,7 @@ export function Home() {
                               <div>
                                 <p className=" text-xl">ประเภทของอาหาร</p>
                                 <div>
-                                  {menu.Disease?.map((type, index) => (
+                                  {menu.Diseases?.map((type, index) => (
                                     <p className=" text-base ml-4">
                                       {index + 1}. {type.Name}
                                     </p>
