@@ -102,6 +102,21 @@ func CancelOrder(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{"data": "Order status updated successfully"})
 }
 
+func ReceiveOrder(c *gin.Context) {
+    id := c.Param("id")
+	status_order_type_id := c.Param("status_order_type_id")
+
+    if err := entity.DB().Model(&entity.Order{}).
+        Where("id = ?", id).
+        Updates(map[string]interface{}{"status_order_type_id": status_order_type_id}).
+        Error; err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"data": "Order status updated successfully"})
+}
+
 
 func GetAllOrder(c *gin.Context) {
 	var customers []entity.Order

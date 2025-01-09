@@ -3,7 +3,6 @@ import Navbar from "../customer/navbar";
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -11,8 +10,6 @@ import {
 } from "@/components/ui/table"
 import { OrderCheckPayment } from "@/interfaces";
 import { GetAllOrder } from "@/services/https/Order";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { SquareCheck, XSquare } from "lucide-react";
 import dayjs from "dayjs";
 import { ImageViewer } from "@/components/ui/ImageViewer";
 import {
@@ -23,7 +20,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-export function CheckPayment() {
+export function ReceiveOrder() {
     const [order, setOrder] = useState<OrderCheckPayment[]>([]);
 
     async function fetchOrder() {
@@ -58,14 +55,14 @@ export function CheckPayment() {
                         <a href="listuser" className="block text-center">รายชื่อผู้ใช้งาน</a>
                     </button>
                     <button className="w-full bg-gray-200 py-4 rounded hover:bg-gray-400">
-                        <a href="receiveorders" className="block text-center">รับรายการสั่งสินค้า</a>
+                        <a href="receiveorder" className="block text-center">รับรายการสั่งสินค้า</a>
                     </button>
                 </div>
 
                 <div className="flex-1 p-5">
                     <div className="flex justify-between items-center mb-5">
                         <h1 className="text-2xl font-bold">
-                            เช็คการจ่ายเงิน
+                            รับรายการสั่งสินค้า
                         </h1>
                     </div>
 

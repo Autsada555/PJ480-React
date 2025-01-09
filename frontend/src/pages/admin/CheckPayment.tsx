@@ -3,7 +3,6 @@ import Navbar from "../customer/navbar";
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,

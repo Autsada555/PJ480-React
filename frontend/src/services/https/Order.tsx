@@ -1,5 +1,5 @@
 
-import { Order, CancelOrderData } from "../../interfaces/index";
+import { Order } from "../../interfaces/index";
 const apiUrl = "http://localhost:8080";
 
 async function CreateOrder(data: Order) {
@@ -42,6 +42,27 @@ async function CancelOrder(id: number) {
 
   return res;
 }
+
+async function ReceiveOrder(id: number,status_order_type_id: number) {
+  const requestOptions: RequestInit = {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include"
+  };
+  let res = await fetch(`${apiUrl}/order/${id}/${status_order_type_id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      console.log(res.data);
+      if (res.data) {
+        return { status: true, message: res.data };
+      } else {
+        return { status: false, message: res.error };
+      }
+    });
+
+  return res;
+}
+
 
 const GetOrderByID = async (id: number) => {
   const requestOptions: RequestInit = {
@@ -89,4 +110,4 @@ const GetAllOrder = async () => {
   return res;
 }
 
-export { CreateOrder, CancelOrder, GetOrderByID, GetAllOrder }
+export { CreateOrder, CancelOrder, GetOrderByID, GetAllOrder, ReceiveOrder }
