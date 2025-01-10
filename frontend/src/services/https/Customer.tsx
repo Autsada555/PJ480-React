@@ -14,7 +14,7 @@ const GetAllCustomer = async () => {
 
   };
 
-  let res = await fetch(`${apiUrl}/customer`, requestOptions)
+  const res = await fetch(`${apiUrl}/customer`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -36,7 +36,7 @@ const GetCustomer = async () => {
     credentials: "include"
   };
 
-  let res = await fetch(`${apiUrl}/customer/`, requestOptions)
+  const res = await fetch(`${apiUrl}/customer/`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -57,7 +57,7 @@ async function CreateCustomer(formData: UserFormData) {
     body: JSON.stringify(formData),
   };
 
-  let res = await fetch(`${apiUrl}/customer/create`, requestOptions)
+  const res = await fetch(`${apiUrl}/customer/create`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -78,7 +78,7 @@ async function UpdateCustomer(formData: UserUpdateFormData, id: number | undefin
     credentials: "include"
   };
 
-  let res = await fetch(`${apiUrl}/customer/edit/${id}`, requestOptions)
+  const res = await fetch(`${apiUrl}/customer/edit/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -93,9 +93,10 @@ async function UpdateCustomer(formData: UserUpdateFormData, id: number | undefin
 
 async function DeleteCustomer(id: number | undefined) {
   const requestOptions: RequestInit = {
-    method: "DELETE"
+    method: "DELETE",
+    credentials: "include",
   };
-  let res = await fetch(`${apiUrl}/customer/delete/${id}`, requestOptions)
+  const res = await fetch(`${apiUrl}/customer/delete/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       console.log(res)
@@ -119,7 +120,7 @@ const GetAllGender = async () => {
 
   };
 
-  let res = await fetch(`${apiUrl}/customer/gender`, requestOptions)
+  const res = await fetch(`${apiUrl}/customer/gender`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -142,7 +143,7 @@ const GetAllUserType = async () => {
 
   };
 
-  let res = await fetch(`${apiUrl}/customer/usertype`, requestOptions)
+  const res = await fetch(`${apiUrl}/customer/usertype`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -164,7 +165,7 @@ const GetCustomerByID = async (id: number) => {
     credentials: "include"
   };
 
-  let res = await fetch(`${apiUrl}/customer/${id}`, requestOptions)
+  const res = await fetch(`${apiUrl}/customer/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
