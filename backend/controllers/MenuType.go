@@ -8,7 +8,7 @@ import (
 )
 
 // GET /Menutypes
-func ListMenutypes(c *gin.Context) {
+func Menutypes(c *gin.Context) {
 	var menutypes []entity.MenuType
 	if err := entity.DB().Raw("SELECT * FROM menu_types").Scan(&menutypes).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

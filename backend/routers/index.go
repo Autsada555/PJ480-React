@@ -43,6 +43,9 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.PATCH("/menu/update/:id", customer, controllers.UpdateMenu)
 	route.DELETE("/menu/delete/:id", customer, controllers.DeleteMenu)
 
+	//menu type
+	route.GET("/menutypes", controllers.Menutypes)
+
 	//order
 	route.GET("/order", controllers.GetAllOrder)
 	route.GET("/order/:id", controllers.GetOrderByID)

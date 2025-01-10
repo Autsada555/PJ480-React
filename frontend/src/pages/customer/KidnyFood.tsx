@@ -10,17 +10,17 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { Menu } from "@/interfaces";
-import { GetAllMenu } from "@/services/https/Menu";
+import { MenuInterface } from "@/interfaces";
+import { GetMenuByDisease } from "@/services/https/Menu";
 
 export function KidnyFood() {
   const [showModalMenu, setShowModalMenu] = useState(false);
-  const [temp, setTemp] = useState<Menu[][] | undefined>()
+  const [temp, setTemp] = useState<MenuInterface[][] | undefined>()
 
   const handleGetAllMenu = async () => {
-    let res = await GetAllMenu();
+    const res = await GetMenuByDisease(5);
     if (res) {
-      const r = groupBy<Menu>(res, "MenuTypeID")
+      const r = groupBy<MenuInterface>(res, "MenuTypeID")
       setTemp([])
       Object.keys(r).forEach(key => {
 
@@ -126,7 +126,7 @@ export function KidnyFood() {
               <h1 className="text-2xl  font-['Inter'] font-bold">{`${temps[0].MenuType.Name} Foods`}</h1>
             </div>
             <div className="ml-28 px-7 flex gap-10 mt-3 flex-wrap">
-              {temps.map((menu: Menu, innerKey: number) => (
+              {temps.map((menu: MenuInterface, innerKey: number) => (
                 <div key={`${outerKey}-${innerKey}`}>
                   <img
                     className="h-[125px] w-[230px] cursor-pointer rounded-[20px]"

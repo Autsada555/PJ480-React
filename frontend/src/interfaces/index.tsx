@@ -1,6 +1,6 @@
 
 export interface User {
-  [x: string]: any;
+  [x: string]: unknown;
 
   ID: number;
   FirstName: string;
@@ -18,7 +18,7 @@ export interface User {
 }
 
 export interface UserID {
-  [x: string]: any;
+  [x: string]: unknown;
 
   ID: number;
   FirstName: string;
@@ -51,7 +51,7 @@ export interface UserType {
   Name: string;
 }
 
-export interface MenuType {
+export interface MenuTypeInterface {
   ID: number;
   Name: string;
 }
@@ -59,7 +59,31 @@ export interface MenuType {
 export interface DiseaseInterface {
   ID: number;
   Name: string;
-  Menus: Menu[];
+  Menus: MenuInterface[];
+}
+
+
+export interface MenuInterface {
+  ID: number;
+  Name: string;
+  Cost: number;
+  Description: string;
+  Component: string[];
+  MenuImage: string;
+  DiseasesID?: number[];
+  Diseases?: DiseaseInterface[];
+  MenuTypeID: number;
+  MenuType: MenuTypeInterface;
+}
+
+export interface CreateMenuInterface {
+  Name: string;
+  MenuTypeID: number;
+  Cost: number;
+  Description: string;
+  Component: string[];
+  MenuImage: string;
+  DiseasesID: number[];
 }
 
 export interface Order {
@@ -83,7 +107,7 @@ export interface OrderHistory {
   Eslip: string;
   Delivery: string;
 
-  Menu: Menu[];
+  Menu: MenuInterface[];
   UserID: number;
   StatusOrderType: StatusOrderType;
   StatusOrderTypeID: number;
@@ -113,23 +137,9 @@ export interface CancelOrderData {
   id?: number;
 }
 
-export interface Menu {
-  ID?: number;
-  Name: string;
-  Cost: number;
-  Description: string;
-  Component: string[];
-  MenuImage: string;
-  DiseaseTypeID: number[];
-  Diseases?: DiseaseInterface[];
-  MenuTypeID: number;
-  MenuType?: MenuType;
-}
-
-
 export interface MenuOrder {
   Quantity: number;
-  Menu: Menu;
+  Menu: MenuInterface;
   details: string;
 }
 

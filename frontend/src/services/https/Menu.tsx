@@ -1,9 +1,9 @@
-import { MenuFormData } from "@/validator";
-import { Menu } from "../../interfaces/index";
+import { CreateMenuInterface } from "@/interfaces";
+// import { MenuFormData } from "@/validator";
 
 const apiUrl = "http://localhost:8080";
 //
-const GetAllMenu = async (id: number) => {
+const GetMenuByDisease = async (diseaseID: number) => {
   const requestOptions: RequestInit = {
     method: "GET",
     headers: {
@@ -13,7 +13,7 @@ const GetAllMenu = async (id: number) => {
 
   };
 
-  let res = await fetch(`${apiUrl}/menu/${id}`, requestOptions)
+  const res = await fetch(`${apiUrl}/menu/${diseaseID}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -26,7 +26,7 @@ const GetAllMenu = async (id: number) => {
   return res;
 }
 
-const GetMenus = async () => {
+const GetAllMenu = async () => {
   const requestOptions: RequestInit = {
     method: "GET",
     headers: {
@@ -49,36 +49,38 @@ const GetMenus = async () => {
   return res;
 }
 
-// const GetMenuByID = async (id: number) => {
-//   const requestOptions = {
-//     method: "GET",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   };
+const GetMenuType = async () => {
+  const requestOptions: RequestInit = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include"
 
-//   let res = await fetch(`${apiUrl}/menu/${id}`, requestOptions)
-//     .then((response) => response.json())
-//     .then((res) => {
-//       if (res.data) {
-//         return res.data;
-//       } else {
-//         return false;
-//       }
-//     });
+  };
 
-//   return res;
-// }
+  const res = await fetch(`${apiUrl}/menutypes`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
 
+  return res;
+}
 
-async function CreateMenu(data: MenuFormData) {
-  const requestOptions = {
+async function CreateMenu(data: CreateMenuInterface) {
+  const requestOptions: RequestInit = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/menu/create`, requestOptions)
+  const res = await fetch(`${apiUrl}/menu/create`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -92,14 +94,15 @@ async function CreateMenu(data: MenuFormData) {
 }
 
 
-async function UpdateMenu(data: Menu) {
-  const requestOptions = {
+async function UpdateMenu(data: CreateMenuInterface, id: number) {
+  const requestOptions: RequestInit = {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/menu/update`, requestOptions)
+  const res = await fetch(`${apiUrl}/menu/update/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -112,11 +115,12 @@ async function UpdateMenu(data: Menu) {
   return res;
 }
 
-async function DeleteMenu(id: number | undefined) {
-  const requestOptions = {
-    method: "DELETE"
+async function DeleteMenu(id: number) {
+  const requestOptions: RequestInit = {
+    method: "DELETE",
+    credentials: "include",
   };
-  let res = await fetch(`${apiUrl}/menu/delete/${id}`, requestOptions)
+  const res = await fetch(`${apiUrl}/menu/delete/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
 
@@ -162,4 +166,4 @@ const GetDiseases = async () => {
 };
 
 
-export { GetAllMenu, GetMenus, CreateMenu, UpdateMenu, DeleteMenu, GetDiseases }
+export { GetAllMenu, GetMenuType, GetMenuByDisease, CreateMenu, UpdateMenu, DeleteMenu, GetDiseases }
