@@ -70,7 +70,7 @@ async function CreateCustomer(formData: UserFormData) {
   return res;
 }
 
-async function UpdateCustomer(formData: UserUpdateFormData, id:number | undefined) {
+async function UpdateCustomer(formData: UserUpdateFormData, id: number | undefined) {
   const requestOptions: RequestInit = {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
@@ -156,11 +156,12 @@ const GetAllUserType = async () => {
 }
 
 const GetCustomerByID = async (id: number) => {
-  const requestOptions = {
+  const requestOptions: RequestInit = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include"
   };
 
   let res = await fetch(`${apiUrl}/customer/${id}`, requestOptions)
@@ -176,4 +177,4 @@ const GetCustomerByID = async (id: number) => {
   return res;
 }
 
-export { GetCustomer, UpdateCustomer, DeleteCustomer, GetAllCustomer, CreateCustomer, GetAllGender, GetAllUserType ,GetCustomerByID}
+export { GetCustomer, UpdateCustomer, DeleteCustomer, GetAllCustomer, CreateCustomer, GetAllGender, GetAllUserType, GetCustomerByID }

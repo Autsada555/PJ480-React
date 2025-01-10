@@ -115,8 +115,8 @@ export function Register() {
               <label htmlFor="userName" className="font-semibold ">ชื่อผู้ใช้งาน</label>
               <input
                 type="text"
-                id="userName"
-                name="userName"
+                id="username"
+                name="username"
                 value={formData.username}
                 onChange={handleChange}
                 required

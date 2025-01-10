@@ -7,7 +7,7 @@ import (
 	// "strconv"
 
 	"github.com/Autsada555/PJ480-React/backend/entity"
-	"github.com/asaskevich/govalidator"
+	// "github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm/clause"
 )
@@ -20,9 +20,7 @@ type CustomerForUpdate struct {
 	Email     string `valid:"required~Email is required,email~Invalid email address" gorm:"unique"`
 	Phone     string `valid:"required~Phone number is required,stringlength(10|10)~Phone must be at 10 characters"`
 	Address   string `valid:"required~Address is required,minstringlength(2)~Address must be at least 2 characters"`
-	District  string `valid:"required~District is required,minstringlength(2)~District must be at least 2 characters"`
-	Province  string `valid:"required~Province is required,minstringlength(2)~Province must be at least 2 characters"`
-	Postcode  string `valid:"required~Postcode is required,stringlength(5|5)~Postcode must be at 5 characters"`
+	
 }
 
 func GetCustomer(c *gin.Context) {
@@ -50,10 +48,10 @@ func CreateCustomer(c *gin.Context) {
 		return
 	}
 
-	if _, err := govalidator.ValidateStruct(customer); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+	// if _, err := govalidator.ValidateStruct(customer); err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	// 	return
+	// }
 
 	if err := entity.DB().Create(&customer).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -72,13 +70,13 @@ func UpdateCustomer(c *gin.Context) {
 		return
 	}
 
-	if _, err := govalidator.ValidateStruct(customer); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "govalidator"})
-		return
-	}
+	// if _, err := govalidator.ValidateStruct(customer); err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "govalidator"})
+	// 	return
+	// }
 
 	if err := entity.DB().Table("users").Where("id = ?", id).Save(&customer).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error":"map"})
+		c.JSON(http.StatusBadRequest, gin.H{"error":err.Error()})
 		return
 	}
 
@@ -181,26 +179,3 @@ func DeleteCustomerID(c *gin.Context) {
 	// response deleted data ส่งคืนการตอบสนอง JSON พร้อมรหัสสถานะ 200 OK
 	c.JSON(http.StatusOK, gin.H{"data": "Delete Customer Successfully"})
 }
-
-func UpdateCustomerByID(c *gin.Context) {
-	var customer CustomerForUpdate
-	id := c.Param("id")
-
-	if err := c.ShouldBindJSON(&customer); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	if _, err := govalidator.ValidateStruct(customer); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	if err := entity.DB().Table("users").Where("id = ?", id).Save(&customer).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"data": "updated your customer successfully"})
-}
-
