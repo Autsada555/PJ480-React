@@ -7,6 +7,7 @@ import (
 	"github.com/Autsada555/PJ480-React/backend/entity"
 	"github.com/Autsada555/PJ480-React/backend/utils"
 	"github.com/gin-gonic/gin"
+	"fmt"
 )
 
 var role_data = map[string]struct {
@@ -50,6 +51,7 @@ var role_data = map[string]struct {
 type LoginPayload struct {
 	EmailOrUsername string `binding:"required"`
 	Password        string `binding:"required"`
+	UserTypeID      uint
 }
 
 func Logout(c *gin.Context) {
@@ -90,8 +92,11 @@ func Login(c *gin.Context) {
 	}
 
 	data := role_data[value.UserType.Name]
+	payload.UserTypeID = value.UserTypeID
+	fmt.Println("data", data)
+	fmt.Println("payload", payload)
 
-	generateJWT, errJWT := utils.GenerateJWT(data.TokenName, c, payload.EmailOrUsername, data.Hour)
+	generateJWT, errJWT := utils.GenerateJWT(data.TokenName, c, payload.EmailOrUsername, data.ID, data.Hour)
 	if errJWT != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "token could not be created"})
 		return

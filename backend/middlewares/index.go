@@ -7,6 +7,7 @@ import (
 	"github.com/Autsada555/PJ480-React/backend/entity"
 	"github.com/Autsada555/PJ480-React/backend/utils"
 	"github.com/gin-gonic/gin"
+	"fmt"
 )
 
 // role base access control for middleware
@@ -31,9 +32,11 @@ func Authentication() gin.HandlerFunc {
 		if _, payload, err := utils.ValidateJWT("token", c); err == nil {
 			token_name, _ := payload["active_token"].(string)
 			if _, data, err := utils.ValidateJWT(token_name, c); err == nil {
+				fmt.Println(data["UserTypeID"])
 				c.Set("EmailOrUsername", data["EmailOrUsername"].(string))
 				c.Set("active_token", token_name)
 				c.Set("authenticated", true)
+				c.Set("UserTypeID", data["UserTypeID"])
 				c.Next()
 				return
 			}
@@ -81,5 +84,60 @@ func Authorization(role_ids ...uint) gin.HandlerFunc {
 			}
 		}
 		c.AbortWithStatusJSON(http.StatusForbidden, gin.H{"error": "Access Denied"})
+	}
+}
+
+func RequireAdmin() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		fmt.Println("RequireAdmin")
+		userTypeID, exists := c.Get("UserTypeID")
+		if !exists {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized2"})
+			return
+		}
+		fmt.Println("UserTypeID",userTypeID)
+		fmt.Printf("typeof userTypeID: %T\n", userTypeID)
+		if userTypeID.(float64) != 200 {
+			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{"error": "Access Denied"})
+			return
+		}
+		c.Next()
+		return
+	}
+}
+func RequireCash() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		fmt.Println("RequireAdmin")
+		userTypeID, exists := c.Get("UserTypeID")
+		if !exists {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized2"})
+			return
+		}
+		fmt.Println("UserTypeID",userTypeID)
+		fmt.Printf("typeof userTypeID: %T\n", userTypeID)
+		if (userTypeID.(float64) != 201) || (userTypeID.(float64) != 200) {
+			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{"error": "Access Denied"})
+			return
+		}
+		c.Next()
+		return
+	}
+}
+func RequireDelivery() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		fmt.Println("RequireAdmin")
+		userTypeID, exists := c.Get("UserTypeID")
+		if !exists {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized2"})
+			return
+		}
+		fmt.Println("UserTypeID",userTypeID)
+		fmt.Printf("typeof userTypeID: %T\n", userTypeID)
+		if (userTypeID.(float64) != 202) || (userTypeID.(float64) != 200) {
+			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{"error": "Access Denied"})
+			return
+		}
+		c.Next()
+		return
 	}
 }

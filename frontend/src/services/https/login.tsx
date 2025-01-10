@@ -9,8 +9,8 @@ async function LoginUser(data: { EmailOrUsername: string, password: string }) {
   };
 
   try {
-    let response = await fetch(`${apiUrl}/login`, requestOptions);
-    let res = await response.json();
+    const response = await fetch(`${apiUrl}/login`, requestOptions);
+    const res = await response.json();
     console.log(res);
     if (res.token && res.usertypeid && res.userid && res.usertype) {
       return { status: true, token: res.token, usertypeid: res.usertypeid, userid: res.userid, usertype: res.usertype};

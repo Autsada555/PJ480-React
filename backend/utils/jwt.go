@@ -40,12 +40,13 @@ func ValidateJWT(token_name string, c *gin.Context) (*jwt.Token, jwt.MapClaims, 
 	return token, claims, nil
 }
 
-func GenerateJWT(token_name string, c *gin.Context, EmailOrUsername string, hour int) (string, error) {
+func GenerateJWT(token_name string, c *gin.Context, EmailOrUsername string,id uint, hour int) (string, error) {
 	expiration := time.Now().Add(time.Hour * time.Duration(hour)).Unix()
 	// token to identify user
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"EmailOrUsername": EmailOrUsername,
 		"exp":   expiration,
+		"UserTypeID":    id,
 	})
 	fmt.Println(SECRET_KEY)
 	token_string, err := token.SignedString(SECRET_KEY)

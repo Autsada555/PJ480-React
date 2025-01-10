@@ -32,16 +32,19 @@ func InitRouter(route *gin.Engine) {
 
 func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.Use(middlewares.Authentication())
-	customer := middlewares.Authorization(100)
+	// customer := middlewares.Authorization(100)
+	requireAdmin := middlewares.RequireAdmin()
+	requireCash := middlewares.RequireCash()
+	// requireDelivery := middlewares.RequireDelivery()
 	// User customer management
 	route.GET("/customer", controllers.GetAllCustomer)
 
 	//menu
-	route.GET("/menus", controllers.GetMenu)
+	route.GET("/menus" , requireAdmin, controllers.GetMenu)
 	route.GET("/menu/:id", controllers.GetMenuByDiseaseID)
-	route.POST("/menu/create", customer, controllers.CreateMenu)
-	route.PATCH("/menu/update/:id", customer, controllers.UpdateMenu)
-	route.DELETE("/menu/delete/:id", customer, controllers.DeleteMenu)
+	route.POST("/menu/create", controllers.CreateMenu)
+	route.PATCH("/menu/update/:id", controllers.UpdateMenu)
+	route.DELETE("/menu/delete/:id", controllers.DeleteMenu)
 
 	//menu type
 	route.GET("/menutypes", controllers.Menutypes)
@@ -51,7 +54,7 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.GET("/order/:id", controllers.GetOrderByID)
 	route.POST("/order/create", controllers.CreateOrder)
 	route.PATCH("/order/cancel/:id", controllers.CancelOrder)
-	route.PATCH("/order/statuspayment/:id/:status_payment_type_id", controllers.CheckPayment)
+	route.PATCH("/order/statuspayment/:id/:status_payment_type_id", requireCash, controllers.CheckPayment)
 	route.PATCH("/order/:id/:status_order_type_id", controllers.ReceiveOrder)
 
 	route.GET("/disease", controllers.GetDiseases)
