@@ -157,6 +157,7 @@ export function CheckPayment() {
                                     <TableHead className="w-[10%] text-center text-black">รายการ</TableHead>
                                     <TableHead className="w-[10%] text-center text-black">วันที่จัดส่ง</TableHead>
                                     <TableHead className="w-[10%] text-center text-black">ชื่อผู้สั่งซื้อ</TableHead>
+                                    <TableHead className="w-[10%] text-center text-black">เมนู</TableHead>
                                     <TableHead className="w-[20%] text-center text-black">สถานที่รับสินค้า</TableHead>
                                     <TableHead className="w-[10%] text-center text-black">สลิปจ่ายเงิน</TableHead>
                                     <TableHead className="w-[10%] text-center text-black">การจ่ายเงิน</TableHead>
@@ -177,6 +178,9 @@ export function CheckPayment() {
                                             </TableCell>
                                             <TableCell className="text-center border border-black">
                                                 {order.User.UserName}
+                                            </TableCell>
+                                            <TableCell className="text-center whitespace-pre border border-black">
+                                                {order.Menu.map(menu => { return menu["Name"] }).join("\r\n")}
                                             </TableCell>
                                             <TableCell className="text-center whitespace-pre border border-black">
                                                 {order.Delivery}

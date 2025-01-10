@@ -64,7 +64,7 @@ export function Login() {
           navigate("/delivery", { replace: true });
         }
         else if (res.usertypeid === 201) {
-          navigate("/cash", { replace: true });
+          navigate("/checkpayment", { replace: true });
         }
         else {
           navigate("/", { replace: true });

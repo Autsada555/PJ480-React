@@ -26,7 +26,7 @@ func InitRouter(route *gin.Engine) {
 func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.Use(middlewares.Authentication())
 	requireAdmin := middlewares.RequireAdmin()
-	requireCash := middlewares.RequireCash()
+	// requireCash := middlewares.RequireCash()
 	// requireDelivery := middlewares.RequireDelivery()
 	route.GET("/customer", controllers.GetAllCustomer)
 
@@ -52,9 +52,9 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.GET("/order/:id", controllers.GetOrderByID)
 	route.POST("/order/create", controllers.CreateOrder)
 	route.PATCH("/order/cancel/:id", controllers.CancelOrder)
-	route.GET("/order", requireAdmin, controllers.GetAllOrder)
-	route.PATCH("/order/statuspayment/:id/:status_payment_type_id", requireCash, controllers.CheckPayment)
-	route.PATCH("/order/:id/:status_order_type_id", requireCash, controllers.ReceiveOrder)
+	route.GET("/order",  controllers.GetAllOrder)
+	route.PATCH("/order/statuspayment/:id/:status_payment_type_id",controllers.CheckPayment)
+	route.PATCH("/order/:id/:status_order_type_id",  controllers.ReceiveOrder)
 
 	route.GET("/disease", requireAdmin, controllers.GetDiseases)
 
