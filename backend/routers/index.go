@@ -58,4 +58,6 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 
 	//status
 	route.GET("/statuspayment", controllers.ListStatusPaymentTypes)
+	route.GET("/statusorder", controllers.ListStatusOrderTypes)
+
 }

@@ -8,8 +8,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { OrderCheckPayment, StatusPaymentType } from "@/interfaces";
-import { GetAllOrder } from "@/services/https/Order";
+import { OrderCheckPayment, StatusOrderType, StatusPaymentType } from "@/interfaces";
+import { GetAllOrder, ReceiveOrder } from "@/services/https/Order";
 import dayjs from "dayjs";
 import { ImageViewer } from "@/components/ui/ImageViewer";
 import {
@@ -19,12 +19,14 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { CheckPaymentTypeID, GetStatusPayment } from "@/services/https/Payment";
+import { CheckPaymentTypeID, GetStatusOrder, GetStatusPayment } from "@/services/https/Payment";
 import { toast, ToastContainer } from "react-toastify";
 
 export function CheckPayment() {
     const [order, setOrder] = useState<OrderCheckPayment[]>([]);
     const [statuspayment, setStatuspayment] = useState<StatusPaymentType[]>([]);
+    const [statusorder, setStatusorder] = useState<StatusOrderType[]>([]);
+
 
     async function fetchOrder() {
         try {
@@ -53,36 +55,77 @@ export function CheckPayment() {
             console.error('Error fetching customer data:', error);
         }
     }
+
+    async function fetchStatusOrder() {
+        try {
+            const res = await GetStatusOrder();
+            if (res) {
+                setStatusorder(res);
+                console.log(res);
+            } else {
+                console.error('Failed to fetch customers');
+            }
+        } catch (error) {
+            console.error('Error fetching customer data:', error);
+        }
+    }
     useEffect(() => {
         fetchOrder();
         fetchStatusPay();
+        fetchStatusOrder();
     }, []);
 
-    const checkPayment = async (id: number,status_payment_type_id: number ) => {
+    const checkPayment = async (id: number, status_payment_type_id: number) => {
         try {
-          const res = await CheckPaymentTypeID(id, status_payment_type_id);
-          if (res.status) {
-            toast.success("เปลี่ยนสถานะสำเร็จ", {
-              position: "bottom-right",
-              autoClose: 3000,
-            });
-            setTimeout(() => {
-              window.location.reload();
-            }, 1500);
-          } else {
-            toast.error(res.message || "เกิดข้อผิดพลาด", {
-              position: "bottom-right",
-              autoClose: 3000,
-            });
-          }
+            const res = await CheckPaymentTypeID(id, status_payment_type_id);
+            if (res.status) {
+                toast.success("เปลี่ยนสถานะสำเร็จ", {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+            } else {
+                toast.error(res.message || "เกิดข้อผิดพลาด", {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                });
+            }
         } catch (error) {
-          console.error("Error during order cancellation:", error);
-          toast.error("มีบางอย่างผิดพลาด", {
-            position: "bottom-right",
-            autoClose: 3000,
-          });
+            console.error("Error during order cancellation:", error);
+            toast.error("มีบางอย่างผิดพลาด", {
+                position: "bottom-right",
+                autoClose: 3000,
+            });
         }
-      };
+    };
+
+    const checkOrder = async (id: number, status_order_type_id: number) => {
+        try {
+            const res = await ReceiveOrder(id, status_order_type_id);
+            if (res.status) {
+                toast.success("เปลี่ยนสถานะสำเร็จ", {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+            } else {
+                toast.error(res.message || "เกิดข้อผิดพลาด", {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                });
+            }
+        } catch (error) {
+            console.error("Error during order cancellation:", error);
+            toast.error("มีบางอย่างผิดพลาด", {
+                position: "bottom-right",
+                autoClose: 3000,
+            });
+        }
+    };
     return (
         <div>
             <Navbar />
@@ -98,9 +141,6 @@ export function CheckPayment() {
                     <button className="w-full bg-gray-200 py-4 rounded hover:bg-gray-400">
                         <a href="listuser" className="block text-center">รายชื่อผู้ใช้งาน</a>
                     </button>
-                    <button className="w-full bg-gray-200 py-4 rounded hover:bg-gray-400">
-                        <a href="receiveorders" className="block text-center">รับรายการสั่งสินค้า</a>
-                    </button>
                 </div>
 
                 <div className="flex-1 p-5">
@@ -112,7 +152,6 @@ export function CheckPayment() {
 
                     <div className="overflow-x-auto">
                         <Table className="border border-gray-300 w-full bg-gray-200">
-                            {/* <TableCaption>A list of your payment.</TableCaption> */}
                             <TableHeader>
                                 <TableRow className="border border-black">
                                     <TableHead className="w-[10%] text-center text-black">รายการ</TableHead>
@@ -121,7 +160,9 @@ export function CheckPayment() {
                                     <TableHead className="w-[20%] text-center text-black">สถานที่รับสินค้า</TableHead>
                                     <TableHead className="w-[10%] text-center text-black">สลิปจ่ายเงิน</TableHead>
                                     <TableHead className="w-[10%] text-center text-black">การจ่ายเงิน</TableHead>
+                                    <TableHead className="w-[10%] text-center text-black">การสั่งซื้อ</TableHead>
                                     <TableHead className="w-[10%] text-center text-black">เช็คการจ่ายเงิน</TableHead>
+                                    <TableHead className="w-[10%] text-center text-black">เช็คการสั่งซื้อ</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody className="">
@@ -148,9 +189,14 @@ export function CheckPayment() {
                                                     order.StatusPaymentType.ID === 2 ? <p className="text-green-500">{order.StatusPaymentType.Name}</p> :
                                                         <p className="text-red-500">{order.StatusPaymentType.Name}</p>}
                                             </TableCell>
-                                            <TableCell className="justify-center flex">
+                                            <TableCell className="text-center border border-black">
+                                                {order.StatusOrderType.ID === 1 ? <p className="text-yellow-500">{order.StatusOrderType.Name}</p> :
+                                                    order.StatusOrderType.ID === 2 ? <p className="text-green-500">{order.StatusOrderType.Name}</p> :
+                                                        <p className="text-red-500">{order.StatusOrderType.Name}</p>}
+                                            </TableCell>
+                                            <TableCell className="justify-center ">
 
-                                                <Select onValueChange = {(c)=> checkPayment(order.ID, Number(c))}>
+                                                <Select onValueChange={(c) => checkPayment(order.ID, Number(c))}>
                                                     <SelectTrigger className="w-[180px] border-green-500">
                                                         <SelectValue placeholder="สถานะ" />
                                                     </SelectTrigger>
@@ -162,6 +208,21 @@ export function CheckPayment() {
                                                 </Select>
 
                                             </TableCell>
+                                            <TableCell className="justify-center">
+
+                                                <Select onValueChange={(c) => checkOrder(order.ID, Number(c))}>
+                                                    <SelectTrigger className="w-[180px] border-green-500">
+                                                        <SelectValue placeholder="สถานะ" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {statusorder.map((statusorder) => (
+                                                            <SelectItem value={statusorder.ID + ""}>{statusorder.Name}</SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+
+                                            </TableCell>
+
                                         </TableRow>
                                     ))
                                 ) : (

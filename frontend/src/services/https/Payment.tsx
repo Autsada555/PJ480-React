@@ -68,6 +68,28 @@ async function CreatePayment(formData: PaymentFormData) {
   
     return res;
   }
+  const GetStatusOrder = async () => {
+    const requestOptions :RequestInit= {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include"
+  
+    };
+  
+    let res = await fetch(`${apiUrl}/statusorder`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+          return res.data;
+        } else {
+          return false;
+        }
+      });
+  
+    return res;
+  }
  
   const GetAddressByUserId = async (userID: number) => {
     const requestOptions: RequestInit = {
@@ -127,4 +149,4 @@ async function CreatePayment(formData: PaymentFormData) {
   }
   
 
-  export { CreatePayment , GetDeliveryType, GetStatusPayment, GetAddressByUserId, CheckPaymentTypeID}
+  export { CreatePayment , GetDeliveryType, GetStatusPayment, GetAddressByUserId, CheckPaymentTypeID, GetStatusOrder} 
