@@ -130,7 +130,7 @@ export function Home() {
         {temp &&
           temp.map((temps, outerKey) => (
             <div key={outerKey}>
-              <div className="flex ml-28 mt-[50px]">
+              <div className="flex ml-28 mt-[20px]">
                 <h1 className="text-2xl  font-['Inter'] font-bold">{`${temps[0].MenuType?.Name} Foods`}</h1>
               </div>
               <div className="ml-28 px-7 flex gap-10 mt-3 flex-wrap ">

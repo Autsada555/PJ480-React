@@ -1,10 +1,9 @@
 import Navbar from "./navbar";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import Thyroidimg from "@/assets/imgforhome/Thiroidimg.jpg";
 import WarningBanner from "@/components/ui/warning";
-
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -13,13 +12,24 @@ import {
 } from "@/components/ui/navigation-menu";
 import { MenuInterface } from "@/interfaces";
 import { GetMenuByDisease } from "@/services/https/Menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { CartContext } from "@/components/ui/cartContext";
 
 export function ThyroidFood() {
-  const [showModalMenu, setShowModalMenu] = useState(false);
   const [temp, setTemp] = useState<MenuInterface[][] | undefined>()
+  const { addMenu } = useContext(CartContext);
 
   const handleGetAllMenu = async () => {
-    const res = await GetMenuByDisease(4);
+    const res = await GetMenuByDisease(2);
     if (res) {
       const r = groupBy<MenuInterface>(res, "MenuTypeID")
       setTemp([])
@@ -52,11 +62,6 @@ export function ThyroidFood() {
     return groupedResult
   }
 
-  const hangleOnCloseModalMenu = (e: any) => {
-    if (e.target.id == "BG") {
-      setShowModalMenu(false);
-    }
-  };
   return (
     <div>
       <Navbar />
@@ -127,78 +132,100 @@ export function ThyroidFood() {
         temp.map((temps, outerKey) => (
           <div key={outerKey}>
             <div className="flex ml-28 mt-[50px]">
-              <h1 className="text-2xl  font-['Inter'] font-bold">{`${temps[0].MenuType.Name} Foods`}</h1>
+              <h1 className="text-2xl font-['Inter'] font-bold">{`${temps[0].MenuType?.Name} Foods`}</h1>
             </div>
             <div className="ml-28 px-7 flex gap-10 mt-3 flex-wrap">
               {temps.map((menu: MenuInterface, innerKey: number) => (
-                <div key={`${outerKey}-${innerKey}`}>
-                  <img
-                    className="h-[125px] w-[230px] cursor-pointer rounded-[20px]"
-                    src={menu.MenuImage}
-                    alt="image"
-                    onClick={() => setShowModalMenu(true)}
-                  />
-                  <div className=" flex flex-row space-x-[100px] pl-2 mt-[20px]">
-                    <h1>{menu.Name}</h1>
-                    <h1>{`${menu.Cost} ฿`}</h1>
-                  </div>
-                  <h2 className="flex pl-2">{temps[0].MenuType.Name}</h2>
-                  <div className="flex pt-3 space-x-[115px] ">
-                    <div className="flex">
+                <div key={`${outerKey}-${innerKey}`} className="border rounded-[20px]">
+                  <Dialog>
+                    <DialogTrigger>
                       <img
-                        className="h-[20px] pl-2 cursor-pointer"
-                        src="src\assets\star.svg"
-                        alt="star"
+                        className="h-[125px] w-[230px] cursor-pointer rounded-[20px]"
+                        src={menu.MenuImage}
+                        alt="image"
                       />
-                      <h1 className="pl-2">4.0</h1>
+                    </DialogTrigger>
+                    <div className="w-full flex flex-row justify-between p-2">
+                      <h1>{menu.Name}</h1>
+                      <h1>{`${menu.Cost} ฿`}</h1>
                     </div>
-                    <img
-                      typeof="button"
-                      className="h-[30px] cursor-pointer"
-                      src="src\assets\add.svg"
-                      alt="add"
-                    />
-                  </div>
-                  {showModalMenu ? (
-                    <div
-                      id="BG"
-                      onClick={hangleOnCloseModalMenu}
-                      className="fixed inset-0 flex justify-center w-full h-full"
-                    >
-                      <div className="w-[600px] h-[600px] mt-[100px] bg-slate-100 rounded-t-lg shadow-lg ">
-                        <h1 className="mt-6 text-4xl">Details Menu</h1>
-                        <div className="flex space-x-0">
-                          <img
-                            className="h-[200px] w-[230px] rounded-[20px] ml-6 mt-5"
-                            src={menu.MenuImage}
-                            alt="image"
-                          />
-                          <div className=" flex flex-row space-x-[100px] pl-2 mt-[20px]">
-                            <h1>{menu.Name}</h1>
-                            <h1>{`${menu.Cost}฿`}</h1>
-                          </div>
-                        </div>
-                        <div>
-                          <h1 className="mt-6 text-4xl">Component Food</h1>
-                          <h1>{`${menu.Component[3]}`}</h1>
-                        </div>
-                        <div>
-                          <h1 className="mt-6 text-4xl">Type Food</h1>
-                          {/* <h1>{menu.MenuType[0]}</h1>
-                                                    <h1>{menu.MenuType[0]}</h1>
-                                                    <h1>{menu.MenuType[0]}</h1>
-                                                    <h1>{menu.MenuType[0]}</h1> */}
-                        </div>
+                    <h2 className="flex pl-2">{temps[0].MenuType?.Name}</h2>
+                    <div className="flex space-x-[115px]">
+                      <div className="flex p-2">
+                        <img
+                          className="h-[20px] pl-2 cursor-pointer"
+                          src="src\assets\star.svg"
+                          alt="star"
+                        />
+                        <h1 className="pl-3">5.0</h1>
+                      </div>
+                      <div onClick={() => addMenu(menu)}>
+                        <img
+                          className="h-[30px] cursor-pointer"
+                          src="src\assets\add.svg"
+                          alt="add"
+                        />
                       </div>
                     </div>
-                  ) : null}
-
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle className="text-center text-2xl">รายละเอียดเมนู</DialogTitle>
+                        <DialogDescription>
+                          <div className="text-black space-y-4">
+                            <div className="flex">
+                              <img
+                                className="h-[200px] w-[230px] rounded-lg object-cover"
+                                src={menu.MenuImage}
+                                alt="Product Image"
+                              />
+                              <div className="w-full ml-5">
+                                <div className="flex justify-between">
+                                  <p className="text-xl font-semibold">{menu.Name}</p>
+                                  <p className="text-xl text-gray-700">{`${menu.Cost} บาท`}</p>
+                                </div>
+                                <p className="text-lg">{temps[0].MenuType?.Name} Foods</p>
+                              </div>
+                            </div>
+                            <div>
+                              <p className="text-xl">ส่วนประกอบอาหาร</p>
+                              <div>
+                                {menu.Component.map((component, index) => (
+                                  <p key={index} className="text-base ml-4">
+                                    {index + 1}. {component}
+                                  </p>
+                                ))}
+                              </div>
+                            </div>
+                            <div>
+                              <p className="text-xl">ประเภทของอาหาร</p>
+                              <div>
+                                {menu.Diseases?.map((type, index) => (
+                                  <p key={index} className="text-base ml-4">
+                                    {index + 1}. {type.Name}
+                                  </p>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </DialogDescription>
+                      </DialogHeader>
+                      <DialogFooter>
+                        <Button
+                          type="submit"
+                          onClick={() => addMenu(menu)}
+                          variant="outline"
+                          className="hover:bg-green-100 hover:border-green-600"
+                        >
+                          เพิ่มลงตะกร้า
+                        </Button>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
                 </div>
-              ))}</div>
+              ))}
+            </div>
           </div>
-
-        ))
-      }
+        ))}
     </div>
   );
 }
