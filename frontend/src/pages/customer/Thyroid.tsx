@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import Thyroidimg from "@/assets/imgforhome/Thiroidimg.jpg";
+import WarningBanner from "@/components/ui/warning";
 
 import {
   NavigationMenu,
@@ -59,7 +60,7 @@ export function ThyroidFood() {
   return (
     <div>
       <Navbar />
-      <div className="mt-3 justify-center flex">
+      <div className="mt-28 justify-center flex ">
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem className="flex">
@@ -102,13 +103,13 @@ export function ThyroidFood() {
           </NavigationMenuList>
         </NavigationMenu>
       </div>
-      {/* <div className="w-[230px] h-[42px] bg-slate-100 mt-[16px] ml-[125px] rounded-xl left-[144px] border-[1px]"></div> */}
-
-      <div className="left-[100px] top-[155px] absolute text-black text-2xl font-bold font-['Inter']">
+      <div>
+        <WarningBanner message={"กรุณาสั่งอาหารก่อน 1 วัน เนื่องจากทางร้านจะต้องเตรียมวัตถุดิบ"} />
+      </div>
+      <div className="flex ml-[100px] text-black text-2xl font-bold font-['Inter']">
         อาหารสำหรับผู้ป่วยโรคไทรอยด์เป็นพิษ (Thyroid Foods)
       </div>
-
-      <div className="w-[1570px] h-[360px] bg-slate-100   mt-[70px] ml-[5px] rounded-xl left-[144px] border-[1px]"></div>
+      <div className="w-[1570px] h-[360px] bg-slate-100 mt-[5px] ml-[5px] rounded-xl left-[144px] border-[1px]"></div>
       <div className="mt-[-328px] ml-[200px] ">
         <img src={Thyroidimg} alt="Thyroidimg" className="w-[500px] h-[300px]" />
       </div>
