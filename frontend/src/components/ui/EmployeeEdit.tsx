@@ -62,9 +62,6 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
       Phone: customers.Phone,
       Email: customers.Email,
       Address: customers.Address,
-      // District: customers.District,
-      // Province: customers.Province,
-      // Postcode: customers.Postcode,
     },
   });
 
@@ -122,21 +119,21 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
       </AlertDialogTrigger>
       <AlertDialogContent className="sm:max-w-[480px] h-[80%] overflow-auto">
         <AlertDialogHeader>
-          <AlertDialogTitle>Edit Employee Data</AlertDialogTitle>
+          <AlertDialogTitle>แก้ไขข้อมูลของผู้ใช้งาน</AlertDialogTitle>
           <AlertDialogDescription>
-            Make changes to your Employee here. Click save when you're done.
+            ทำการแก้ไขข้อมูลของผู้ใช้งานและทำการกดบันทึกข้อมูลที่นี่
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <form onSubmit={form.handleSubmit(onValid)}>
           <Form {...form}>
-            <div className="grid gap-2 mt-4">
+            <div className="grid gap-2 mt-0">
               <FormField
                 name="FirstName"
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>First Name</FormLabel>
+                    <FormLabel>ชื่อ</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -150,7 +147,7 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Last Name</FormLabel>
+                    <FormLabel>นามสกุล</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -165,14 +162,14 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Gender</FormLabel>
+                      <FormLabel>เพศ</FormLabel>
                       <FormControl>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={String(customers.Gender.ID)}
                         >
                           <SelectTrigger>
-                            <SelectValue placeholder="Pick Gender" />
+                            <SelectValue placeholder="เลือกเพศ" />
                           </SelectTrigger>
                           <SelectContent>
                             {gender.map((g) => (
@@ -195,15 +192,15 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>UserType</FormLabel>
+                      <FormLabel>ประเภทผู้ใช้งาน</FormLabel>
                       <FormControl>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={String(customers.UserTypeID)}
                         >
                           <SelectTrigger>
-                            <SelectValue placeholder="Pick UserType" />
-                          </SelectTrigger>
+                            <SelectValue placeholder="" />
+                          </SelectTrigger>เลือกประเภทผู้ใช้งาน
                           <SelectContent>
                             {usertype.map((g) => (
                               <SelectItem key={g.ID} value={String(g.ID)}>
@@ -224,7 +221,7 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone</FormLabel>
+                    <FormLabel>เบอร์โทรศัพท์</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -238,7 +235,7 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>อีเมล</FormLabel>
                     <FormControl>
                       <Input {...field} type="email" />
                     </FormControl>
@@ -252,7 +249,7 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Address</FormLabel>
+                    <FormLabel>ที่อยู่</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -260,55 +257,13 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
                   </FormItem>
                 )}
               />
-{/* 
-              <FormField
-                name="District"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>District</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                name="Province"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Province</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                name="Postcode"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Postcode</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />*/}
                   </div> 
 
             <AlertDialogFooter>
               <AlertDialogAction asChild>
-                <Button variant="secondary">Close</Button>
+                <Button variant="secondary">ปิด</Button>
               </AlertDialogAction>
-              <Button type="submit">Save changes</Button>
+              <Button type="submit">บันทึกการแก้ไข</Button>
             </AlertDialogFooter>
           </Form>
         </form>

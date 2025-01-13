@@ -101,7 +101,7 @@ export function Customer(): JSX.Element {
       const res = await UpdateCustomer(data, userid);
       console.log(res);
 
-      alert("อัพเดตแล้ว");
+      alert("อัพเดตข้อมูลเรียบร้อย");
     } catch (error) {
       console.log("Error", error);
     }

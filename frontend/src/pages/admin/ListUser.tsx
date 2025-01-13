@@ -59,7 +59,7 @@ export function ListUser() {
 
         <div className="flex-1">
           <div className="flex justify-between items-center mb-5">
-            <h1 className="text-2xl font-bold">User List</h1>
+            <h1 className="text-2xl font-bold">รายชื่อผู้ใช้งาน</h1>
             <div>
                 <EmployeeCreateDialog onCreated={fetchEmployee} />
             </div>

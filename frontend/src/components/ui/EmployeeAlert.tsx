@@ -35,19 +35,19 @@ const EmployeeAlert = ({ customerID, onCancel }: Props) => {
     <AlertDialogContent className="sm:max-w-[320px]">
       <AlertDialogHeader className="items-center sm:text-center">
         <AlertTriangleIcon className="text-red-500 h-16 w-16" />
-        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+        <AlertDialogTitle>คุณต้องการลบผู้ใช้งานใช่ไหม?</AlertDialogTitle>
         <AlertDialogDescription>
-          This will delete all employee data.
+          ข้อมูลบัญชีของผู้ใช้จะถูกลบออกทั้งหมด
         </AlertDialogDescription>
       </AlertDialogHeader>
-      <AlertDialogFooter className="sm:justify-between">
+      <AlertDialogFooter >
         <AlertDialogAction asChild>
           <Button variant="secondary" onClick={onCancel}>
-            No, don't delete.
+            ยกเลิก
           </Button>
         </AlertDialogAction>
         <Button type="button" variant={"destructive"} onClick={handleCancel}>
-          Yes! Delete.
+          ลบ
         </Button>
       </AlertDialogFooter>
     </AlertDialogContent>

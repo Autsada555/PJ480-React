@@ -125,18 +125,18 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
     <>
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>
-          <UserPlus className="text-green-500 mt-[35px] ml-[250px] hover:scale-110 cursor-pointer " />
+          <UserPlus className="text-green-500 mt-[35px] ml-[150px] hover:scale-130 cursor-pointer " />
         </AlertDialogTrigger>
         <AlertDialogContent className="sm:max-w-[480px] h-[80%] overflow-auto">
           <AlertDialogHeader>
             <AlertDialogTitle>สร้างบัญชีผู้ใช้</AlertDialogTitle>
             <AlertDialogDescription>
-              {/* Make changes to your Employee here. Click save when you're done. */}
+            ทำการสร้างบัญชีของผู้ใช้งานและทำการกดบันทึกข้อมูลที่นี่
             </AlertDialogDescription>
           </AlertDialogHeader>
           <form onSubmit={form.handleSubmit(onValid)}>
             <Form {...form}>
-              <div className="grid gap-2 mt-4">
+              <div className="grid gap-2 mt-1">
                 <FormField
                   name="FirstName"
                   control={form.control}
@@ -204,7 +204,7 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
                           onValueChange={(value) => field.onChange(Number(value))}
                         >
                           <SelectTrigger>
-                            <SelectValue placeholder="Pick User Type" />
+                            <SelectValue placeholder="เลือกประเภทผู้ใช้งาน" />
                           </SelectTrigger>
                           <SelectContent>
                             {usertype.map((u) => (
@@ -289,48 +289,6 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
                     </FormItem>
                   )}
                 />
-{/* 
-                <FormField
-                  name="District"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>District</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  name="Province"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Province</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  name="Postcode"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Postcode</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} 
-                 /> */}
               </div>
 
               <AlertDialogFooter>
@@ -339,7 +297,7 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
                     ปิด
                   </Button>
                 </AlertDialogAction>
-                <Button type="submit" onClick={() => setOpen(false)}>สร้าง</Button>
+                <Button type="submit" onClick={() => setOpen(false)}>สร้างบัญชี</Button>
               </AlertDialogFooter>
             </Form>
           </form>

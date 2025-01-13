@@ -275,7 +275,7 @@ export function Management() {
                   <DialogHeader>
                     <DialogTitle>เพิ่มรายการเมนูอาหาร</DialogTitle>
                     <DialogDescription>
-                      เพิ่มรายละเอียดของเมนูอาหาร
+                      สามาาถเพิ่มรายละเอียดของเมนูอาหารได้ที่นี่
                     </DialogDescription>
                   </DialogHeader>
                   <div>
@@ -472,16 +472,16 @@ export function Management() {
                   </div>
 
                   <DialogFooter>
+                    <DialogClose asChild>
+                      <button className="px-3 py-1 text-white bg-gray-500 rounded">ยกเลิก</button>
+                    </DialogClose>
                     <button
                       type="button"
                       className="px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1"
                       onClick={() => handleSubmit()}
                     >
-                      Submit
+                      บันทึก
                     </button>
-                    <DialogClose asChild>
-                      <button className="px-3 py-1 text-white bg-gray-500 rounded">ยกเลิก</button>
-                    </DialogClose>
                   </DialogFooter>
 
                 </DialogContent>
@@ -546,7 +546,7 @@ export function Management() {
                           <DialogHeader>
                             <DialogTitle>แก้ไขรายการเมนูอาหาร</DialogTitle>
                             <DialogDescription>
-                              แก้ไขรายละเอียดของเมนูอาหาร
+                              สามารถแก้ไขรายละเอียดของเมนูอาหารได้ที่นี่
                             </DialogDescription>
                           </DialogHeader>
                           <div>
@@ -743,6 +743,9 @@ export function Management() {
                           </div>
 
                           <DialogFooter>
+                            <DialogClose asChild>
+                              <button className="px-3 py-1 text-white bg-gray-500 rounded">ยกเลิก</button>
+                            </DialogClose>
                             <button
                               type="button"
                               className="px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1"
@@ -750,9 +753,6 @@ export function Management() {
                             >
                               บันทึก
                             </button>
-                            <DialogClose asChild>
-                              <button className="px-3 py-1 text-white bg-gray-500 rounded">ยกเลิก</button>
-                            </DialogClose>
                           </DialogFooter>
 
                         </DialogContent>
@@ -766,21 +766,21 @@ export function Management() {
 
                         <DialogContent className="w-[800px]">
                           <DialogHeader>
-                            <DialogTitle>ลบเมนู</DialogTitle>
+                            <DialogTitle>คุณต้องการที่จะลบเมนูนี้ใช่ไหม?</DialogTitle>
                             <DialogDescription>
-                              คุณแน่ใจหรือไม่ว่าต้องการลบเมนูนี้?
+                              ข้อมูลของเมนูจะถูกลบทั้งหมด
                             </DialogDescription>
                           </DialogHeader>
                           <DialogFooter>
+                            <DialogClose asChild>
+                              <button className="px-3 py-1 text-white bg-gray-500 rounded">ยกเลิก</button>
+                            </DialogClose>
                             <button
                               className="px-3 py-1 text-white bg-red-500 rounded"
                               onClick={() => handleDelete(menu.ID)}  // เรียกใช้ฟังก์ชันลบ
                             >
                               ลบ
                             </button>
-                            <DialogClose asChild>
-                              <button className="px-3 py-1 text-white bg-gray-500 rounded">ยกเลิก</button>
-                            </DialogClose>
                           </DialogFooter>
                         </DialogContent>
                       </Dialog>
