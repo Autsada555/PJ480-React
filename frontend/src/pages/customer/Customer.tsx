@@ -16,7 +16,7 @@ import {
   GetCustomerByID,
   UpdateCustomer,
 } from "../../services/https/Customer";
-import { useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   Card,
   CardContent,
@@ -68,7 +68,7 @@ export function Customer(): JSX.Element {
 
     async function fetchCustomer() {
       try {
-        const res = await GetCustomerByID(userid); 
+        const res = await GetCustomerByID(userid);
         setCustomer(res);
       } catch (error) {
         console.error("Error fetching customer options:", error);
@@ -82,7 +82,7 @@ export function Customer(): JSX.Element {
   useEffect(() => {
     if (customers) {
       console.log(customers);
-      resetForm1(customers); 
+      resetForm1(customers);
     }
   }, [customers]);
 
@@ -92,7 +92,7 @@ export function Customer(): JSX.Element {
     reset: resetForm1,
     setValue,
   } = useForm({
-    defaultValues: customers ?? {}, 
+    defaultValues: customers ?? {},
   });
 
   const onSubmit = async (data: any) => {
@@ -132,62 +132,72 @@ export function Customer(): JSX.Element {
   return (
     <>
       <Navbar />
-      <div>
-        <div className="left-[226px] top-[105px] absolute text-black text-xl font-bold font-['Inter']">
-          Overview
-        </div>
-        <div className="left-[226px] top-[135px] absolute text-black text-3xl font-bold font-['Inter']">
-         Your Profile
-        </div>
-        <div>
-          <div className="w-[348px] h-[380px] bg-slate-100 mt-[180px] ml-[220px] rounded-3xl border-[1px]"></div>
-          <div className="">
-            <Avatar className=" left-[320px] top-[-350px] w-[140px] h-[140px]">
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </div>
-          <div className="absolute top-[390px] left-[330px] flex">
-            <p className="text-[19px] text-gray-700 space-x-4">
-              <span className="font-semibold">{customers?.FirstName}</span>
-              <span className="font-semibold">{customers?.LastName}</span>
-            </p>
-          </div>
-          <div className="absolute top-[440px] left-[310px] flex">
-            <Button
-              className="flex w-[160px] text-[17px] text-white bg-slate-500"
-              variant="outline"
-            >
-              <Link to="/history">ประวัติคำสั่งซื้อ</Link>
-            </Button>
-          </div>
-          <div className="absolute top-[500px] left-[310px] flex">
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="flex w-[160px] text-[17px] text-white bg-red-700"
-                >
-                  ออกจากระบบ
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>คุณต้องการออกจากระบบใช่หรือไม่?</AlertDialogTitle>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
-                  <AlertDialogAction className="bg-red-600" onClick={LogOut} >ยืนยัน</AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+      <div >
+        <div className="min-h-screen">
+          {/* Header */}
+          <div className="text-center py-32 mr-[880px]">
+            <h1 className="text-xl text-black font-bold mr-16">Overview</h1>
+            <h2 className="text-3xl text-black font-bold mt-1">Your Profile</h2>
           </div>
 
+          {/* Profile Section */}
+          <div className="flex items-center justify-center mr-[700px] mt-[-120px]">
+            <div className="w-[348px] h-[380px] bg-slate-100 rounded-3xl border border-gray-300 shadow-lg relative p-6">
+              {/* Avatar */}
+              <div className="absolute top-[20px] left-[50%] transform -translate-x-1/2">
+                <Avatar className="w-[120px] h-[120px]">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </div>
+
+              {/* Name */}
+              <div className="mt-[140px] text-center">
+                <p className="text-lg font-semibold text-gray-700">
+                  {customers?.FirstName} {customers?.LastName}
+                </p>
+              </div>
+
+              {/* Buttons */}
+              <div className="mt-6 flex flex-col items-center space-y-4">
+                {/* History Button */}
+                <Button
+                  className="w-[160px] text-[17px] text-white bg-slate-500"
+                  variant="outline"
+                >
+                  <Link to="/history">ประวัติคำสั่งซื้อ</Link>
+                </Button>
+
+                {/* Logout Button */}
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="w-[160px] text-[17px] text-white bg-red-700"
+                    >
+                      ออกจากระบบ
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>คุณต้องการออกจากระบบใช่หรือไม่?</AlertDialogTitle>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
+                      <AlertDialogAction className="bg-red-600" onClick={LogOut}>
+                        ยืนยัน
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
+            </div>
+          </div>
         </div>
         <div>
           <Tabs
             defaultValue="account"
-            className="absolute w-[500px] left-[740px] top-[132px]"
+            className=" w-[500px] ml-[1040px] mt-[-710px] "
           >
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="account">บัญชีผู้ใช้</TabsTrigger>
@@ -290,7 +300,7 @@ export function Customer(): JSX.Element {
                 <CardHeader>
                   <CardTitle>รายละเอียดที่อยู่</CardTitle>
                   <CardDescription>
-                   สามารถเปลี่ยนข้อมูลที่อยู่ของคุณได้ที่นี่
+                    สามารถเปลี่ยนข้อมูลที่อยู่ของคุณได้ที่นี่
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4 ">
@@ -310,39 +320,6 @@ export function Customer(): JSX.Element {
                         className="text-[16px] mt-2 w-full"
                       />
                     </div>
-                    {/* <div className="space-y-4 flex items-center">
-                      <Label htmlFor="district" className="w-1/4 mt-2">
-                        District
-                      </Label>
-                      <Input
-                        id="district"
-                        placeholder="District"
-                        {...registerForm1("District")}
-                        className="text-[16px] mt-2 w-full"
-                      />
-                    </div>
-                    <div className="space-y-4 flex items-center">
-                      <Label htmlFor="province" className="w-1/4 mt-2">
-                        Province
-                      </Label>
-                      <Input
-                        id="province"
-                        placeholder="Province"
-                        {...registerForm1("Province")}
-                        className="text-[16px] mt-2 w-full"
-                      />
-                    </div>
-                    <div className="space-y-4 flex items-center">
-                      <Label htmlFor="postcode" className="w-1/4 mt-2">
-                        Postcode
-                      </Label>
-                      <Input
-                        id="postcode"
-                        placeholder="Postcode"
-                        {...registerForm1("Postcode")}
-                        className="text-[16px] mt-2 w-full"
-                      />
-                    </div> */}
                     <CardFooter className="justify-center">
                       <Button className="bg-green-600 mt-6" type="submit">
                         อัพเดตข้อมูลที่อยู่

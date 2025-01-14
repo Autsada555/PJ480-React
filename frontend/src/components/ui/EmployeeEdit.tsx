@@ -127,7 +127,7 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
 
         <form onSubmit={form.handleSubmit(onValid)}>
           <Form {...form}>
-            <div className="grid gap-2 mt-0">
+            <div className="grid gap-2 mt-[-160px]">
               <FormField
                 name="FirstName"
                 control={form.control}

@@ -68,7 +68,7 @@ export function ListUser() {
 
           <div className="overflow-x-auto">
             <Table className="border border-gray-300 w-full bg-gray-200">
-              <TableCaption>A list of User.</TableCaption>
+              <TableCaption>รายการผู้ใช้งาน</TableCaption>
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-[10%] text-center">ชื่อ</TableHead>

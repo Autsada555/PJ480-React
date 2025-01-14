@@ -1,6 +1,8 @@
 import { OrderHistory } from "@/interfaces";
 import Navbar from "./navbar";
 import dayjs from "dayjs";
+import { Button } from "@/components/ui/button";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -81,8 +83,17 @@ export function History() {
         <div className="left-[176px] top-[125px] absolute text-black text-2xl font-bold font-['Inter']">
           ประวัติการสั่งซื้อ
         </div>
+        <div className="flex justify-start">
+  <Button
+    className="w-[100px] text-[17px] text-white bg-slate-500 mt-2"
+    variant="outline"
+  >
+    <Link to="/customer">ย้อนกลับ</Link>
+  </Button>
+</div>
+
         <div>
-          <Table className=" border-double border-4 border-gray-300 mt-[100px] w-[1200px] ml-[175px] bg-gray-200">
+          <Table className=" border-double border-4 border-gray-300 mt-[100px] w-[1600px] ml-[175px] bg-gray-200">
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[10%] text-center text-black">
@@ -106,10 +117,10 @@ export function History() {
                 <TableHead className="w-[14%] text-center hidden md:table-cell text-black">
                   สถานะการสั่งซื้อ
                 </TableHead>
-                <TableHead className="w-[18%] text-center hidden md:table-cell text-black">
+                <TableHead className="w-[15%] text-center hidden md:table-cell text-black">
                   สถานะการชำระเงิน
                 </TableHead>
-                <TableHead className="w-[15%] text-center text-black">
+                <TableHead className="w-[18%] text-center text-black">
                   ยกเลิกการสั่งซื้อ
                 </TableHead>
               </TableRow>
@@ -125,7 +136,7 @@ export function History() {
                       {order.DateDelivery ? dayjs(order.DateDelivery).format("DD/MM/YYYY") : "N/A"}
                     </TableCell>
                     <TableCell className="text-center">
-                      {`${order.Quantity} ชิ้น`}
+                      {`${order.Quantity}`}
                     </TableCell>
                     <TableCell className="text-center whitespace-pre">
                       {order.Menu.map(menu => { return menu["Name"] }).join("\r\n")}
