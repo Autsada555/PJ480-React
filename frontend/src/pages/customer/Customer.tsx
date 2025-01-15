@@ -136,7 +136,7 @@ export function Customer(): JSX.Element {
         <div className="min-h-screen">
           {/* Header */}
           <div className="text-center py-32 mr-[880px]">
-            <h1 className="text-xl text-black font-bold mr-16">Overview</h1>
+            <h1 className="text-2xl text-black font-bold mr-16">Overview</h1>
             <h2 className="text-3xl text-black font-bold mt-1">Your Profile</h2>
           </div>
 
@@ -153,7 +153,7 @@ export function Customer(): JSX.Element {
 
               {/* Name */}
               <div className="mt-[140px] text-center">
-                <p className="text-lg font-semibold text-gray-700">
+                <p className="text-2xl font-semibold text-black">
                   {customers?.FirstName} {customers?.LastName}
                 </p>
               </div>
@@ -167,7 +167,6 @@ export function Customer(): JSX.Element {
                 >
                   <Link to="/history">ประวัติคำสั่งซื้อ</Link>
                 </Button>
-
                 {/* Logout Button */}
                 <AlertDialog>
                   <AlertDialogTrigger asChild>

@@ -525,7 +525,7 @@ export function Management() {
                     <td className="text-center border px-4 py-2">
                       <Dialog>
                         <DialogTrigger asChild>
-                          <button className="ml-2 px-3 py-1 text-white bg-green-500 rounded"
+                          <button className="ml-2 px-3 py-1 text-white bg-yellow-500 rounded"
                             onClick={() => {
                               console.log(menu);
                               setFormUpdateData({
@@ -544,7 +544,7 @@ export function Management() {
 
                         <DialogContent className="w-[800px]">
                           <DialogHeader>
-                            <DialogTitle>แก้ไขรายการเมนูอาหาร</DialogTitle>
+                            <DialogTitle className="text-2xl">แก้ไขรายการเมนูอาหาร</DialogTitle>
                             <DialogDescription>
                               สามารถแก้ไขรายละเอียดของเมนูอาหารได้ที่นี่
                             </DialogDescription>
@@ -748,7 +748,7 @@ export function Management() {
                             </DialogClose>
                             <button
                               type="button"
-                              className="px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1"
+                              className="px-4 py-2 rounded-md bg-green-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1"
                               onClick={() => handleUpdate(menu.ID)}
                             >
                               บันทึก

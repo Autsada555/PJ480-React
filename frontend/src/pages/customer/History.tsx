@@ -1,8 +1,8 @@
 import { OrderHistory } from "@/interfaces";
 import Navbar from "./navbar";
 import dayjs from "dayjs";
-import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { SquareArrowLeft } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -84,16 +84,19 @@ export function History() {
           ประวัติการสั่งซื้อ
         </div>
         <div className="flex justify-start">
-  <Button
-    className="w-[100px] text-[17px] text-white bg-slate-500 mt-2"
-    variant="outline"
-  >
-    <Link to="/customer">ย้อนกลับ</Link>
-  </Button>
-</div>
+          <div className="relative group flex items-center mt-[35px] ml-6">
+            <Link to="/customer">
+              <SquareArrowLeft className="w-8 h-8 text-black-700 hover:text-gray-900" />
+            </Link>
+            <span className="absolute left-1/2 -translate-x-1/2 bottom-[120%] px-2 py-1 text-xs text-white bg-red-800 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+              ย้อนกลับ
+            </span>
+          </div>
+
+        </div>
 
         <div>
-          <Table className=" border-double border-4 border-gray-300 mt-[100px] w-[1600px] ml-[175px] bg-gray-200">
+          <Table className=" border-double border-4 border-gray-300 mt-[20px] w-[1600px] ml-[175px] bg-gray-200">
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[10%] text-center text-black">

@@ -69,35 +69,35 @@ export function Home() {
                 <NavigationMenuItem>
                   <Link to={"/home"}>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      Health Food
+                      อาหารเพื่อสุขภาพ
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Link to={"/diabetesfood"}>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      Diabetes Food
+                      อาหารสำหรับโรคเบาหวาน
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Link to={"/kidnyfood"}>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      Kidny Foods
+                    อาหารสำหรับโรคไต
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Link to={"/gastritistfood"}>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      Gastritist Foods
+                    อาหารสำหรับโรคกระเพาะ
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Link to={"/thyroidfood"}>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      Thyroid Foods
+                    อาหารสำหรับโรคไทรอยด์
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
