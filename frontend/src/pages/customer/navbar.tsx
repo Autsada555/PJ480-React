@@ -112,7 +112,7 @@ function Navbar() {
             </div>
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <SignOut className="text-white cursor-pointer" size={32} />
+                <SignOut className="text-white cursor-pointer ml-6 mt-1" size={32} />
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>

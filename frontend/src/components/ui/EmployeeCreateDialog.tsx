@@ -125,11 +125,11 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
     <>
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>
-          <UserPlus className="text-green-500 mt-[35px] ml-[150px] hover:scale-130 cursor-pointer " />
+          <UserPlus className="text-green-500 mt-[40px] ml-[-85px] hover:scale-130 cursor-pointer w-10 h-10" />
         </AlertDialogTrigger>
         <AlertDialogContent className="sm:max-w-[480px] h-[80%] overflow-auto">
           <AlertDialogHeader>
-            <AlertDialogTitle>สร้างบัญชีผู้ใช้</AlertDialogTitle>
+            <AlertDialogTitle className="text-2xl">สร้างบัญชีผู้ใช้</AlertDialogTitle>
             <AlertDialogDescription>
             ทำการสร้างบัญชีของผู้ใช้งานและทำการกดบันทึกข้อมูลที่นี่
             </AlertDialogDescription>
@@ -290,14 +290,13 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
                   )}
                 />
               </div>
-
               <AlertDialogFooter>
                 <AlertDialogAction asChild>
-                  <Button variant="secondary" onClick={() => setOpen(false)}>
+                  <Button variant="secondary" className="bg-gray-600 mt-4" onClick={() => setOpen(false)}>
                     ปิด
                   </Button>
                 </AlertDialogAction>
-                <Button type="submit" onClick={() => setOpen(false)}>สร้างบัญชี</Button>
+                <Button type="submit" className="bg-green-600 mt-4" onClick={() => setOpen(false)}>สร้างบัญชี</Button>
               </AlertDialogFooter>
             </Form>
           </form>

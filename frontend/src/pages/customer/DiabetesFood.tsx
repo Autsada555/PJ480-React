@@ -66,47 +66,47 @@ export function DiabetesFood() {
     <div>
       <Navbar />
       <div className="mt-28 justify-center flex ">
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem className="flex">
-              <NavigationMenuItem>
-                <Link to={"/home"}>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Health Food
-                  </NavigationMenuLink>
-                </Link>
+      <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem className="flex">
+                <NavigationMenuItem>
+                  <Link to={"/home"}>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                      อาหารเพื่อสุขภาพ
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <Link to={"/diabetesfood"}>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                      อาหารสำหรับโรคเบาหวาน
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <Link to={"/kidnyfood"}>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    อาหารสำหรับโรคไต
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <Link to={"/gastritistfood"}>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    อาหารสำหรับโรคกระเพาะ
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <Link to={"/thyroidfood"}>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    อาหารสำหรับโรคไทรอยด์
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
               </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link to={"/diabetesfood"}>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Diabetes Food
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link to={"/kidnyfood"}>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Kidny Foods
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link to={"/gastritistfood"}>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Gastritist Foods
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link to={"/thyroidfood"}>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Thyroid Foods
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+            </NavigationMenuList>
+          </NavigationMenu>
       </div>
       <div>
         <WarningBanner message={"กรุณาสั่งอาหารก่อน 1 วัน เนื่องจากทางร้านจะต้องเตรียมวัตถุดิบ"} />

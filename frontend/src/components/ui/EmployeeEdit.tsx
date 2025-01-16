@@ -113,21 +113,20 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
   };
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
+    <AlertDialog open={open} onOpenChange={setOpen} >
       <AlertDialogTrigger asChild>
         <Edit className="text-yellow-500 abs-center hover:scale-110 cursor-pointer" />
       </AlertDialogTrigger>
-      <AlertDialogContent className="sm:max-w-[480px] h-[80%] overflow-auto">
+      <AlertDialogContent className="sm:max-w-[480px] h-[80%] overflow-auto ">
         <AlertDialogHeader>
-          <AlertDialogTitle>แก้ไขข้อมูลของผู้ใช้งาน</AlertDialogTitle>
+          <AlertDialogTitle className="text-2xl">แก้ไขข้อมูลของผู้ใช้งาน</AlertDialogTitle>
           <AlertDialogDescription>
             ทำการแก้ไขข้อมูลของผู้ใช้งานและทำการกดบันทึกข้อมูลที่นี่
           </AlertDialogDescription>
         </AlertDialogHeader>
-
         <form onSubmit={form.handleSubmit(onValid)}>
           <Form {...form}>
-            <div className="grid gap-2 mt-[-160px]">
+            <div className="grid gap-2 mt-[-140px]">
               <FormField
                 name="FirstName"
                 control={form.control}
@@ -261,9 +260,9 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
 
             <AlertDialogFooter>
               <AlertDialogAction asChild>
-                <Button variant="secondary">ปิด</Button>
+                <Button variant="secondary" className="bg-gray-600 mt-4">ปิด</Button>
               </AlertDialogAction>
-              <Button type="submit">บันทึกการแก้ไข</Button>
+              <Button type="submit" className="bg-green-600 mt-4">บันทึกการแก้ไข</Button>
             </AlertDialogFooter>
           </Form>
         </form>

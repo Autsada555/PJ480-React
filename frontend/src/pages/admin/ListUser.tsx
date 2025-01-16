@@ -64,10 +64,8 @@ export function ListUser() {
                 <EmployeeCreateDialog onCreated={fetchEmployee} />
             </div>
           </div>
-
-
-          <div className="overflow-x-auto">
-            <Table className="border border-gray-300 w-full bg-gray-200">
+          <div className="overflow-x-auto mt-[-15px]">
+            <Table className="border border-gray-300 w-[1600px] bg-gray-200 ">
               <TableCaption>รายการผู้ใช้งาน</TableCaption>
               <TableHeader>
                 <TableRow>
@@ -77,9 +75,9 @@ export function ListUser() {
                   <TableHead className="w-[10%] text-center">ประเภทของผู้ใช้งาน</TableHead>
                   <TableHead className="w-[10%] text-center">อีเมล</TableHead>
                   <TableHead className="w-[10%] text-center">เบอร์โทรศัพท์</TableHead>
-                  <TableHead className="w-[10%] text-center">ที่อยู่</TableHead>
-                  <TableHead className="w-[5%] text-center">แก้ไข</TableHead>
-                  <TableHead className="w-[5%] text-center">ลบ</TableHead>
+                  <TableHead className="w-[14%] text-center">ที่อยู่</TableHead>
+                  <TableHead className="w-[3%] text-center">แก้ไข</TableHead>
+                  <TableHead className="w-[3%] text-center">ลบ</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -107,7 +105,7 @@ export function ListUser() {
                       <TableCell className="text-center hidden md:table-cell">
                         {customer.Address}
                       </TableCell>
-                      <TableCell className="relative text-center">
+                      <TableCell className="relative text-center ">
                         <EmployeeEdit
                           customers={customer}
                           onSave={fetchCustomer}
