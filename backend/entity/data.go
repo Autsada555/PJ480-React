@@ -149,19 +149,19 @@ func SetupData(db *gorm.DB) {
 	menutypes := []MenuType{
 		{
 			BaseModel: BaseModel{ID: 1},
-			Name:      "Savory",
+			Name:      "อาหารคาว",
 		},
 		{
 			BaseModel: BaseModel{ID: 2},
-			Name:      "Dessert",
+			Name:      "ขนม&ของหวาน",
 		},
 		{
 			BaseModel: BaseModel{ID: 3},
-			Name:      "Soup",
+			Name:      "ซุป",
 		},
 		{
 			BaseModel: BaseModel{ID: 4},
-			Name:      "Drink",
+			Name:      "เครื่องดื่ม",
 		},
 	}
 	db.Create(&menutypes)
@@ -170,15 +170,15 @@ func SetupData(db *gorm.DB) {
 	statusordertypes := []StatusOrderType{
 		{
 			BaseModel: BaseModel{ID: 1},
-			Name:      "รอการรับออเดอร์",
+			Name:      "รอการรับคำสั่งซื้อ",
 		},
 		{
 			BaseModel: BaseModel{ID: 2},
-			Name:      "รับออเดอร์เรียบร้อย",
+			Name:      "รับคำสั่งซื้อเรียบร้อย",
 		},
 		{
 			BaseModel: BaseModel{ID: 3},
-			Name:      "ยกเลิกออเดอร์",
+			Name:      "ยกเลิกคำสั่งซื้อ",
 		},
 	}
 	db.Create(&statusordertypes)
@@ -186,7 +186,7 @@ func SetupData(db *gorm.DB) {
 	statuspaymenttypes := []StatusPaymentType{
 		{
 			BaseModel: BaseModel{ID: 1},
-			Name:      "รอการเช็คชำระ",
+			Name:      "รอการเช็คชำระเงิน",
 		},
 		{
 			BaseModel: BaseModel{ID: 2},
@@ -198,6 +198,26 @@ func SetupData(db *gorm.DB) {
 		},
 	}
 	db.Create(&statuspaymenttypes)
+
+	statusdeliverytypes := []StatusDeliveryType{
+		{
+			BaseModel: BaseModel{ID: 1},
+			Name:      "รอการรับคำสั่งซื้อ",
+		},
+		{
+			BaseModel: BaseModel{ID: 2},
+			Name:      "กำลังเตรียมจัดส่ง",
+		},
+		{
+			BaseModel: BaseModel{ID: 3},
+			Name:      "อยู่ระหว่างจัดส่ง",
+		},
+		{
+			BaseModel: BaseModel{ID: 4},
+			Name:      "ส่งเรียบร้อย",
+		},
+	}
+	db.Create(&statusdeliverytypes)
 
 	menu := []Menu{
 		{
@@ -312,7 +332,8 @@ func SetupData(db *gorm.DB) {
 			},
 			StatusOrderTypeID: 1,
 			StatusPaymentTypeID: 1,
-			UserID: 1,
+			StatusDeliveryTypeID: 1,
+			UserID: 3,
 
 		},
 		{
@@ -325,9 +346,10 @@ func SetupData(db *gorm.DB) {
 			Menu: []Menu{
 				menu[1], menu[2],
 			},
-			StatusOrderTypeID: 2,
+			StatusOrderTypeID: 1,
 			StatusPaymentTypeID: 1,
-			UserID: 1,
+			StatusDeliveryTypeID: 2,
+			UserID: 3,
 
 		},
 		{
@@ -340,9 +362,10 @@ func SetupData(db *gorm.DB) {
 			Menu: []Menu{
 				menu[1], menu[2],
 			},
-			StatusOrderTypeID: 3,
+			StatusOrderTypeID: 1,
 			StatusPaymentTypeID: 1,
-			UserID: 1,
+			StatusDeliveryTypeID: 3,
+			UserID: 3,
 
 		},
 		{
@@ -355,9 +378,10 @@ func SetupData(db *gorm.DB) {
 			Menu: []Menu{
 				menu[1], menu[2],
 			},
-			StatusOrderTypeID: 3,
-			StatusPaymentTypeID: 3,
-			UserID: 1,
+			StatusOrderTypeID: 1,
+			StatusPaymentTypeID: 1,
+			StatusDeliveryTypeID: 4,
+			UserID: 3,
 
 		},
 	}

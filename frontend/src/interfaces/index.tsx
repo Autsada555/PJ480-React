@@ -46,6 +46,11 @@ export interface StatusPaymentType {
   Name: string;
 }
 
+export interface StatusDeliveryType {
+  ID: number;
+  Name: string;
+}
+
 export interface UserType {
   ID: number;
   Name: string;
@@ -97,6 +102,8 @@ export interface Order {
   UserID: number;
   StatusOrderTypeID: number;
   StatusPaymentTypeID: number;
+  StatusDeliveryTypeID: number;
+
 }
 
 export interface OrderHistory {
@@ -113,6 +120,9 @@ export interface OrderHistory {
   StatusOrderTypeID: number;
   StatusPaymentType: StatusPaymentType;
   StatusPaymentTypeID: number;
+  StatusDeliveryType: StatusDeliveryType;
+  StatusDeliveryTypeID: number;
+  User: User;
 }
 
 export interface OrderCheckPayment {
@@ -130,6 +140,8 @@ export interface OrderCheckPayment {
   StatusOrderTypeID: number;
   StatusPaymentType: StatusPaymentType;
   StatusPaymentTypeID: number;
+  StatusDeliveryType: StatusDeliveryType;
+  StatusDeliveryTypeID: number;
 }
 
 export interface CancelOrderData {

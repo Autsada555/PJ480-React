@@ -38,9 +38,10 @@ type Order struct {
 		Quantity int    `json:"Quantity"`
 		Details  string `json:"details"`
 	} `json:"Menu"`
-	StatusOrderTypeID int `json:"StatusOrderTypeID"`
-	StatusPaymentTypeID int `json:"StatusPaymentTypeID"`
-	UserID       int `json:"UserID"`
+	StatusOrderTypeID    int `json:"StatusOrderTypeID"`
+	StatusPaymentTypeID  int `json:"StatusPaymentTypeID"`
+	StatusDeliveryTypeID int `json:"StatusDeliveryTypeID"`
+	UserID               int `json:"UserID"`
 }
 
 func CreateOrder(c *gin.Context) {
@@ -67,15 +68,16 @@ func CreateOrder(c *gin.Context) {
 	}
 
 	order := entity.Order{
-		Quantity:     preload.Quantity,
-		TotalAmount:  preload.TotalAmount,
-		DateDelivery: preload.DateDelivery,
-		Eslip:        preload.Eslip,
-		Delivery:     preload.Delivery,
-		Menu:         menus,
-		UserID:       uint(preload.UserID),
-		StatusOrderTypeID: uint(preload.StatusOrderTypeID),
-		StatusPaymentTypeID: uint(preload.StatusPaymentTypeID),
+		Quantity:             preload.Quantity,
+		TotalAmount:          preload.TotalAmount,
+		DateDelivery:         preload.DateDelivery,
+		Eslip:                preload.Eslip,
+		Delivery:             preload.Delivery,
+		Menu:                 menus,
+		UserID:               uint(preload.UserID),
+		StatusOrderTypeID:    uint(preload.StatusOrderTypeID),
+		StatusPaymentTypeID:  uint(preload.StatusPaymentTypeID),
+		StatusDeliveryTypeID: uint(preload.StatusDeliveryTypeID),
 	}
 	if err := entity.DB().Create(&order).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -88,41 +90,70 @@ func CreateOrder(c *gin.Context) {
 }
 
 func CancelOrder(c *gin.Context) {
-    id := c.Param("id")
+	id := c.Param("id")
 	status_order_type_id := 3
 
-    if err := entity.DB().Model(&entity.Order{}).
-        Where("id = ?", id).
-        Updates(map[string]interface{}{"status_order_type_id": status_order_type_id}).
-        Error; err != nil {
-        c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-        return
-    }
+	if err := entity.DB().Model(&entity.Order{}).
+		Where("id = ?", id).
+		Updates(map[string]interface{}{"status_order_type_id": status_order_type_id}).
+		Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 
-    c.JSON(http.StatusOK, gin.H{"data": "Order status updated successfully"})
+	c.JSON(http.StatusOK, gin.H{"data": "Order status updated successfully"})
+}
+
+func DeliveryOrder(c *gin.Context) {
+	id := c.Param("id")
+	status_delivery_type_id := 2
+
+	if err := entity.DB().Model(&entity.Order{}).
+		Where("id = ?", id).
+		Updates(map[string]interface{}{"status_delivery_type_id": status_delivery_type_id}).
+		Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": "Order status updated successfully"})
 }
 
 func ReceiveOrder(c *gin.Context) {
-    id := c.Param("id")
+	id := c.Param("id")
 	status_order_type_id := c.Param("status_order_type_id")
 
-    if err := entity.DB().Model(&entity.Order{}).
-        Where("id = ?", id).
-        Updates(map[string]interface{}{"status_order_type_id": status_order_type_id}).
-        Error; err != nil {
-        c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-        return
-    }
+	if err := entity.DB().Model(&entity.Order{}).
+		Where("id = ?", id).
+		Updates(map[string]interface{}{"status_order_type_id": status_order_type_id}).
+		Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 
-    c.JSON(http.StatusOK, gin.H{"data": "Order status updated successfully"})
+	c.JSON(http.StatusOK, gin.H{"data": "Order status updated successfully"})
 }
 
+func CheckDeliveryOrder(c *gin.Context) {
+	id := c.Param("id")
+	status_delivery_type_id := c.Param("status_delivery_type_id")
+
+	if err := entity.DB().Model(&entity.Order{}).
+		Where("id = ?", id).
+		Update("status_delivery_type_id", status_delivery_type_id).
+		Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": "Order status updated successfully"})
+}
 
 func GetAllOrder(c *gin.Context) {
 	var customers []entity.Order
 
 	if err := entity.DB().
-		Preload("Menu").Preload("StatusOrderType").Preload("StatusPaymentType").Preload("User").
+		Preload("Menu").Preload("StatusOrderType").Preload("StatusPaymentType").Preload("StatusDeliveryType").Preload("User").
 		Find(&customers).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -135,7 +166,7 @@ func GetOrderByID(c *gin.Context) {
 	orderID := c.Param("id")
 
 	if err := entity.DB().
-		Preload("Menu").Preload("StatusOrderType").Preload("StatusPaymentType").Preload("User").
+		Preload("Menu").Preload("StatusOrderType").Preload("StatusPaymentType").Preload("StatusDeliveryType").Preload("User").
 		Where("user_id = ?", orderID).
 		Find(&order).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

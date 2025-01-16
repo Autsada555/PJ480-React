@@ -52,14 +52,17 @@ func initRequiredAuthRouter(route *gin.RouterGroup) {
 	route.GET("/order/:id", controllers.GetOrderByID)
 	route.POST("/order/create", controllers.CreateOrder)
 	route.PATCH("/order/cancel/:id", controllers.CancelOrder)
+	route.PATCH("/order/deliveryorder/:id", controllers.DeliveryOrder)
 	route.GET("/order",  controllers.GetAllOrder)
 	route.PATCH("/order/statuspayment/:id/:status_payment_type_id",controllers.CheckPayment)
 	route.PATCH("/order/:id/:status_order_type_id",  controllers.ReceiveOrder)
+	route.PATCH("/order/deliveryorder/:id/:status_delivery_type_id",  controllers.CheckDeliveryOrder)
 
 	route.GET("/disease", requireAdmin, controllers.GetDiseases)
 
 	//status
 	route.GET("/statuspayment", controllers.ListStatusPaymentTypes)
 	route.GET("/statusorder", controllers.ListStatusOrderTypes)
+	route.GET("/statusdelivery", controllers.ListStatusDeliveryTypes)
 
 }

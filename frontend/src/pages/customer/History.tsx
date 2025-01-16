@@ -25,7 +25,10 @@ import {
   AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
 import { toast, ToastContainer } from "react-toastify";
-
+import { Bag, FlagBannerFold, Package, ShoppingBagOpen, Truck } from "@phosphor-icons/react";
+import { Steps } from 'rsuite';
+import './style.less';
+import { cn } from "@/lib/utils";
 
 export function History() {
   const [order, setOrder] = useState<OrderHistory[]>([]);
@@ -84,13 +87,13 @@ export function History() {
           ประวัติการสั่งซื้อ
         </div>
         <div className="flex justify-start">
-  <Button
-    className="w-[100px] text-[17px] text-white bg-slate-500 mt-2"
-    variant="outline"
-  >
-    <Link to="/customer">ย้อนกลับ</Link>
-  </Button>
-</div>
+          <Button
+            className="w-[100px] text-[17px] text-white bg-slate-500 mt-2"
+            variant="outline"
+          >
+            <Link to="/customer">ย้อนกลับ</Link>
+          </Button>
+        </div>
 
         <div>
           <Table className=" border-double border-4 border-gray-300 mt-[100px] w-[1600px] ml-[175px] bg-gray-200">
@@ -121,7 +124,7 @@ export function History() {
                   สถานะการชำระเงิน
                 </TableHead>
                 <TableHead className="w-[18%] text-center text-black">
-                  ยกเลิกการสั่งซื้อ
+                  การจัดส่ง
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -159,26 +162,94 @@ export function History() {
                           <p className="text-red-500">{order.StatusPaymentType.Name}</p>}
                     </TableCell>
                     <TableCell className="justify-center flex">
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <button className="mt-1 ml-2 px-3 py-1 text-white bg-red-500 rounded hover:scale-110 cursor-pointer">ยกเลิก</button>
+                      <AlertDialog >
+                        <AlertDialogTrigger asChild >
+                          {/* {order.StatusOrderType.ID === 3 ?
+                            <button disabled className="mt-1 ml-2 px-3 py-1 text-white bg-red-500 rounded " ><Package size={32} /></button> :
+                            <button className="mt-1 ml-2 px-3 py-1 text-white bg-green-500 rounded hover:scale-110 cursor-pointer"><Package size={32} /></button>
+                          } */}
+                          <button disabled={order.StatusOrderType.ID === 3}
+                            className={cn("mt-1 ml-2 px-3 py-1 text-white rounded ",
+                              order.StatusOrderType.ID === 3 && "bg-red-500",
+                              order.StatusOrderType.ID !== 3 && "bg-green-500 hover:scale-110 ")} >
+                            <Package size={32} />
+                          </button>
                         </AlertDialogTrigger>
-                        <AlertDialogContent>
+                        <AlertDialogContent className="max-w-fit">
                           <AlertDialogHeader>
-                            <AlertDialogTitle>คุณต้องการยกเลิกการสั่งซื้อนี้ใช่หรือไม่?</AlertDialogTitle>
+                            <AlertDialogTitle>สถานะการส่งสินค้า</AlertDialogTitle>
                             <AlertDialogDescription>
                               หากมีการยกเลิกการสั่งที่ชำระเงินแล้ว ทางร้านจะโอนเงินกลับตามเลขบัญชีของลูกค้า
                             </AlertDialogDescription>
+                            <div className="h-full w-[1200px]">
+                              {order.StatusDeliveryType.ID === 2 ?
+                                <Steps current={2}>
+                                  <Steps.Item />
+                                  <Steps.Item icon={<ShoppingBagOpen size={52} />} title={order.StatusDeliveryType.Name} description={`ชื่อผู้รับ : ${order.User.UserName} | ที่อยู่ : ${order.User.Address}`} />
+                                  <Steps.Item />
+                                  <Steps.Item />
+                                </Steps> : order.StatusDeliveryType.ID === 3 ?
+                                  <Steps current={3}>
+                                    <Steps.Item />
+                                    <Steps.Item />
+                                    <Steps.Item icon={<Truck size={52} />} title={order.StatusDeliveryType.Name} description={`ชื่อผู้รับ : ${order.User.UserName} | ที่อยู่ : ${order.User.Address}`} />
+                                    <Steps.Item />
+                                  </Steps> : order.StatusDeliveryType.ID === 4 ?
+                                    <Steps current={4}>
+                                      <Steps.Item />
+                                      <Steps.Item />
+                                      <Steps.Item />
+                                      <Steps.Item icon={<FlagBannerFold size={52} />} title={order.StatusDeliveryType.Name} description={`ชื่อผู้รับ : ${order.User.UserName} | ที่อยู่ : ${order.User.Address}`} />
+                                    </Steps> :
+                                    <Steps current={1}>
+                                      <Steps.Item icon={<Bag size={52} />} title={order.StatusDeliveryType.Name} description={`ชื่อผู้รับ : ${order.User.UserName} | ที่อยู่ : ${order.User.Address}`} />
+                                      <Steps.Item />
+                                      <Steps.Item />
+                                      <Steps.Item />
+                                    </Steps>
+                              }
+                            </div>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
-                            <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
-                            <AlertDialogAction
-                              className="bg-red-600"
-                              type="submit"
-                              onClick={() => cancelOrder(order.ID)}
-                            >
-                              ยืนยัน
-                            </AlertDialogAction>
+                            <div className="flex space-x-[1000px] w-full">
+                              <div>
+                                <AlertDialog>
+                                  <AlertDialogTrigger asChild>
+                                    {order.StatusOrderType.ID === 2 ?
+                                      <button disabled className="mt-1 ml-2 px-3 py-1 text-white bg-slate-400 rounded ">
+                                        ยกเลิกคำสั่งซื้อ
+                                      </button> :
+                                      <button className="mt-1 ml-2 px-3 py-1 text-white bg-red-500 rounded hover:scale-110 cursor-pointer">
+                                        ยกเลิกคำสั่งซื้อ
+                                      </button>
+                                    }
+                                  </AlertDialogTrigger>
+                                  <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                      <AlertDialogTitle>คุณต้องการยกเลิกการสั่งซื้อนี้ใช่หรือไม่?</AlertDialogTitle>
+                                      <AlertDialogDescription>
+                                        หากมีการยกเลิกการสั่งที่ชำระเงินแล้ว ทางร้านจะโอนเงินกลับตามเลขบัญชีของลูกค้า
+                                      </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                      <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
+                                      <AlertDialogAction
+                                        className="bg-red-600"
+                                        type="submit"
+                                        onClick={() => cancelOrder(order.ID)}
+                                      >
+                                        ยืนยัน
+                                      </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                  </AlertDialogContent>
+                                </AlertDialog>
+                              </div>
+                              <div>
+                                <AlertDialogCancel>
+                                  กลับ
+                                </AlertDialogCancel>
+                              </div>
+                            </div>
                           </AlertDialogFooter>
                         </AlertDialogContent>
                       </AlertDialog>

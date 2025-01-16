@@ -28,10 +28,9 @@ import { CartContext } from "@/components/ui/cartContext";
 import { toast, ToastContainer } from "react-toastify";
 import WarningBanner from "@/components/ui/warning";
 import { CreateOrder } from "@/services/https/Order";
-import { Menu, Order, UserID } from "@/interfaces";
+import { MenuInterface, Order, UserID } from "@/interfaces";
 import { useNavigate } from "react-router-dom";
 import { ImageUpload } from "@/components/ui/uploadimage";
-import { string } from "zod";
 
 export function Payment(): JSX.Element {
   const [customer, setCustomer] = useState<UserID | null>(null);
@@ -47,30 +46,14 @@ export function Payment(): JSX.Element {
     datedelivery: new Date(),
     eslip: '',
     delivery: '',
-    menu: [] as Menu[],
+    menu: [] as MenuInterface[],
     statusordertypeid: 1,
     statuspaymenttypeid: 1,
+    statusdeliverytypeid: 1,
     userid: 0,
     user: ''
   });
 
-
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-  //   const { name, value, type } = e.target;
-  //   console.log(e.target)
-  //   setFormData((prevState) => {
-  //     let newValue: any = value;
-
-  //     if (type === "number") {
-  //       newValue = Number(value);
-  //     }
-
-  //     return {
-  //       ...prevState,
-  //       [name]: newValue,
-  //     };
-  //   });
-  // };
 
   const { register, reset } = useForm<PaymentFormData>({
     resolver: zodResolver(paymentFormSchema),
@@ -95,10 +78,8 @@ export function Payment(): JSX.Element {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // console.log(images[0].data_url)
     try {
       const customerData: Order = {
-        // ID: formData.id,
         Quantity: getQuantity(),
         TotalAmount: getTotal(),
         DateDelivery: date!,
@@ -107,9 +88,10 @@ export function Payment(): JSX.Element {
         Menu: getMenus(),
         StatusOrderTypeID: formData.statusordertypeid,
         StatusPaymentTypeID: formData.statuspaymenttypeid,
+        StatusDeliveryTypeID: formData.statusdeliverytypeid,
         UserID: userid,
       };
-      console.log("Submitted data:", JSON.stringify(customerData));
+      console.log("Submitted data:", customerData);
 
       const res = await CreateOrder(customerData);
       console.log("Customer creation response:", res);
@@ -141,16 +123,12 @@ export function Payment(): JSX.Element {
   };
 
   const [selectedOption, setSelectedOption] = useState<"store-pickup" | "home-delivery" | null>(null);
-  const [selectedOptionA, setSelectedOptionA] = useState<"cash-payment" | "bank-transfer" | null>(null);
 
   const handleOptionChange = (option: "store-pickup" | "home-delivery") => {
     setSelectedOption((prev) => (prev === option ? null : option)); // Toggle selection
     console.log("123212");
   };
-  const handleOptionChangeA = (option: "cash-payment" | "bank-transfer") => {
-    setSelectedOptionA((prev) => (prev === option ? null : option)); // Toggle selection
-    console.log("5645");
-  };
+
   return (
     <div className=" w-svw">
       <Navbar />
@@ -227,27 +205,11 @@ export function Payment(): JSX.Element {
 
           <h2 className="ml-[-510px] text-xl font-semibold">Payment</h2>
           <div className="flex ">
-            <div className="justify-start items-start mt-4 ">
-              <div className="flex">
-                <Checkbox
-                  id="cash-payment"
-                  // checked={selectedOptionA === "cash-payment"}
-                  // onCheckedChange={() => handleOptionChangeA("cash-payment")}
-                  name="eslip"
-                  onClick={() => setFormData((value) => {
-                    value.eslip = "ชำระด้วยเงินสด"
-                    return value
-                  })}
-                />
-                <Label htmlFor="cash-payment">ชำระด้วยเงินสด</Label>
-              </div>
-              <div className="flex mt-2">
+              <div className="ml-[-70px] mt-2">
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Checkbox
                       id="bank-transfer"
-                    // checked={selectedOptionA === "bank-transfer"}
-                    // onCheckedChange={() => handleOptionChangeA("bank-transfer")} 
                     />
                   </AlertDialogTrigger>
                   <Label htmlFor="bank-transfer">โอนเงินผ่านธนาคาร</Label>
@@ -266,9 +228,8 @@ export function Payment(): JSX.Element {
                   </AlertDialogContent>
                 </AlertDialog>
               </div>
-            </div>
 
-            <div className="ml-[200px]">
+            <div className="ml-[250px]">
               <Label htmlFor="upload-image">อัพโหลดใบเสร็จจ่ายเงิน</Label>
               <ImageUpload setData={setImages}/>
             </div>

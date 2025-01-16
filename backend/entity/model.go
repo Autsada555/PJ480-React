@@ -39,6 +39,11 @@ type StatusPaymentType struct { //
 	Name string `gorm:"unique"`
 }
 
+type StatusDeliveryType struct { //
+	BaseModel
+	Name string `gorm:"unique"`
+}
+
 type UserType struct { //
 	BaseModel
 	Name string `gorm:"unique"`
@@ -47,13 +52,13 @@ type UserType struct { //
 type User struct { //
 	BaseModel
 
-	FirstName string `gorm:"default:ชื่อ"`
-	LastName  string `gorm:"default:นามสกุล"`
-	Email     string `valid:"required~Email is required,email~Invalid email address" gorm:"unique"`
-	Password  string `valid:"required~Password is required,minstringlength(8)~Password must be at least 8 characters"`
-	Phone     string `valid:"required~Phone number is required,stringlength(10|10)~Phone must be at 10 characters"`
-	UserName  string `valid:"required~UserName is required,minstringlength(5)~UserName must be at 5 characters" gorm:"unique"`
-	Address   string `gorm:"default:ที่อยู่"`
+	FirstName        string `gorm:"default:ชื่อ"`
+	LastName         string `gorm:"default:นามสกุล"`
+	Email            string `valid:"required~Email is required,email~Invalid email address" gorm:"unique"`
+	Password         string `valid:"required~Password is required,minstringlength(8)~Password must be at least 8 characters"`
+	Phone            string `valid:"required~Phone number is required,stringlength(10|10)~Phone must be at 10 characters"`
+	UserName         string `valid:"required~UserName is required,minstringlength(5)~UserName must be at 5 characters" gorm:"unique"`
+	Address          string `gorm:"default:ที่อยู่"`
 	CreditCardNumber string `valid:"required~CreditCardNumber number is required,stringlength(16|16)~Phone must be at 16 characters" gorm:"unique"`
 
 	GenderID uint
@@ -81,6 +86,9 @@ type Order struct { //
 
 	StatusPaymentTypeID uint
 	StatusPaymentType   *StatusPaymentType `gorm:"foreignKey:StatusPaymentTypeID"`
+
+	StatusDeliveryTypeID uint
+	StatusDeliveryType   *StatusDeliveryType `gorm:"foreignKey:StatusDeliveryTypeID"`
 }
 
 type Menu struct {

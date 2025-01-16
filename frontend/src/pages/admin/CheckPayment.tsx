@@ -9,7 +9,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { OrderCheckPayment, StatusOrderType, StatusPaymentType } from "@/interfaces";
-import { GetAllOrder, ReceiveOrder } from "@/services/https/Order";
+import { DeliveryOrder, GetAllOrder, ReceiveOrder } from "@/services/https/Order";
 import dayjs from "dayjs";
 import { ImageViewer } from "@/components/ui/ImageViewer";
 import {
@@ -21,6 +21,17 @@ import {
 } from "@/components/ui/select"
 import { CheckPaymentTypeID, GetStatusOrder, GetStatusPayment } from "@/services/https/Payment";
 import { toast, ToastContainer } from "react-toastify";
+import { Package } from "@phosphor-icons/react";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
 
 export function CheckPayment() {
     const [order, setOrder] = useState<OrderCheckPayment[]>([]);
@@ -126,6 +137,32 @@ export function CheckPayment() {
             });
         }
     };
+
+    const deliveryOrder = async (id: number) => {
+        try {
+            const res = await DeliveryOrder(id);
+            if (res.status) {
+                toast.success("เตรียมจัดส่งสำเร็จ", {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+            } else {
+                toast.error(res.message || "เกิดข้อผิดพลาด", {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                });
+            }
+        } catch (error) {
+            console.error("Error during order cancellation:", error);
+            toast.error("มีบางอย่างผิดพลาด", {
+                position: "bottom-right",
+                autoClose: 3000,
+            });
+        }
+    };
     return (
         <div>
             <Navbar />
@@ -158,10 +195,12 @@ export function CheckPayment() {
                                     <TableHead className="w-[10%] text-center text-black">วันที่จัดส่ง</TableHead>
                                     <TableHead className="w-[10%] text-center text-black">ชื่อผู้สั่งซื้อ</TableHead>
                                     <TableHead className="w-[10%] text-center text-black">เมนู</TableHead>
-                                    <TableHead className="w-[20%] text-center text-black">สถานที่รับสินค้า</TableHead>
+                                    <TableHead className="w-[10%] text-center text-black">สถานที่รับสินค้า</TableHead>
                                     <TableHead className="w-[10%] text-center text-black">สลิปจ่ายเงิน</TableHead>
                                     <TableHead className="w-[10%] text-center text-black">การจ่ายเงิน</TableHead>
                                     <TableHead className="w-[10%] text-center text-black">การสั่งซื้อ</TableHead>
+                                    <TableHead className="w-[10%] text-center text-black">การจัดส่ง</TableHead>
+                                    <TableHead className="w-[10%] text-center text-black">เตรียมจัดส่ง</TableHead>
                                     <TableHead className="w-[10%] text-center text-black">เช็คการจ่ายเงิน</TableHead>
                                     <TableHead className="w-[10%] text-center text-black">เช็คการสั่งซื้อ</TableHead>
                                 </TableRow>
@@ -198,6 +237,46 @@ export function CheckPayment() {
                                                     order.StatusOrderType.ID === 2 ? <p className="text-green-500">{order.StatusOrderType.Name}</p> :
                                                         <p className="text-red-500">{order.StatusOrderType.Name}</p>}
                                             </TableCell>
+                                            <TableCell className="text-center whitespace-pre border border-black">
+                                                {/* {order.StatusDeliveryType.Name} */}
+                                                {order.StatusDeliveryType.ID === 1 ? <p className="text-cyan-700">{order.StatusDeliveryType.Name}</p> :
+                                                    order.StatusDeliveryType.ID === 2 ? <p className="text-orange-500">{order.StatusDeliveryType.Name}</p> :
+                                                        order.StatusDeliveryType.ID === 3 ? <p className="text-lime-500">{order.StatusDeliveryType.Name}</p> :
+                                                            <p className="text-green-500">{order.StatusDeliveryType.Name}</p>}
+                                            </TableCell>
+                                            <TableCell className="text-center whitespace-pre border border-black">
+                                                <AlertDialog>
+                                                    <AlertDialogTrigger asChild>
+                                                        {order.StatusDeliveryType.ID === 2 ?
+                                                            <button disabled className="mt-1 ml-2 px-3 py-1 text-white bg-orange-500 rounded "><Package size={32} /></button> :
+                                                            order.StatusDeliveryType.ID === 3 ?
+                                                                <button disabled className="mt-1 ml-2 px-3 py-1 text-white bg-lime-500 rounded "><Package size={32} /></button> :
+                                                                order.StatusDeliveryType.ID === 4 ?
+                                                                    <button disabled className="mt-1 ml-2 px-3 py-1 text-white bg-green-500 rounded "><Package size={32} /></button> :
+                                                                    <button className="mt-1 ml-2 px-3 py-1 text-white bg-cyan-700 rounded hover:scale-110 cursor-pointer"><Package size={32} /></button>
+                                                        }
+                                                    </AlertDialogTrigger>
+                                                    <AlertDialogContent>
+                                                        <AlertDialogHeader>
+                                                            <AlertDialogTitle>คุณต้องการเตรียมจัดส่งคำสั่งซื้อนี้ใช่หรือไม่?</AlertDialogTitle>
+                                                            {/* <AlertDialogDescription>
+                                                                หากมีการยกเลิกการสั่งที่ชำระเงินแล้ว ทางร้านจะโอนเงินกลับตามเลขบัญชีของลูกค้า
+                                                            </AlertDialogDescription> */}
+                                                        </AlertDialogHeader>
+                                                        <AlertDialogFooter>
+                                                            <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
+                                                            <AlertDialogAction
+                                                                className="bg-green-600"
+                                                                type="submit"
+                                                                onClick={() => deliveryOrder(order.ID)}
+                                                            >
+                                                                ยืนยัน
+                                                            </AlertDialogAction>
+                                                        </AlertDialogFooter>
+                                                    </AlertDialogContent>
+                                                </AlertDialog>
+                                                {/* <button className="mt-1 ml-2 px-3 py-1 text-white bg-green-500 rounded hover:scale-110 cursor-pointer"><Package size={32} /></button> */}
+                                            </TableCell>
                                             <TableCell className="justify-center ">
 
                                                 <Select onValueChange={(c) => checkPayment(order.ID, Number(c))}>
@@ -227,6 +306,7 @@ export function CheckPayment() {
 
                                             </TableCell>
 
+
                                         </TableRow>
                                     ))
                                 ) : (
@@ -237,11 +317,11 @@ export function CheckPayment() {
                                     </TableRow>
                                 )}
                             </TableBody>
-                        </Table>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        </Table >
+                    </div >
+                </div >
+            </div >
+        </div >
 
     )
 }

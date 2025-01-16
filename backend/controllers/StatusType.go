@@ -26,6 +26,15 @@ func ListStatusPaymentTypes(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": statusordertypes})
 }
 
+func ListStatusDeliveryTypes(c *gin.Context) {
+	var statusordertypes []entity.StatusDeliveryType
+	if err := entity.DB().Raw("SELECT * FROM status_delivery_types").Scan(&statusordertypes).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": statusordertypes})
+}
+
 func CheckPayment(c *gin.Context) {
     id := c.Param("id")
 	status_payment_type_id := c.Param("status_payment_type_id")
