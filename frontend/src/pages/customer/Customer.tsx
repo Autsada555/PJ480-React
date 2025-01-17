@@ -285,6 +285,17 @@ export function Customer(): JSX.Element {
                         className="text-[16px] mt-2 w-full"
                       />
                     </div>
+                    <div className="space-y-4 flex items-center">
+                      <Label htmlFor="email" className="w-1/4 mt-2">
+                      เลขบัญชี
+                      </Label>
+                      <Input
+                        id="creditcardnumber"
+                        placeholder="เลขบัญชี"
+                        {...registerForm1("CreditCardNumber")}
+                        className="text-[16px] mt-2 w-full"
+                      />
+                    </div>
                     <CardFooter className="justify-center mt-6">
                       <Button type="submit" className="bg-green-600 mt-6">
                         อัพเดตข้อมูล

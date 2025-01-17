@@ -9,7 +9,7 @@ export const userFormSchema = z.object({
     Phone: z.string().length(10, "Phone number must be 10 characters"),
     UserName: z.string(),
     Address: z.string(),
-
+    CreditCardNumber: z.string().length(10, "Phone number must be 10 characters"),
     GenderID: z.number(),
     UserTypeID: z.number(),
 
@@ -28,6 +28,7 @@ export const userFormSchema = z.object({
     Postcode: z.string().length(5, "Postcode must be 5 characters"),
     UserTypeID: z.number({ required_error: "Please select user type" }),
     GenderID: z.number({ required_error: "Please select gender" }),
+    CreditCardNumber: z.string().length(10, "Phone number must be 10 characters"),
   });
   
   export type UserUpdateFormData = z.infer<typeof userUpdateFormSchema>;

@@ -59,7 +59,7 @@ type User struct { //
 	Phone            string `valid:"required~Phone number is required,stringlength(10|10)~Phone must be at 10 characters"`
 	UserName         string `valid:"required~UserName is required,minstringlength(5)~UserName must be at 5 characters" gorm:"unique"`
 	Address          string `gorm:"default:ที่อยู่"`
-	CreditCardNumber string `valid:"required~CreditCardNumber number is required,stringlength(16|16)~Phone must be at 16 characters" gorm:"unique"`
+	CreditCardNumber string `valid:"required~CreditCardNumber number is required,stringlength(10|10)~Phone must be at 16 characters" gorm:"unique"`
 
 	GenderID uint
 	Gender   *Gender `gorm:"foreignKey:GenderID"`
@@ -70,11 +70,11 @@ type User struct { //
 
 type Order struct { //
 	BaseModel
-	Quantity     int
-	TotalAmount  int
-	DateDelivery time.Time
-	Eslip        string `gorm:"type:longtext"`
-	Delivery     string
+	Quantity     int `valid:"required~Quantity is required"`
+	TotalAmount  int `valid:"required~TotalAmount is required"`
+	DateDelivery time.Time `valid:"required~DateDelivery is required"`
+	Eslip        string `valid:"required~Eslip is required" gorm:"type:longtext"`
+	Delivery     string `valid:"required~Delivery is required"`
 
 	Menu []Menu `gorm:"many2many:order_menu"`
 

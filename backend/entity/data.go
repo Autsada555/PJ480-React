@@ -45,7 +45,7 @@ func SetupData(db *gorm.DB) {
 		},
 		{
 			BaseModel: BaseModel{ID: 202},
-			Name:      "deliver",
+			Name:      "delivery",
 		},
 	}
 	db.Create(&usertypes)
@@ -63,7 +63,7 @@ func SetupData(db *gorm.DB) {
 			Phone:      "0988888888",
 			UserName:   "Somchai",
 			Address:    "555 Suranari Meaung Nakhon Ratcasima 30000",
-			CreditCardNumber: "6666-6666-6666-4444",
+			CreditCardNumber: "6666661111",
 		},
 		{
 			BaseModel:  BaseModel{ID: 2},
@@ -76,7 +76,7 @@ func SetupData(db *gorm.DB) {
 			Phone:      "0988888888",
 			UserName:   "Peter",
 			Address:    "666 Suranari Meaung Nakhon Ratcasima 30000",
-			CreditCardNumber: "6666-6666-6666-3333",
+			CreditCardNumber: "6666662222",
 		},
 		{
 			BaseModel:  BaseModel{ID: 3},
@@ -89,7 +89,7 @@ func SetupData(db *gorm.DB) {
 			Phone:      "0988888888",
 			UserName:   "veter",
 			Address:    "777 Suranari Meaung Nakhon Ratcasima 30000",
-			CreditCardNumber: "6666-6666-6666-2222",
+			CreditCardNumber: "6666663333",
 		},
 		{
 			BaseModel:  BaseModel{ID: 4},
@@ -102,7 +102,7 @@ func SetupData(db *gorm.DB) {
 			Phone:      "0999999999",
 			UserName:   "Pinky",
 			Address:    "888 Suranari Meaung Nakhon Ratcasima 30000",
-			CreditCardNumber: "6666-6666-6666-1111",
+			CreditCardNumber: "6666664444",
 		},
 		{
 			BaseModel:  BaseModel{ID: 5},
@@ -115,7 +115,7 @@ func SetupData(db *gorm.DB) {
 			Phone:      "0999999999",
 			UserName:   "Jezzy",
 			Address:    "999 Suranari Meaung Nakhon Ratcasima 30000",
-			CreditCardNumber: "6666-6666-6666-6666",
+			CreditCardNumber: "6666665555",
 		},
 	}
 	db.Create(&users)

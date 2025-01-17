@@ -165,6 +165,20 @@ export function Register() {
                 placeholder='เบอร์โทรศัพท์'
               />
             </div>
+
+            <div className="mb-1">
+              <label htmlFor="creditcardnumber" className="font-semibold ">เลขบัญชี</label>
+              <input
+                type="text"
+                id="creditcardnumber"
+                name="creditcardnumber"
+                value={formData.creditcardnumber}
+                onChange={handleChange}
+                required
+                className="w-full border px-2 py-1 rounded mt-2"
+                placeholder='เลขบัญชี'
+              />
+            </div>
             <Button className="h-8  w-full  mt-4 bg-[#01BD63] hover:bg-[#47e699] " type="submit">สมัครสมาชิก</Button>
           </form>
           <Button className="h-8  w-full  mt-4 bg-[#00301E] hover:bg-[#174937] " type="submit" onClick={onLogin}>มีบัญชีเรียบร้อย</Button>

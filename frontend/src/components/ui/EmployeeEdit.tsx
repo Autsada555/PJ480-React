@@ -62,6 +62,7 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
       Phone: customers.Phone,
       Email: customers.Email,
       Address: customers.Address,
+      CreditCardNumber: customers.CreditCardNumber,
     },
   });
 
@@ -244,6 +245,20 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
               />
 
               <FormField
+                name="CreditCardNumber"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>เลขบัญชี</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
                 name="Address"
                 control={form.control}
                 render={({ field }) => (
@@ -256,7 +271,7 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
                   </FormItem>
                 )}
               />
-                  </div> 
+            </div>
 
             <AlertDialogFooter>
               <AlertDialogAction asChild>

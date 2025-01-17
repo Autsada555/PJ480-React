@@ -198,6 +198,7 @@ export function Payment(): JSX.Element {
                   onSelect={setDate}
                   className="mt-2"
                   disabled={(day) => day < new Date()} 
+                  required
                 />
               </div>
             </div>
@@ -231,7 +232,7 @@ export function Payment(): JSX.Element {
 
             <div className="ml-[250px]">
               <Label htmlFor="upload-image">อัพโหลดใบเสร็จจ่ายเงิน</Label>
-              <ImageUpload setData={setImages}/>
+              <ImageUpload setData={setImages} />
             </div>
 
           </div>

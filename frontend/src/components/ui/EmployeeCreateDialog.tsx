@@ -61,6 +61,7 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
       UserName: "",
       Password: "",
       Address: "",
+      CreditCardNumber: "",
       // District: "",
       // Province: "",
       // Postcode: "",
@@ -131,7 +132,7 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
           <AlertDialogHeader>
             <AlertDialogTitle className="text-2xl">สร้างบัญชีผู้ใช้</AlertDialogTitle>
             <AlertDialogDescription>
-            ทำการสร้างบัญชีของผู้ใช้งานและทำการกดบันทึกข้อมูลที่นี่
+              ทำการสร้างบัญชีของผู้ใช้งานและทำการกดบันทึกข้อมูลที่นี่
             </AlertDialogDescription>
           </AlertDialogHeader>
           <form onSubmit={form.handleSubmit(onValid)}>
@@ -268,6 +269,20 @@ const EmployeeCreateDialog = ({ onCreated }: { onCreated: () => void }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>รหัสผ่าน</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  name="CreditCardNumber"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>เลขบัญชี</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>

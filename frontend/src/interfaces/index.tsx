@@ -12,6 +12,7 @@ export interface User {
   Address: string;
   GenderID: number;
   UserTypeID: number;
+  CreditCardNumber: string;
 
   Gender: Gender;
   UserType: UserType;
@@ -27,6 +28,7 @@ export interface UserID {
   Phone: string;
   Address: string;
   GenderID: number;
+  CreditCardNumber: string;
 
   Gender: Gender;
 }
