@@ -55,6 +55,9 @@ export function ListUser() {
           <button className="w-full bg-gray-200 py-4 rounded hover:bg-gray-400">
             <a href="listuser" className="block text-center">รายชื่อผู้ใช้งาน</a>
           </button>
+          <button className="w-full bg-gray-200 py-4 rounded hover:bg-gray-400">
+            <a href="delivery" className="block text-center">การจัดส่งสินค้า</a>
+          </button>
         </div>
 
         <div className="flex-1">

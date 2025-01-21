@@ -106,7 +106,7 @@ export function History() {
                   รายการที่
                 </TableHead>
                 <TableHead className="w-[10%] text-center text-black">
-                  วันที่จัดส่ง
+                  วันที่จัดส่ง&เวลา
                 </TableHead>
                 <TableHead className="w-[10%] text-center text-black">
                   จำนวนทั้งหมด
@@ -139,7 +139,7 @@ export function History() {
                       {order.ID || `customer ${order.ID}`}
                     </TableCell>
                     <TableCell className=" text-center">
-                      {order.DateDelivery ? dayjs(order.DateDelivery).format("DD/MM/YYYY") : "N/A"}
+                      {order.DateDelivery ? dayjs(order.DateDelivery).format("DD/MM/YYYY HH:mm") : "N/A"}
                     </TableCell>
                     <TableCell className="text-center">
                       {`${order.Quantity}`}

@@ -195,7 +195,7 @@ export function CheckPayment() {
                             <TableHeader>
                                 <TableRow className="border border-black">
                                     <TableHead className="w-[10%] text-center text-black">รายการ</TableHead>
-                                    <TableHead className="w-[10%] text-center text-black">วันที่จัดส่ง</TableHead>
+                                    <TableHead className="w-[10%] text-center text-black">วันที่จัดส่ง&เวลา</TableHead>
                                     <TableHead className="w-[10%] text-center text-black">ชื่อผู้สั่งซื้อ</TableHead>
                                     <TableHead className="w-[10%] text-center text-black">เมนู</TableHead>
                                     <TableHead className="w-[10%] text-center text-black">สถานที่รับสินค้า</TableHead>
@@ -216,7 +216,7 @@ export function CheckPayment() {
                                                 {order.ID || `customer ${order.ID}`}
                                             </TableCell>
                                             <TableCell className="text-center border border-black">
-                                                {order.DateDelivery ? dayjs(order.DateDelivery).format("DD/MM/YYYY") : "N/A"}
+                                                {order.DateDelivery ? dayjs(order.DateDelivery).format("DD/MM/YYYY HH:mm") : "N/A"}
                                             </TableCell>
                                             <TableCell className="text-center border border-black">
                                                 {order.User.UserName}
