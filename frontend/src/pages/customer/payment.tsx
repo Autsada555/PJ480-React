@@ -99,10 +99,10 @@ export function Payment(): JSX.Element {
           position: "bottom-right",
           autoClose: 3000,
         });
-        // setTimeout(() => {
-        //   navigate("/customer", { replace: true });
+        setTimeout(() => {
+          navigate("/customer", { replace: true });
 
-        // }, 3000);
+        }, 3000);
       }
 
       else {
