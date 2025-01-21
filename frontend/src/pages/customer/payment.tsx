@@ -4,10 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { CalendarIcon } from "lucide-react";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
-import { Calendar } from "@/components/ui/calendar";
+import isBefore from 'date-fns/isBefore';
 import Qrcode from "@/assets/Qrcode.jpg";
 import {
   AlertDialog,
@@ -31,6 +28,7 @@ import { CreateOrder } from "@/services/https/Order";
 import { MenuInterface, Order, UserID } from "@/interfaces";
 import { useNavigate } from "react-router-dom";
 import { ImageUpload } from "@/components/ui/uploadimage";
+import { DatePicker } from 'rsuite';
 
 export function Payment(): JSX.Element {
   const [customer, setCustomer] = useState<UserID | null>(null);
@@ -97,14 +95,14 @@ export function Payment(): JSX.Element {
       console.log("Customer creation response:", res);
 
       if (res.status) {
-        toast.success("บันทึกเรียบร้อย", {
+        toast.success("บันทึกรายการสั่งซื้อเรียบร้อย", {
           position: "bottom-right",
           autoClose: 3000,
         });
-        setTimeout(() => {
-          navigate("/customer", { replace: true });
+        // setTimeout(() => {
+        //   navigate("/customer", { replace: true });
 
-        }, 3000);
+        // }, 3000);
       }
 
       else {
@@ -182,23 +180,11 @@ export function Payment(): JSX.Element {
             </div>
             <div>
               <Label>Date</Label>
-              <div className="mt-2">
-                <div
-                  className={cn(
-                    "w-[280px] md:w-auto justify-center font-normal  border rounded-2xl",
-                    !date && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon className=" ml-[125px]" />
-                  {date ? format(date, "PPP") : "Pick a date"}
-                </div>
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  className="mt-2"
-                  disabled={(day) => day < new Date()} 
-                  required
+              <div className="border rounded w-full">
+                <DatePicker onSelect={setDate}
+                  defaultValue={new Date()}
+                  shouldDisableDate={date => isBefore(date, new Date())}
+                  format="MM/dd/yyyy HH:mm"
                 />
               </div>
             </div>
@@ -206,29 +192,29 @@ export function Payment(): JSX.Element {
 
           <h2 className="ml-[-510px] text-xl font-semibold">Payment</h2>
           <div className="flex ">
-              <div className="ml-[-70px] mt-2">
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Checkbox
-                      id="bank-transfer"
-                    />
-                  </AlertDialogTrigger>
-                  <Label htmlFor="bank-transfer">โอนเงินผ่านธนาคาร</Label>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Bank Transfer</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        คุณสามารถชำระเงินผ่านช่องทางนี้และทำการบันทึกสลิปการโอนเงินเพื่อใช้เป็นหลักฐาน
-                      </AlertDialogDescription>
-                      <img src={Qrcode} alt="QR code" className="w-full mt-4" />
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
-                        <AlertDialogAction>ตกลง</AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogHeader>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </div>
+            <div className="ml-[-70px] mt-2">
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Checkbox
+                    id="bank-transfer"
+                  />
+                </AlertDialogTrigger>
+                <Label htmlFor="bank-transfer">โอนเงินผ่านธนาคาร</Label>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Bank Transfer</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      คุณสามารถชำระเงินผ่านช่องทางนี้และทำการบันทึกสลิปการโอนเงินเพื่อใช้เป็นหลักฐาน
+                    </AlertDialogDescription>
+                    <img src={Qrcode} alt="QR code" className="w-full mt-4" />
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
+                      <AlertDialogAction>ตกลง</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogHeader>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
 
             <div className="ml-[250px]">
               <Label htmlFor="upload-image">อัพโหลดใบเสร็จจ่ายเงิน</Label>

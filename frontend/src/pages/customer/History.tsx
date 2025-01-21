@@ -25,7 +25,7 @@ import {
   AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
 import { toast, ToastContainer } from "react-toastify";
-import { Bag, FlagBannerFold, Package, ShoppingBagOpen, Truck } from "@phosphor-icons/react";
+import { Bag, CheckCircle, FlagBannerFold, Package, Receipt, ShoppingBagOpen, Truck } from "@phosphor-icons/react";
 import { Steps } from 'rsuite';
 import './style.less';
 import { cn } from "@/lib/utils";
@@ -154,15 +154,15 @@ export function History() {
                       {order.Delivery}
                     </TableCell>
                     <TableCell className="text-center hidden md:table-cell">
-                      {order.StatusOrderType.ID === 1 ? <p className="text-yellow-500">{order.StatusOrderType.Name}</p> :
-                        order.StatusOrderType.ID === 2 ? <p className="text-green-500">{order.StatusOrderType.Name}</p> :
-                          <p className="text-red-500">{order.StatusOrderType.Name}</p>}
+                      {order.StatusOrderType.ID === 1 ? <p className="text-yellow-500 flex justify-center"><Receipt size={20} />{order.StatusOrderType.Name}</p> :
+                        order.StatusOrderType.ID === 2 ? <p className="text-green-500 flex justify-center"><CheckCircle size={20} />{order.StatusOrderType.Name}</p> :
+                          <p className="text-red-500 flex justify-center"><Bag size={20} />{order.StatusOrderType.Name}</p>}
 
                     </TableCell>
                     <TableCell className="text-center hidden md:table-cell">
-                      {order.StatusPaymentType.ID === 1 ? <p className="text-yellow-500">{order.StatusPaymentType.Name}</p> :
-                        order.StatusPaymentType.ID === 2 ? <p className="text-green-500">{order.StatusPaymentType.Name}</p> :
-                          <p className="text-red-500">{order.StatusPaymentType.Name}</p>}
+                      {order.StatusPaymentType.ID === 1 ? <p className="text-yellow-500 flex justify-center"><Receipt size={20} />{order.StatusPaymentType.Name}</p> :
+                        order.StatusPaymentType.ID === 2 ? <p className="text-green-500 flex justify-center"><CheckCircle size={20} />{order.StatusPaymentType.Name}</p> :
+                          <p className="text-red-500 flex justify-center"><Bag size={20} />{order.StatusPaymentType.Name}</p>}
                     </TableCell>
                     <TableCell className="justify-center flex">
                       <AlertDialog >

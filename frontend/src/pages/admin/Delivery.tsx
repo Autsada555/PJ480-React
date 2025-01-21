@@ -8,8 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { OrderCheckPayment, StatusDeliveryType} from "@/interfaces";
-import { CheckDeliveryOrder, GetAllOrder, GetStatusDelivery  } from "@/services/https/Order";
+import { OrderCheckPayment, StatusDeliveryType } from "@/interfaces";
+import { CheckDeliveryOrder, GetAllOrder, GetStatusDelivery } from "@/services/https/Order";
 import dayjs from "dayjs";
 import {
   Select,
@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { toast, ToastContainer } from "react-toastify";
+import { Bag, CheckCircle, Receipt, TrolleySuitcase, Truck } from "@phosphor-icons/react";
 
 
 export function Delivery() {
@@ -128,54 +129,64 @@ export function Delivery() {
                   <TableHead className="w-[10%] text-center text-black">สถานะการจัดส่ง</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody className="">
+              <TableBody className="border-collapse">
                 {Array.isArray(order) && order.length > 0 ? (
                   order.map((order) => (
-                    <TableRow key={order.ID}>
-                      <TableCell className=" text-center border border-black">
+                    <TableRow key={order.ID} className="border border-black">
+                      <TableCell className="text-center border border-black">
                         {order.ID || `customer ${order.ID}`}
                       </TableCell>
-                      <TableCell className=" text-center border border-black">
+                      <TableCell className="text-center border border-black">
                         {order.DateDelivery ? dayjs(order.DateDelivery).format("DD/MM/YYYY") : "N/A"}
                       </TableCell>
                       <TableCell className="text-center border border-black">
                         {order.User.UserName}
                       </TableCell>
                       <TableCell className="text-center whitespace-pre border border-black">
-                        {order.Menu.map(menu => { return menu["Name"] }).join("\r\n")}
+                        {order.Menu.map((menu) => menu["Name"]).join("\r\n")}
                       </TableCell>
                       <TableCell className="text-center whitespace-pre border border-black">
                         {order.Delivery}
                       </TableCell>
                       <TableCell className="text-center hidden md:table-cell border border-black">
-                        {order.StatusPaymentType.ID === 1 ? <p className="text-yellow-500">{order.StatusPaymentType.Name}</p> :
-                          order.StatusPaymentType.ID === 2 ? <p className="text-green-500">{order.StatusPaymentType.Name}</p> :
-                            <p className="text-red-500">{order.StatusPaymentType.Name}</p>}
+                        {order.StatusPaymentType.ID === 1 ? (
+                          <p className="text-yellow-500 flex justify-center"><Receipt size={20} />{order.StatusPaymentType.Name}</p>
+                        ) : order.StatusPaymentType.ID === 2 ? (
+                          <p className="text-green-500 flex justify-center"><CheckCircle size={20} />{order.StatusPaymentType.Name}</p>
+                        ) : (
+                          <p className="text-red-500 flex justify-center"><Bag size={20} />{order.StatusPaymentType.Name}</p>
+                        )}
                       </TableCell>
                       <TableCell className="text-center border border-black">
-                        {order.StatusOrderType.ID === 1 ? <p className="text-yellow-500">{order.StatusOrderType.Name}</p> :
-                          order.StatusOrderType.ID === 2 ? <p className="text-green-500">{order.StatusOrderType.Name}</p> :
-                            <p className="text-red-500">{order.StatusOrderType.Name}</p>}
+                        {order.StatusOrderType.ID === 1 ? (
+                          <p className="text-yellow-500 flex justify-center"><Receipt size={20} />{order.StatusOrderType.Name}</p>
+                        ) : order.StatusOrderType.ID === 2 ? (
+                          <p className="text-green-500 flex justify-center"><CheckCircle size={20} />{order.StatusOrderType.Name}</p>
+                        ) : (
+                          <p className="text-red-500 flex justify-center"><Bag size={20} />{order.StatusOrderType.Name}</p>
+                        )}
                       </TableCell>
                       <TableCell className="text-center whitespace-pre border border-black">
-                        {/* {order.StatusDeliveryType.Name} */}
-                        {order.StatusDeliveryType.ID === 1 ? <p className="text-cyan-700">{order.StatusDeliveryType.Name}</p> :
-                          order.StatusDeliveryType.ID === 2 ? <p className="text-orange-500">{order.StatusDeliveryType.Name}</p> :
-                            order.StatusDeliveryType.ID === 3 ? <p className="text-lime-500">{order.StatusDeliveryType.Name}</p> :
-                              <p className="text-green-500">{order.StatusDeliveryType.Name}</p>}
+                        {order.StatusDeliveryType.ID === 1 ? (
+                          <p className="text-cyan-700 flex justify-center"><Receipt size={20} />{order.StatusDeliveryType.Name}</p>
+                        ) : order.StatusDeliveryType.ID === 2 ? (
+                          <p className="text-orange-500 flex justify-center"><TrolleySuitcase size={20} />{order.StatusDeliveryType.Name}</p>
+                        ) : order.StatusDeliveryType.ID === 3 ? (
+                          <p className="text-lime-500 flex justify-center"><Truck size={20} />{order.StatusDeliveryType.Name}</p>
+                        ) : (
+                          <p className="text-green-500 flex justify-center"><CheckCircle size={20} />{order.StatusDeliveryType.Name}</p>
+                        )}
                       </TableCell>
-
-                      <TableCell className="justify-center ">
-
-                        <Select
-                         onValueChange={(c) => checkDeliveryOrder(order.ID, Number(c))}
-                        >
+                      <TableCell className="text-center border border-black">
+                        <Select onValueChange={(c) => checkDeliveryOrder(order.ID, Number(c))}>
                           <SelectTrigger className="w-[180px] border-green-500">
                             <SelectValue placeholder="สถานะ" />
                           </SelectTrigger>
                           <SelectContent>
                             {statusdelivery.map((statusdelivery) => (
-                              <SelectItem value={statusdelivery.ID + ""}>{statusdelivery.Name}</SelectItem>
+                              <SelectItem key={statusdelivery.ID} value={statusdelivery.ID + ""}>
+                                {statusdelivery.Name}
+                              </SelectItem>
                             ))}
                           </SelectContent>
                         </Select>
@@ -183,13 +194,14 @@ export function Delivery() {
                     </TableRow>
                   ))
                 ) : (
-                  <TableRow>
-                    <TableCell colSpan={12} className="text-center">
+                  <TableRow className="border border-black">
+                    <TableCell colSpan={12} className="text-center border border-black">
                       ไม่มีรายการที่สั่งซื้อ
                     </TableCell>
                   </TableRow>
                 )}
               </TableBody>
+
             </Table >
           </div >
         </div >
