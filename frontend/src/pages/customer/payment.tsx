@@ -184,6 +184,8 @@ export function Payment(): JSX.Element {
                 <DatePicker onSelect={setDate}
                   defaultValue={new Date()}
                   shouldDisableDate={date => isBefore(date, new Date())}
+                  hideHours={hour => hour < 8 || hour > 18}
+                  hideMinutes={minute => minute % 15 !== 0}
                   format="MM/dd/yyyy HH:mm"
                 />
               </div>
