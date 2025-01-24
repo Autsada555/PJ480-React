@@ -32,6 +32,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
+import MenuAdmin from "./MenuAdmin";
 
 export function CheckPayment() {
     const [order, setOrder] = useState<OrderCheckPayment[]>([]);
@@ -168,10 +169,12 @@ export function CheckPayment() {
             <Navbar />
             <ToastContainer />
             <div className="flex flex-col md:flex-row mt-[90px] space-y-5 md:space-y-0 md:space-x-4">
-                <div className="bg-gray-300 w-full md:w-[250px] h-fit md:h-[800px] p-4 space-y-4">
-                    <button className="w-full bg-gray-200 py-4 rounded hover:bg-gray-400">
-                        <a href="management" className="block text-center">จัดการเมนู</a>
-                    </button>
+                {/* <div className="bg-gray-300 w-full md:w-[250px] h-fit md:h-[800px] p-4 space-y-4">
+                    {Number(localStorage.getItem("id")) === 200 && (
+                        <button className="w-full bg-gray-200 py-4 rounded hover:bg-gray-400">
+                            <a href="management" className="block text-center">จัดการเมนู</a>
+                        </button>
+                    )}
                     <button className="w-full bg-gray-200 py-4 rounded hover:bg-gray-400">
                         <a href="checkpayment" className="block text-center">เช็คการจ่ายเงิน</a>
                     </button>
@@ -181,7 +184,8 @@ export function CheckPayment() {
                     <button className="w-full bg-gray-200 py-4 rounded hover:bg-gray-400">
                         <a href="delivery" className="block text-center">การจัดส่งสินค้า</a>
                     </button>
-                </div>
+                </div> */}
+                <MenuAdmin />
 
                 <div className="flex-1 p-5">
                     <div className="flex justify-between items-center mb-5">
@@ -241,7 +245,7 @@ export function CheckPayment() {
                                             </TableCell>
                                             <TableCell className="text-center border border-black">
                                                 {order.StatusOrderType.ID === 1 ? (
-                                                   <p className="text-yellow-500 flex justify-center"><Receipt size={20} />{order.StatusOrderType.Name}</p>
+                                                    <p className="text-yellow-500 flex justify-center"><Receipt size={20} />{order.StatusOrderType.Name}</p>
                                                 ) : order.StatusOrderType.ID === 2 ? (
                                                     <p className="text-green-500 flex justify-center"><CheckCircle size={20} />{order.StatusOrderType.Name}</p>
                                                 ) : (

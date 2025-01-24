@@ -87,9 +87,12 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
   const onValid: SubmitHandler<UserUpdateFormData> = async (
     formData: UserUpdateFormData
   ) => {
+    console.log(form.getValues());
+    console.log(customers);
+
     try {
-      console.log(formData);
-      const res = await UpdateCustomer(formData, customers.ID);
+      // console.log(formData);
+      const res = await UpdateCustomer(form.getValues(), customers.ID);
       if (res.status) {
         onSave();
         toast.success("Update Successful", {
@@ -277,7 +280,7 @@ const EmployeeEdit = ({ customers, onSave }: Props) => {
               <AlertDialogAction asChild>
                 <Button variant="secondary" className="bg-gray-600 mt-4">ปิด</Button>
               </AlertDialogAction>
-              <Button type="submit" className="bg-green-600 mt-4">บันทึกการแก้ไข</Button>
+              <Button type="submit" onClick={onValid} className="bg-green-600 mt-4">บันทึกการแก้ไข</Button>
             </AlertDialogFooter>
           </Form>
         </form>

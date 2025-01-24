@@ -20,9 +20,11 @@ import { ThyroidFood } from './pages/customer/Thyroid';
 import { ListUser } from './pages/admin/ListUser';
 import { Customer } from "./pages/customer/Customer";
 
+import PrivateRoute from './PrivateRoute';
+
 
 function App() {
-  
+
   return (
     <div>
       <BrowserRouter>
@@ -30,20 +32,38 @@ function App() {
           <Routes>
             <Route path="/home" element={<Home />} />
             <Route path="/customer" element={<Customer />} />
-            <Route path="/management" element={<Management />} />
-            <Route path="/checkpayment" element={<CheckPayment />} />
-            <Route path="/payment" element={<Payment />} />
+            <Route path="/management" element={
+              <PrivateRoute allowedRoles={[200]}>
+                <Management />
+              </PrivateRoute>
+            } />
+            <Route path="/checkpayment" element={
+              <PrivateRoute allowedRoles={[200, 201]}>
+                <CheckPayment />
+              </PrivateRoute>
+            } />
+            <Route path="/payment" element={
+              <PrivateRoute allowedRoles={[100, 200]}>
+                <Payment />
+              </PrivateRoute>
+            } />
             <Route path="/register" element={<Register />} />
             <Route path="/" element={<Login />} />
-            <Route path="/delivery" element={<Delivery />} />
-            <Route path="/history" element={<History />} />
+            <Route path="/delivery" element={
+              <PrivateRoute allowedRoles={[200, 202]}>
+                <Delivery />
+              </PrivateRoute>
+            } />
+            <Route path="/history" element={
+              <PrivateRoute allowedRoles={[100, 200]}>
+                <History />
+              </PrivateRoute>
+            } />
             <Route path="/diabetesfood" element={<DiabetesFood />} />
             <Route path="/kidnyfood" element={<KidnyFood />} />
             <Route path="/gastritistfood" element={<GastritistFood />} />
             <Route path="/thyroidfood" element={<ThyroidFood />} />
             <Route path="/listuser" element={<ListUser />} />
-
-
           </Routes>
         </div>
       </BrowserRouter>

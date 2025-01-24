@@ -17,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import MenuAdmin from "./MenuAdmin";
 
 export function ListUser() {
   const [customer, setCustomer] = useState<User[]>([]);
@@ -45,7 +46,7 @@ export function ListUser() {
     <div>
       <Navbar />
       <div className="mt-[95px] flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-4">
-        <div className="bg-gray-300 w-full md:w-[250px] h-fit md:h-[800px] p-4 space-y-4">
+        {/* <div className="bg-gray-300 w-full md:w-[250px] h-fit md:h-[800px] p-4 space-y-4">
           <button className="w-full bg-gray-200 py-4 rounded hover:bg-gray-400">
             <a href="management" className="block text-center">จัดการเมนู</a>
           </button>
@@ -58,13 +59,14 @@ export function ListUser() {
           <button className="w-full bg-gray-200 py-4 rounded hover:bg-gray-400">
             <a href="delivery" className="block text-center">การจัดส่งสินค้า</a>
           </button>
-        </div>
+        </div> */}
+        <MenuAdmin />
 
         <div className="flex-1">
           <div className="flex justify-between items-center mb-5">
             <h1 className="text-2xl font-bold">รายชื่อผู้ใช้งาน</h1>
             <div>
-                <EmployeeCreateDialog onCreated={fetchEmployee} />
+              <EmployeeCreateDialog onCreated={fetchEmployee} />
             </div>
           </div>
           <div className="overflow-x-auto mt-[-15px]">

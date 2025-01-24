@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select"
 import { toast, ToastContainer } from "react-toastify";
 import { Bag, CheckCircle, Receipt, TrolleySuitcase, Truck } from "@phosphor-icons/react";
+import MenuAdmin from "./MenuAdmin";
 
 
 export function Delivery() {
@@ -92,7 +93,7 @@ export function Delivery() {
       <Navbar />
       <ToastContainer />
       <div className="flex flex-col md:flex-row mt-[90px] space-y-5 md:space-y-0 md:space-x-4">
-        <div className="bg-gray-300 w-full md:w-[250px] h-fit md:h-[800px] p-4 space-y-4">
+        {/* <div className="bg-gray-300 w-full md:w-[250px] h-fit md:h-[800px] p-4 space-y-4">
           <button className="w-full bg-gray-200 py-4 rounded hover:bg-gray-400">
             <a href="management" className="block text-center">จัดการเมนู</a>
           </button>
@@ -105,7 +106,8 @@ export function Delivery() {
           <button className="w-full bg-gray-200 py-4 rounded hover:bg-gray-400">
             <a href="delivery" className="block text-center">การจัดส่งสินค้า</a>
           </button>
-        </div>
+        </div> */}
+        <MenuAdmin />
 
         <div className="flex-1 p-5">
           <div className="flex justify-between items-center mb-5">

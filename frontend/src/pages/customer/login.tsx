@@ -41,7 +41,7 @@ export function Login() {
   }
 
   const loginUser = async (values: z.infer<typeof formSchema>) => {
-    let res = await LoginUser({ ...values });
+    const res = await LoginUser({ ...values });
     console.log(res);
     try {
     if (res.status) {

@@ -17,6 +17,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { MenuOrder } from "@/interfaces";
+import { Button } from "@/components/ui/button";
 
 function Navbar() {
   const { getMenus, getQuantity, removeMenu, getTotal, addQuantity } = useContext(CartContext);
@@ -49,7 +50,7 @@ function Navbar() {
           description: "มีบางอย่างผิดปกติทำให้ออกจากระบบไม่ได้",
         })
       }
-      
+
     } catch (error) {
       console.log("Error", error);
     }
@@ -82,23 +83,36 @@ function Navbar() {
             </button>
           </form>
 
-          <div className="flex justify-between">
-            <div className="flex space-x-4 mt-[6px]">
-              <a href="/home" className="text-white hover:text-gray-300">
-                หน้าหลัก
-              </a>
+          <div className="flex justify-between align-center">
+            <div className="flex space-x-1 mt-[6px]">
+              <Button className="text-white hover:text-gray-300 bg-green-800">
+                <Link to="/home">
+                  หน้าหลัก
+                </Link>
+              </Button>
 
-              <a href="#" className="text-white hover:text-gray-300">
-                เกี่ยวกับ
-              </a>
+              {[200].includes(Number(localStorage.getItem("id"))) && (
+                <Button className="text-white hover:text-gray-300 bg-green-800">
+                  <Link to="/management">
+                    จัดการแอดมิน
+                  </Link>
+                </Button>
+              )}
+              {[201].includes(Number(localStorage.getItem("id"))) && (
+                <Button className="text-white hover:text-gray-300 bg-green-800">
+                  <Link to="/checkpayment">
+                    เช็คการจ่ายเงิน
+                  </Link>
+                </Button>
+              )}
+              {[202].includes(Number(localStorage.getItem("id"))) && (
+                <Button className="text-white hover:text-gray-300 bg-green-800">
+                  <Link to="/delivery">
+                    การจัดส่งสินค้า
+                  </Link>
+                </Button>
+              )}
 
-              <a href="#" className="text-white hover:text-gray-300">
-                บริการ
-              </a>
-
-              <a href="#" className="text-white hover:text-gray-300">
-                ติดต่อ
-              </a>
             </div>
             <div
               className="ml-4"
@@ -128,19 +142,21 @@ function Navbar() {
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
+
+            <div className="ml-4 flex align-center">
+              <a onClick={handleCartClick} className="relative cursor-pointer flex align-center">
+                <i className="fa-solid fa-cart-shopping text-[32px] text-white hover:text-gray-500 transition-all duration-300"></i>
+
+                {getQuantity() > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+                    {getQuantity()}
+                  </span>
+                )}
+              </a>
+            </div>
           </div>
 
-          <div className="fixed top-6 right-10 z-20">
-            <a onClick={handleCartClick} className="relative cursor-pointer">
-              <i className="fa-solid fa-cart-shopping fa-3x text-white hover:text-gray-500 transition-all duration-300"></i>
 
-              {getQuantity() > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
-                  {getQuantity()}
-                </span>
-              )}
-            </a>
-          </div>
 
           {isModalOpen && (
             <div
