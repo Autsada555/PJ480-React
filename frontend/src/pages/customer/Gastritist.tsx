@@ -29,7 +29,7 @@ export function GastritistFood() {
   const { addMenu } = useContext(CartContext);
 
   const handleGetAllMenu = async () => {
-    const res = await GetMenuByDisease(2);
+    const res = await GetMenuByDisease(3);
     if (res) {
       const r = groupBy<MenuInterface>(res, "MenuTypeID")
       setTemp([])
