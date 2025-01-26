@@ -83,21 +83,21 @@ export function Home() {
                 <NavigationMenuItem>
                   <Link to={"/kidnyfood"}>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    อาหารสำหรับโรคไต
+                      อาหารสำหรับโรคไต
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Link to={"/gastritistfood"}>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    อาหารสำหรับโรคกระเพาะ
+                      อาหารสำหรับโรคกระเพาะ
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Link to={"/thyroidfood"}>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    อาหารสำหรับโรคไทรอยด์
+                      อาหารสำหรับโรคไทรอยด์
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
@@ -131,7 +131,7 @@ export function Home() {
           temp.map((temps, outerKey) => (
             <div key={outerKey}>
               <div className="flex ml-28 mt-[20px]">
-                <h1 className="text-2xl  font-['Inter'] font-bold">{`${temps[0].MenuType?.Name} Foods`}</h1>
+                <h1 className="text-2xl  font-['Inter'] font-bold">{`${temps[0].MenuType?.Name}`}</h1>
               </div>
               <div className="ml-28 px-7 flex gap-10 mt-3 flex-wrap ">
                 {temps.map((menu: MenuInterface, innerKey: number) => (
@@ -181,13 +181,12 @@ export function Home() {
                                   alt="Product Image"
                                 />
                                 <div className=" w-full ml-5">
-                                  <div className="flex justify-between">
+                                  <div className=" justify-between">
                                     <p className="text-xl  font-semibold">{menu.Name}</p>
                                     <p className="text-xl text-gray-700">{`${menu.Cost} บาท`}</p>
+                                    <p className="text-xl  font-semibold">คำอธิบาย</p>
+                                    <p className="text-lg text-black ">{`${menu.Description} บาท`}</p>
                                   </div>
-                                  <p className="text-lg">
-                                    {temps[0].MenuType?.Name} Foods
-                                  </p>
                                 </div>
                               </div>
                               <div>

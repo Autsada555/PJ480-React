@@ -165,7 +165,7 @@ function Navbar() {
               onClick={closeModal}
             >
               <div
-                className="bg-white border-2 border-green-600 w-full md:w-1/3 h-full p-4 rounded-l shadow-lg relative flex flex-col"
+                className="bg-white border-2 border-green-600 w-full md:w-2/5 h-full p-4 rounded-l shadow-lg relative flex flex-col"
                 onClick={(e) => e.stopPropagation()}
               >
                 <button
@@ -186,7 +186,7 @@ function Navbar() {
                         <img
                           src={menu.Menu.MenuImage}
                           alt={`Product ${menu.Menu.Name}`}
-                          className="mr-6 border-green-600 border aspect-square h-40"
+                          className="mr-6 border-green-600 border h-[140px] w-[300px] aspect-square object-cover "
                         />
                         <div className="flex justify-around  items-center w-full">
                           <div>
